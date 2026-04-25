@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 export function InviteContactsScreen({ onBack }: { onBack?: () => void }) {
   const [inputValue, setInputValue] = useState('');
