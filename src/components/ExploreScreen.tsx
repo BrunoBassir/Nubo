@@ -1,9 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { PlaceDetailScreen } from './PlaceDetailScreen';
-import { Place, placesData } from './ExplorePlacesScreen';
+import { Place } from './ExplorePlacesScreen';
+import { collection, onSnapshot, query, limit } from 'firebase/firestore';
+import { db } from '../lib/firebase';
 
 export function ExploreScreen({ onPlacesClick, onChallengesClick, onDiscoveryClick, onFeaturedDetailClick, onRadarClick, onSecretMissionsClick, onRouteClick, onValidate }: { onPlacesClick?: () => void, onChallengesClick?: () => void, onDiscoveryClick?: () => void, onFeaturedDetailClick?: () => void, onRadarClick?: () => void, onSecretMissionsClick?: () => void, onRouteClick?: () => void, onValidate?: () => void }) {
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
+  const [placesData, setPlacesData] = useState<Place[]>([]);
+  
+  useEffect(() => {
+    const unsub = onSnapshot(query(collection(db, 'places'), limit(5)), (snapshot) => {
+      const places: Place[] = snapshot.docs.map(doc => ({
+        ...(doc.data() as Omit<Place, 'id'>),
+        id: doc.id
+      }));
+      setPlacesData(places);
+    }, (error) => {
+       console.error("Error fetching places: ", error);
+    });
+
+    return () => unsub();
+  }, []);
 
   if (selectedPlace) {
     return <PlaceDetailScreen place={selectedPlace} onClose={() => setSelectedPlace(null)} onRouteClick={onRouteClick} onValidate={onValidate} />;
@@ -123,22 +140,13 @@ export function ExploreScreen({ onPlacesClick, onChallengesClick, onDiscoveryCli
           </div>
           
           <div className="flex gap-4 overflow-x-auto hide-scrollbar pb-4">
-            <div onClick={() => {
-              const place = placesData.find(p => p.id === 1);
-              if (place) setSelectedPlace(place);
-            }} className="w-40 shrink-0 group cursor-pointer">
-              <div className="w-full aspect-square rounded-2xl bg-cover bg-center mb-2 border border-slate-200 dark:border-slate-800 transition-all duration-300 group-hover:border-primary/40 group-hover:shadow-[0_0_15px_rgba(25,204,240,0.15)] group-hover:scale-105" style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuAtmknKxfFmcGriApOdvMiNdmOAfDNH2B5DoWCmCv-cPni_d_LK4Du3r4VSnrrIJbHpXq3IbKZr-7ivym_pZ1yYkwMwwvJ7OOOzqBtFAjTxbo6fujRF8ASWN-E1PmxZaN8IvK-x6wSOS2u5NcVOJepkegvS7dVImw1Zpj1OGAUmB5sp9JDnIUXvcNWKBuccMubABApWZS_6khWk5xLnJOmmnUv-qVUAX2BYBz9EwzIdabSDhiSaisstqUgi6S15mF50R796Les4gY0')" }}></div>
-              <p className="font-bold text-sm truncate group-hover:text-primary transition-colors">Artisan Roast</p>
-              <p className="text-[10px] text-slate-500">Cafetería • 150m</p>
-            </div>
-            <div onClick={() => {
-              const place = placesData.find(p => p.id === 4);
-              if (place) setSelectedPlace(place);
-            }} className="w-40 shrink-0 group cursor-pointer">
-              <div className="w-full aspect-square rounded-2xl bg-cover bg-center mb-2 border border-slate-200 dark:border-slate-800 transition-all duration-300 group-hover:border-primary/40 group-hover:shadow-[0_0_15px_rgba(25,204,240,0.15)] group-hover:scale-105" style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuBs5cd59liGweFlnfO3PrRFOPwoR3ghQHjqROvkCiCIvimUX9LwQ1Us7ysQMJJZYiGPxSDbVHyFx-Ku7bMR-THA_XBKHxTw4YEydZ8WBJZjkdq7B0iqFApkVEK_ZVPgeBwxhniKTuZmmvrTmfT2x7WQV3yfWuqNgAEh9XvrBoJCTaLNJKq3-kkxSNSD1-PysCyNZCm4SEsTjPi4HIuvorbnnbx_N8Lv7Tm66rvIAaSCPYWZn_QGS629Hk8kpG-pzLi4dvzfPAnX65k')" }}></div>
-              <p className="font-bold text-sm truncate group-hover:text-primary transition-colors">Neon Lights Bar</p>
-              <p className="text-[10px] text-slate-500">Bar • 1.2km</p>
-            </div>
+            {placesData.slice(0, 3).map((place) => (
+              <div key={place.id} onClick={() => setSelectedPlace(place)} className="w-40 shrink-0 group cursor-pointer">
+                <div className="w-full aspect-square rounded-2xl bg-cover bg-center mb-2 border border-slate-200 dark:border-slate-800 transition-all duration-300 group-hover:border-primary/40 group-hover:shadow-[0_0_15px_rgba(25,204,240,0.15)] group-hover:scale-105" style={{ backgroundImage: `url('${place.imageUrl}')` }}></div>
+                <p className="font-bold text-sm truncate group-hover:text-primary transition-colors">{place.name}</p>
+                <p className="text-[10px] text-slate-500">{place.subcategory} • {place.distance}</p>
+              </div>
+            ))}
           </div>
         </section>
       </main>

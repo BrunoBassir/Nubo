@@ -1,10 +1,27 @@
 import { motion } from 'motion/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { PlaceDetailScreen } from './PlaceDetailScreen';
-import { Place, placesData } from './ExplorePlacesScreen';
+import { Place } from './ExplorePlacesScreen';
+import { collection, onSnapshot, query, limit } from 'firebase/firestore';
+import { db } from '../lib/firebase';
 
 export function HomeScreen({ onProfileClick, onLevelClick, onRecentActivityClick, onSpotClick, onCoffeeRouteClick, onNotificationsClick, onValidate }: { onProfileClick: () => void, onLevelClick: () => void, onRecentActivityClick?: () => void, onSpotClick?: () => void, onCoffeeRouteClick?: () => void, onNotificationsClick?: () => void, onValidate?: () => void }) {
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
+  const [placesData, setPlacesData] = useState<Place[]>([]);
+  
+  useEffect(() => {
+    const unsub = onSnapshot(query(collection(db, 'places'), limit(3)), (snapshot) => {
+      const places: Place[] = snapshot.docs.map(doc => ({
+        ...(doc.data() as Omit<Place, 'id'>),
+        id: doc.id
+      }));
+      setPlacesData(places);
+    }, (error) => {
+       console.error("Error fetching places: ", error);
+    });
+
+    return () => unsub();
+  }, []);
 
   if (selectedPlace) {
     return <PlaceDetailScreen place={selectedPlace} onClose={() => setSelectedPlace(null)} onValidate={onValidate} onRouteClick={onCoffeeRouteClick} />;
@@ -122,8 +139,8 @@ export function HomeScreen({ onProfileClick, onLevelClick, onRecentActivityClick
               <span className="material-symbols-outlined text-on-surface-variant group-hover:text-cyan-300 transition-colors">arrow_forward</span>
             </div>
             <div className="flex overflow-x-auto gap-4 scroll-hide -mx-6 px-6 pb-4 snap-x">
-              {placesData.filter(p => p.id === 1 || p.id === 4 || p.id === 5).map((place, i) => (
-                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} key={i} className="w-[260px] min-w-[260px] glass-card rounded-xl overflow-hidden flex-shrink-0 cursor-pointer snap-start hover:bg-white/5 transition-all duration-300 border border-transparent hover:border-cyan-400/30 hover:shadow-[0_0_15px_rgba(25,204,240,0.15)] group flex h-[100px]" onClick={() => setSelectedPlace(place)}>
+              {placesData.map((place, i) => (
+                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} key={place.id || i} className="w-[260px] min-w-[260px] glass-card rounded-xl overflow-hidden flex-shrink-0 cursor-pointer snap-start hover:bg-white/5 transition-all duration-300 border border-transparent hover:border-cyan-400/30 hover:shadow-[0_0_15px_rgba(25,204,240,0.15)] group flex h-[100px]" onClick={() => setSelectedPlace(place)}>
                   <div className="w-[100px] h-full relative shrink-0">
                     <img alt={place.name} className="w-full h-full object-cover" src={place.imageUrl} />
                   </div>
@@ -135,11 +152,6 @@ export function HomeScreen({ onProfileClick, onLevelClick, onRecentActivityClick
                     </p>
                     <div className="flex items-center gap-2 mt-1">
                       <p className="text-[10px] text-primary/80 truncate">{place.category}</p>
-                      {place.xpLevel && (
-                        <span className="bg-slate-900/80 px-1.5 py-0.5 rounded text-primary font-stat-main text-[9px] border border-white/10 whitespace-nowrap">
-                          {place.xpLevel}
-                        </span>
-                      )}
                     </div>
                   </div>
                 </motion.div>

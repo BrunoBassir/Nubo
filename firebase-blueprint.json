@@ -1,4 +1,85 @@
 {
-  "entities": {},
-  "firestore": {}
+  "entities": {
+    "Place": {
+      "title": "Place",
+      "description": "A location in the Nubo network.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "category": { "type": "string" },
+        "subcategory": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "badge": { "type": "string" },
+        "badgeType": { "type": "string" },
+        "xpLevel": { "type": "string" },
+        "nuboPoints": { "type": "string" },
+        "isOpen": { "type": "boolean" },
+        "distance": { "type": "string" }
+      },
+      "required": ["name", "category", "imageUrl"]
+    },
+    "Challenge": {
+      "title": "Challenge",
+      "description": "A task or challenge for the user.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "xpReward": { "type": "number" },
+        "pointsReward": { "type": "number" },
+        "status": { "type": "string" },
+        "progress": { "type": "number" },
+        "maxProgress": { "type": "number" },
+        "icon": { "type": "string" }
+      },
+      "required": ["title", "xpReward", "maxProgress"]
+    },
+    "Reward": {
+      "title": "Reward",
+      "description": "An exchangeable reward for points.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "provider": { "type": "string" },
+        "cost": { "type": "number" },
+        "imageUrl": { "type": "string" },
+        "type": { "type": "string" }
+      },
+      "required": ["title", "cost", "provider"]
+    },
+    "User": {
+      "title": "User",
+      "description": "A Nubo application user.",
+      "type": "object",
+      "properties": {
+        "displayName": { "type": "string" },
+        "email": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "xp": { "type": "number" },
+        "level": { "type": "number" },
+        "points": { "type": "number" }
+      },
+      "required": ["email"]
+    }
+  },
+  "firestore": {
+    "/places/{placeId}": {
+      "schema": { "$ref": "#/entities/Place" },
+      "description": "Places data."
+    },
+    "/challenges/{challengeId}": {
+      "schema": { "$ref": "#/entities/Challenge" },
+      "description": "Challenges available for users."
+    },
+    "/rewards/{rewardId}": {
+      "schema": { "$ref": "#/entities/Reward" },
+      "description": "Rewards available in the store."
+    },
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profiles and stats."
+    }
+  }
 }

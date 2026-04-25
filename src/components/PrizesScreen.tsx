@@ -1,27 +1,54 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { RewardDetailScreen, RewardInfo } from './RewardDetailScreen';
 import { PrizeCelebrationScreen } from './PrizeCelebrationScreen';
+import { collection, onSnapshot } from 'firebase/firestore';
+import { db } from '../lib/firebase';
 
 type RewardCategory = 'Todo' | 'Gastronomía' | 'Cultura' | 'Hospedaje';
 const rewardCategories: RewardCategory[] = ['Todo', 'Gastronomía', 'Cultura', 'Hospedaje'];
 
-const rewardsData: RewardInfo[] = [
-  { id: '1', category: 'Gastronomía', title: '2x1 Café Especial', points: 300, level: 1, imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCOMOlMoMND60i9WCfHv4uf-8bBFb3n3J6J3VSufTSPmG9vaGGbcz1eNMXkYpAgrxQu3UXTMhW5_PRgcXuCi_i5Eb1UnQPE-BhvGPOa4zVqSvNijtZziplJUdw80QfRsEp5T89ZYErXuk5nFmjsT3DnfJb_YHMLYe_BM3nQ2mtUpP5KZxEXzG_q5thbLxOi90_nl7IlBrzcRDCmJoCL0wqxAI68FZSbAiPUnRCCBEj4xwaTCbd4zIuF7jZmvS763O4uwkJFJPvtyeI', available: true, userPoints: 2450 },
-  { id: '2', category: 'Gastronomía', title: 'Cena Gourmet', points: 1200, level: 3, imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB86KdbUYEx4U1CzvvVkry7Bx7Jq4OvCVpgDhebQuQTubhJJfYMeI2RbXlqIj5XQUvArQ_WAS2kD816YLNtpYfoqrCVj7UJbAKZcCNh1qJ7z7EbGZlOEeSFR8DbMPd0_l7gz8vSvM2R8CvogHLe4oG_JD1ujPvax4__Wa8uFiH_9phZ4BVJkUfU0AaFOKYszXOpuoIBuvsAQ6Om0IXotzYLtt7gJGD65glreDpPfqiUdEeXO6bPlXwWTjTC1842IL8M3hJ6rFbsS5g', available: true, userPoints: 2450 },
-  { id: '3', category: 'Gastronomía', title: 'Brunch Premium', points: 800, level: 4, imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD0ci0F1ZsqmEWhfcOBRkCdwZqspIPMkLdN9kqvzKyI-X2D3Sth8oAt049S6AG2-tPctcv4lblxHhbRk4U3hU-wnvI7lrSZDZHlZXLedhEzeUK4l0-NYqmBa5x8fERNh14YEAQIL3lA7jInobzB9wh496i8YkEVDahJ1HXq1ThEFI8xTQB_N1NZ597ICbM7yAezyvtjkGQPEsdE7HUP64YtqlMtu7yl13Nv4GDnj03xprk11FBMbGO-mfUQe-NmpWpqatlUYwr0zQw', available: false, userPoints: 2450 },
-  { id: '4', category: 'Gastronomía', title: 'Wine Tasting', points: 2500, level: 5, imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDFnc5BijG8IwQt7G3Q9DMxs7HYS5tSN9a6wWQ0eNg2dL6k9MZI8yqld8TCwed2iAxCWeaHwoKNSQIjEIC2hUBm-O9aLtwUHZQvkUdqZkvRAJq1tVVhnQM2go2Ssy63qZDWQAMm2k8oiibm6WTqWdjb9vtXxV0xWwxUsKAEJUvJgAT2YOBiGtypYXOhDhxHya8zCw9U_cGH5F4-xQ9ThffhHydnTOWQyzEIulI4Hf2slNYueMa8J66bgLRMSIpo_BXKX7oTgEe18ak', available: false, userPoints: 2450 },
-  { id: '5', category: 'Cultura', title: 'Entrada Cine', points: 500, level: 2, imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDFnc5BijG8IwQt7G3Q9DMxs7HYS5tSN9a6wWQ0eNg2dL6k9MZI8yqld8TCwed2iAxCWeaHwoKNSQIjEIC2hUBm-O9aLtwUHZQvkUdqZkvRAJq1tVVhnQM2go2Ssy63qZDWQAMm2k8oiibm6WTqWdjb9vtXxV0xWwxUsKAEJUvJgAT2YOBiGtypYXOhDhxHya8zCw9U_cGH5F4-xQ9ThffhHydnTOWQyzEIulI4Hf2slNYueMa8J66bgLRMSIpo_BXKX7oTgEe18ak', available: true, userPoints: 2450 },
-  { id: '6', category: 'Cultura', title: 'Muestra Arte', points: 400, level: 1, imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCOMOlMoMND60i9WCfHv4uf-8bBFb3n3J6J3VSufTSPmG9vaGGbcz1eNMXkYpAgrxQu3UXTMhW5_PRgcXuCi_i5Eb1UnQPE-BhvGPOa4zVqSvNijtZziplJUdw80QfRsEp5T89ZYErXuk5nFmjsT3DnfJb_YHMLYe_BM3nQ2mtUpP5KZxEXzG_q5thbLxOi90_nl7IlBrzcRDCmJoCL0wqxAI68FZSbAiPUnRCCBEj4xwaTCbd4zIuF7jZmvS763O4uwkJFJPvtyeI', available: true, userPoints: 2450 },
-  { id: '7', category: 'Cultura', title: 'Concierto Jazz', points: 3000, level: 6, imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB86KdbUYEx4U1CzvvVkry7Bx7Jq4OvCVpgDhebQuQTubhJJfYMeI2RbXlqIj5XQUvArQ_WAS2kD816YLNtpYfoqrCVj7UJbAKZcCNh1qJ7z7EbGZlOEeSFR8DbMPd0_l7gz8vSvM2R8CvogHLe4oG_JD1ujPvax4__Wa8uFiH_9phZ4BVJkUfU0AaFOKYszXOpuoIBuvsAQ6Om0IXotzYLtt7gJGD65glreDpPfqiUdEeXO6bPlXwWTjTC1842IL8M3hJ6rFbsS5g', available: false, userPoints: 2450 },
-  { id: '8', category: 'Cultura', title: 'Backstage Pass', points: 10000, level: 10, imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD0ci0F1ZsqmEWhfcOBRkCdwZqspIPMkLdN9kqvzKyI-X2D3Sth8oAt049S6AG2-tPctcv4lblxHhbRk4U3hU-wnvI7lrSZDZHlZXLedhEzeUK4l0-NYqmBa5x8fERNh14YEAQIL3lA7jInobzB9wh496i8YkEVDahJ1HXq1ThEFI8xTQB_N1NZ597ICbM7yAezyvtjkGQPEsdE7HUP64YtqlMtu7yl13Nv4GDnj03xprk11FBMbGO-mfUQe-NmpWpqatlUYwr0zQw', available: false, userPoints: 2450 },
-  { id: '9', category: 'Hospedaje', title: 'Noche en Suite', points: 5500, level: 4, imageUrl: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', available: true, userPoints: 2450 },
-  { id: '10', category: 'Hospedaje', title: 'Fin de semana Spa', points: 12000, level: 8, imageUrl: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', available: false, userPoints: 2450 }
-];
+const mapTypeToCategory = (type: string): RewardCategory => {
+  if (type === 'food') return 'Gastronomía';
+  if (type === 'culture') return 'Cultura';
+  if (type === 'hotel') return 'Hospedaje';
+  return 'Todo';
+};
 
 export function PrizesScreen({ onVouchersClick, onMysteryChestClick, onPrizeFragmentsClick, onLiveAuctionsClick, onTradingMarketClick }: { onVouchersClick?: () => void, onMysteryChestClick?: () => void, onPrizeFragmentsClick?: () => void, onLiveAuctionsClick?: () => void, onTradingMarketClick?: () => void }) {
   const [activeCategory, setActiveCategory] = useState<RewardCategory>('Todo');
   const [selectedReward, setSelectedReward] = useState<RewardInfo | null>(null);
   const [showCelebration, setShowCelebration] = useState(false);
+  
+  const [rewardsData, setRewardsData] = useState<RewardInfo[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Hardcode user points for now, normally fetch from user doc
+  const userPoints = 2450;
+
+  useEffect(() => {
+    const unsub = onSnapshot(collection(db, 'rewards'), (snapshot) => {
+      const data: RewardInfo[] = snapshot.docs.map(doc => {
+        const docData = doc.data();
+        return {
+          id: doc.id,
+          title: docData.title,
+          category: mapTypeToCategory(docData.type),
+          points: docData.cost,
+          level: Math.ceil(docData.cost / 1000) || 1, // mock level mapping
+          imageUrl: docData.imageUrl,
+          available: userPoints >= docData.cost,
+          userPoints: userPoints
+        };
+      });
+      setRewardsData(data);
+      setLoading(false);
+    }, (error) => {
+       console.error("Error fetching rewards: ", error);
+       setLoading(false);
+    });
+
+    return () => unsub();
+  }, [userPoints]);
 
   const renderRewardCard = (reward: RewardInfo) => (
     <div key={reward.id} onClick={() => setSelectedReward(reward)} className={`cursor-pointer transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] group ${reward.available ? 'reward-card-active glow-border hover:shadow-[0_0_15px_rgba(25,204,240,0.15)]' : 'reward-card-locked hover:border-slate-600 border border-transparent'}`}>
@@ -52,6 +79,10 @@ export function PrizesScreen({ onVouchersClick, onMysteryChestClick, onPrizeFrag
       </div>
     </div>
   );
+
+  if (loading) {
+     return <div className="bg-background-dark min-h-screen text-white flex items-center justify-center">Cargando premios...</div>;
+  }
 
   return (
     <>

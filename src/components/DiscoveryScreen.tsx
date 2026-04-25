@@ -1,33 +1,70 @@
-import { useState, useMemo } from 'react';
-import { Place, placesData } from './ExplorePlacesScreen';
+import { useState, useMemo, useEffect } from 'react';
+import { Place } from './ExplorePlacesScreen';
 import { PlaceDetailScreen } from './PlaceDetailScreen';
+import { collection, onSnapshot } from 'firebase/firestore';
+import { db } from '../lib/firebase';
 
 type DiscoveryCategory = 'Todos' | 'Gastronomía' | 'Cultura' | 'Hotelería';
 
 export function DiscoveryScreen({ onHome, onExplore, onScan, onPrizes, onRanking, onValidate, onRouteClick }: { onHome?: () => void, onExplore?: () => void, onScan?: () => void, onPrizes?: () => void, onRanking?: () => void, onValidate?: () => void, onRouteClick?: () => void }) {
   const [activeCategory, setActiveCategory] = useState<DiscoveryCategory>('Todos');
-  const [selectedPlaceId, setSelectedPlaceId] = useState<number>(1);
+  const [selectedPlaceId, setSelectedPlaceId] = useState<string | null>(null);
   const [showDetailScreen, setShowDetailScreen] = useState<boolean>(false);
+  const [placesData, setPlacesData] = useState<Place[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const selectedPlace = useMemo(() => placesData.find(p => p.id === selectedPlaceId), [selectedPlaceId]);
+  useEffect(() => {
+    const unsub = onSnapshot(collection(db, 'places'), (snapshot) => {
+      const places: Place[] = snapshot.docs.map(doc => ({
+        ...(doc.data() as Omit<Place, 'id'>),
+        id: doc.id
+      }));
+      setPlacesData(places);
+      if (places.length > 0 && !selectedPlaceId) {
+        setSelectedPlaceId(places[0].id);
+      }
+      setLoading(false);
+    }, (error) => {
+       console.error("Error fetching places: ", error);
+       setLoading(false);
+    });
 
-  // Coordinates mapping since we don't have a real map
-  const placeCoordinates: Record<number, { top: string, left: string, icon: string }> = {
-    1: { top: '48%', left: '62%', icon: 'local_cafe' },
-    2: { top: '38%', left: '22%', icon: 'museum' },
-    3: { top: '30%', left: '75%', icon: 'hotel' },
-    4: { top: '65%', left: '50%', icon: 'local_bar' },
-    5: { top: '55%', left: '30%', icon: 'restaurant' },
-    6: { top: '25%', left: '40%', icon: 'museum' }
+    return () => unsub();
+  }, []);
+
+  const selectedPlace = useMemo(() => placesData.find(p => p.id === selectedPlaceId), [placesData, selectedPlaceId]);
+
+  // Make deterministic coordinates based on string id length/chars so they are spread out
+  const getCoordinates = (id: string, index: number) => {
+     const positions = [
+       { top: '48%', left: '62%' },
+       { top: '38%', left: '22%' },
+       { top: '30%', left: '75%' },
+       { top: '65%', left: '50%' },
+       { top: '55%', left: '30%' },
+       { top: '25%', left: '40%' }
+     ];
+     return positions[index % positions.length];
   };
+
+  const getIcon = (category: string) => {
+     if (category === 'Gastronomía') return 'local_cafe';
+     if (category === 'Cultura') return 'museum';
+     if (category === 'Hospedaje') return 'hotel';
+     return 'place';
+  }
 
   const filteredPlaces = useMemo(() => {
     if (activeCategory === 'Todos') return placesData;
     return placesData.filter(p => p.category === activeCategory || (activeCategory === 'Gastronomía' && p.category === 'Bares'));
-  }, [activeCategory]);
+  }, [activeCategory, placesData]);
 
   if (showDetailScreen && selectedPlace) {
     return <PlaceDetailScreen place={selectedPlace} onClose={() => setShowDetailScreen(false)} onValidate={onValidate} onRouteClick={onRouteClick} />;
+  }
+
+  if (loading) {
+     return <div className="bg-background-dark min-h-screen text-white flex items-center justify-center">Cargando mapa...</div>;
   }
 
   return (
@@ -73,9 +110,9 @@ export function DiscoveryScreen({ onHome, onExplore, onScan, onPrizes, onRanking
             </div>
           </div>
 
-          {filteredPlaces.map(place => {
-            const coords = placeCoordinates[place.id];
-            if (!coords) return null;
+          {filteredPlaces.map((place, i) => {
+            const coords = getCoordinates(place.id, i);
+            const icon = getIcon(place.category);
             
             const isSelected = selectedPlaceId === place.id;
             
@@ -87,7 +124,7 @@ export function DiscoveryScreen({ onHome, onExplore, onScan, onPrizes, onRanking
                 style={{ top: coords.top, left: coords.left }}
               >
                 <div className={`${isSelected ? 'bg-background-dark text-[#19ccf0] border-4 border-[#19ccf0] shadow-[0_0_20px_rgba(25,204,240,0.4)] w-14 h-14' : 'bg-[#19ccf0] text-background-dark w-10 h-10 border-2 border-[#19ccf0]/50'} rounded-xl flex items-center justify-center rotate-45`}>
-                  <span className={`material-symbols-outlined -rotate-45 ${isSelected ? 'text-3xl font-black' : 'text-xl font-bold'}`}>{coords.icon}</span>
+                  <span className={`material-symbols-outlined -rotate-45 ${isSelected ? 'text-3xl font-black' : 'text-xl font-bold'}`}>{icon}</span>
                 </div>
                 {place.badge === "Popular" && !isSelected && (
                   <div className="absolute -top-1 -right-1 bg-white text-[#ff8a3d] text-[9px] font-black px-1.5 py-0.5 rounded-sm shadow-sm tracking-tighter">HOT</div>

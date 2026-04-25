@@ -1,10 +1,12 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { PlaceDetailScreen } from './PlaceDetailScreen';
+import { collection, onSnapshot } from 'firebase/firestore';
+import { db } from '../lib/firebase';
 
 type PlaceCategory = 'Todo' | 'Gastronomía' | 'Hotelería' | 'Cultura' | 'Bares';
 
 export type Place = {
-  id: number;
+  id: string;
   name: string;
   distance: string;
   category: string;
@@ -17,99 +19,44 @@ export type Place = {
   isOpen: boolean;
 };
 
-export const placesData: Place[] = [
-  {
-    id: 1,
-    name: "Artisan Roast House",
-    distance: "150m",
-    category: "Gastronomía",
-    subcategory: "Especialidad",
-    imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuAtmknKxfFmcGriApOdvMiNdmOAfDNH2B5DoWCmCv-cPni_d_LK4Du3r4VSnrrIJbHpXq3IbKZr-7ivym_pZ1yYkwMwwvJ7OOOzqBtFAjTxbo6fujRF8ASWN-E1PmxZaN8IvK-x6wSOS2u5NcVOJepkegvS7dVImw1Zpj1OGAUmB5sp9JDnIUXvcNWKBuccMubABApWZS_6khWk5xLnJOmmnUv-qVUAX2BYBz9EwzIdabSDhiSaisstqUgi6S15mF50R796Les4gY0",
-    badge: "Popular",
-    badgeType: "popular", // yellow
-    xpLevel: "+150 XP Bonus",
-    nuboPoints: null,
-    isOpen: true,
-  },
-  {
-    id: 2,
-    name: "Galería de Arte Moderno",
-    distance: "450m",
-    category: "Cultura",
-    subcategory: "Abierto",
-    imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuAJsH75Mxn3q8rSehmHhLHh15fY93QYRcbHTzWwuxVC3GE_oDFWolw0twT-TONUwTE9xPCviHDGnXCTzY2wVrZdXfyItICrW8angsHGFdhQFEgvmPyfUvuK3rkzRdkrXB94obx651Gt4CN-mYSFFAUqOUqzqVmgBIuNmB0fqfbX5C1x9ls5ij6bXi80h92Xwtoi97NNcexd6kgCjEX9OoPsyuYfqwnfqH4fiVZM4vkzRgDDLmhyLMq6EF6mKrkNZpNRttGkstIbPgM",
-    badge: "Nuevo",
-    badgeType: "new", // cyan
-    xpLevel: "+50 XP",
-    nuboPoints: "+5% NUBO POINTS",
-    isOpen: true,
-  },
-  {
-    id: 3,
-    name: "Hotel Grand Plaza",
-    distance: "800m",
-    category: "Hotelería",
-    subcategory: "24/7",
-    imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuAm6rDcMLBpSVSJ6QdYQtcKZTNvOg1-OTsV60IF13QhJgHEfAZ16_1_fhISdiKK5GZDdNtMuCoc9OqEUQnNK7JL8k8_2xrfuIB7FyDT5D07U7cD0ujAetol6XYC4kExxuEuxEPawXMn0tfSB2ibIOgRnrvG-71k5Ak0IuiREH3pg-lbccyfi-QIJ8H2c177RKLxug4B93gCp5TOs0MVBMUbyxdtOtyJXldbxle_NB2dTFACLcuMAsuFZ1ofqjiDV85Fk5efBRRSUVU",
-    badge: null,
-    badgeType: null,
-    xpLevel: "+300 XP BONUS",
-    nuboPoints: null,
-    isOpen: true,
-  },
-  {
-    id: 4,
-    name: "The Neon Bar",
-    distance: "1.2km",
-    category: "Bares",
-    subcategory: "Abre 20:00",
-    imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuBs5cd59liGweFlnfO3PrRFOPwoR3ghQHjqROvkCiCIvimUX9LwQ1Us7ysQMJJZYiGPxSDbVHyFx-Ku7bMR-THA_XBKHxTw4YEydZ8WBJZjkdq7B0iqFApkVEK_ZVPgeBwxhniKTuZmmvrTmfT2x7WQV3yfWuqNgAEh9XvrBoJCTaLNJKq3-kkxSNSD1-PysCyNZCm4SEsTjPi4HIuvorbnnbx_N8Lv7Tm66rvIAaSCPYWZn_QGS629Hk8kpG-pzLi4dvzfPAnX65k",
-    badge: "Popular",
-    badgeType: "popular",
-    xpLevel: null,
-    nuboPoints: "+10% NUBO POINTS",
-    isOpen: false,
-  },
-  {
-    id: 5,
-    name: "La Trattoria Nostra",
-    distance: "2km",
-    category: "Gastronomía",
-    subcategory: "Italiana",
-    imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuDgvAeXjxY1Rt_lDsWFjSECqppFs1nBSKoq19XLdFme7BLX1M3vASKB7jbo4f4FBwUYyDZpA0R9BpD-Ns9pf770ONFKpG4sgfl01dBBgadeJ1EvLWj-G99zpaqJpuoV3VFgrTCKZkMk9APyVmMDrcxgZrmyvKoTJgglKZafHBSL7DzBrg5_wUxHo0ap26X3tgOLw3i5OBkPGAsOBbG4X2AOKGkmsnD_OfjO3O2JlVsAb4ik-D1VE3U4HJYZlw77LZAFWBAmW3xm03Y",
-    badge: "Promo",
-    badgeType: "new",
-    xpLevel: "+100 XP",
-    nuboPoints: null,
-    isOpen: true,
-  },
-  {
-    id: 6,
-    name: "Museo Histórico",
-    distance: "3km",
-    category: "Cultura",
-    subcategory: "Historia",
-    imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuC8qbZ5XV0AKFTAkY59qgZ2wDhFyRTTYSLLtAtzIfrLAOs_1tb9scIWSEO1JqoCYJBGpf9o5c6mdL3PEZbsndvu6BhZO_MFEtpROdXnr3glaLMv0tI98xlqPHLgcij6jnnEs2XAxC2D2R2J1vHSgAxmBAtbTgt-bRj008HAg_2-jkUGUhsuL9_KEdnEhSDZtfAYJKUSO6lEzzk2ETjO_KePTxkIyRrTy9QBXQHGXpvk4a4xZYlYpArctGe5__DN-LeqC9tgT2eq5hU",
-    badge: null,
-    badgeType: null,
-    xpLevel: "+20 XP",
-    nuboPoints: null,
-    isOpen: true,
-  }
-];
-
 export function ExplorePlacesScreen({ onBack, onPlaceDetailClick, onProfileClick, onNotificationsClick, onRouteClick }: { onBack?: () => void, onPlaceDetailClick?: () => void, onProfileClick?: () => void, onNotificationsClick?: () => void, onRouteClick?: () => void }) {
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
   const [activeCategory, setActiveCategory] = useState<PlaceCategory>('Todo');
+  const [placesData, setPlacesData] = useState<Place[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsub = onSnapshot(collection(db, 'places'), (snapshot) => {
+      const places: Place[] = snapshot.docs.map(doc => ({
+        ...(doc.data() as Omit<Place, 'id'>),
+        id: doc.id
+      }));
+      setPlacesData(places);
+      setLoading(false);
+    }, (error) => {
+       console.error("Error fetching places: ", error);
+       setLoading(false);
+    });
+
+    return () => unsub();
+  }, []);
 
   const filteredPlaces = useMemo(() => {
     if (activeCategory === 'Todo') {
-      return placesData.filter(p => p.id !== 1); // Keep Artisan out of the main list for 'Todo' as it's featured
+      return placesData.filter(p => p.id !== 'place1'); // Keep Artisan out of the main list for 'Todo' as it's featured
     }
     return placesData.filter(p => p.category === activeCategory);
-  }, [activeCategory]);
+  }, [activeCategory, placesData]);
+
+  const featuredPlace = useMemo(() => {
+    return placesData.find(p => p.id === 'place1') || placesData[0];
+  }, [placesData]);
 
   const categories: PlaceCategory[] = ['Todo', 'Gastronomía', 'Hotelería', 'Cultura', 'Bares'];
+
+  if (loading) {
+    return <div className="bg-background-dark min-h-screen text-white flex items-center justify-center">Cargando lugares...</div>;
+  }
 
   return (
     <div className="bg-background-dark text-slate-100 min-h-screen flex flex-col w-full lg:max-w-md lg:mx-auto relative">
@@ -157,29 +104,33 @@ export function ExplorePlacesScreen({ onBack, onPlaceDetailClick, onProfileClick
         </div>
         
         {/* Featured Section (only show if 'Todo') */}
-        {activeCategory === 'Todo' && (
+        {activeCategory === 'Todo' && featuredPlace && (
           <section className="mt-6">
             <div className="relative w-full aspect-[16/10] rounded-xl overflow-hidden shadow-2xl border border-white/10">
-              <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuAtmknKxfFmcGriApOdvMiNdmOAfDNH2B5DoWCmCv-cPni_d_LK4Du3r4VSnrrIJbHpXq3IbKZr-7ivym_pZ1yYkwMwwvJ7OOOzqBtFAjTxbo6fujRF8ASWN-E1PmxZaN8IvK-x6wSOS2u5NcVOJepkegvS7dVImw1Zpj1OGAUmB5sp9JDnIUXvcNWKBuccMubABApWZS_6khWk5xLnJOmmnUv-qVUAX2BYBz9EwzIdabSDhiSaisstqUgi6S15mF50R796Les4gY0')" }}></div>
+              <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('${featuredPlace.imageUrl}')` }}></div>
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
               <div className="absolute top-4 left-4 flex gap-2">
-                <div className="bg-yellow-400 text-black px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 shadow-lg">
-                  <span className="material-symbols-outlined text-[14px]">star</span>
-                  Popular
-                </div>
+                {featuredPlace.badge && (
+                  <div className={`px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 shadow-lg ${featuredPlace.badgeType === 'popular' ? 'bg-yellow-400 text-black' : 'bg-cyan-400 text-slate-950'}`}>
+                    <span className="material-symbols-outlined text-[14px]">{featuredPlace.badgeType === 'popular' ? 'star' : 'new_releases'}</span>
+                    {featuredPlace.badge}
+                  </div>
+                )}
                 <div className="bg-cyan-400 text-slate-950 px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 shadow-lg">
                   <span className="material-symbols-outlined text-[14px]">distance</span>
-                  150m
+                  {featuredPlace.distance}
                 </div>
               </div>
               <div className="absolute bottom-4 left-4 right-4">
-                <p className="text-cyan-400 text-[10px] font-black mb-1 uppercase tracking-[0.2em] [text-shadow:0_0_10px_rgba(25,204,240,0.5)]">Gastronomía • Especialidad</p>
-                <h2 className="text-2xl font-bold text-white mb-3 leading-tight font-display">Artisan Roast House</h2>
+                <p className="text-cyan-400 text-[10px] font-black mb-1 uppercase tracking-[0.2em] [text-shadow:0_0_10px_rgba(25,204,240,0.5)]">{featuredPlace.category} • {featuredPlace.subcategory}</p>
+                <h2 className="text-2xl font-bold text-white mb-3 leading-tight font-display">{featuredPlace.name}</h2>
                 <div className="flex items-center justify-between">
-                  <div className="bg-cyan-500/10 backdrop-blur-md px-3 py-2 rounded-lg border border-cyan-500/20">
-                    <span className="text-cyan-400 font-bold text-xs">+150 XP Bonus</span>
-                  </div>
-                  <button onClick={() => setSelectedPlace(placesData[0])} className="bg-cyan-400 text-slate-950 px-6 py-2.5 rounded-lg font-bold text-sm hover:scale-105 transition-transform shadow-[0_0_20px_rgba(25,204,240,0.4)] hover:shadow-[0_0_30px_rgba(25,204,240,0.6)]">
+                  {featuredPlace.xpLevel && (
+                    <div className="bg-cyan-500/10 backdrop-blur-md px-3 py-2 rounded-lg border border-cyan-500/20">
+                      <span className="text-cyan-400 font-bold text-xs">{featuredPlace.xpLevel}</span>
+                    </div>
+                  )}
+                  <button onClick={() => setSelectedPlace(featuredPlace)} className="bg-cyan-400 text-slate-950 px-6 py-2.5 rounded-lg font-bold text-sm hover:scale-105 transition-transform shadow-[0_0_20px_rgba(25,204,240,0.4)] hover:shadow-[0_0_30px_rgba(25,204,240,0.6)]">
                     Explorar
                   </button>
                 </div>

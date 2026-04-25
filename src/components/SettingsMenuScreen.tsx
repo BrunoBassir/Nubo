@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { seedDatabase } from '../lib/seedDatabase';
 
 export function SettingsMenuScreen({ 
   onBack,
@@ -19,6 +20,22 @@ export function SettingsMenuScreen({
 }) {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [locationEnabled, setLocationEnabled] = useState(true);
+  const [isSeeding, setIsSeeding] = useState(false);
+  const [seedStatus, setSeedStatus] = useState<{message: string; type: 'success' | 'error'} | null>(null);
+
+  const handleSeed = async () => {
+    setIsSeeding(true);
+    setSeedStatus(null);
+    const result = await seedDatabase();
+    setIsSeeding(false);
+    if (result.success) {
+      setSeedStatus({ message: '¡Datos inyectados correctamente! Revisa tu consola de Firebase.', type: 'success' });
+      // clear message after 5 seconds
+      setTimeout(() => setSeedStatus(null), 5000);
+    } else {
+      setSeedStatus({ message: `Ocurrió un error al inyectar los datos: ${result.error}`, type: 'error' });
+    }
+  };
 
   return (
     <div className="bg-background-dark text-slate-100 min-h-screen flex flex-col w-full lg:max-w-md lg:mx-auto relative dark">
@@ -138,6 +155,21 @@ export function SettingsMenuScreen({
                 <span className="material-symbols-outlined text-[#00f2ff]">restart_alt</span>
                 <span className="font-medium text-sm">Reiniciar Tutorial (Onboarding)</span>
               </div>
+            </button>
+            <button 
+              onClick={handleSeed} 
+              disabled={isSeeding}
+              className={`w-full flex flex-col p-4 hover:bg-white/5 transition-colors ${isSeeding ? 'opacity-50 cursor-not-allowed' : ''}`}
+            >
+              <div className="flex items-center gap-3 w-full">
+                <span className="material-symbols-outlined text-[#00f2ff]">{isSeeding ? 'hourglass_empty' : 'database'}</span>
+                <span className="font-medium text-sm">{isSeeding ? 'Inyectando datos...' : 'Crear base de datos falsa'}</span>
+              </div>
+              {seedStatus && (
+                <div className={`mt-2 text-xs text-left p-2 rounded ${seedStatus.type === 'success' ? 'bg-green-500/10 text-green-400 border border-green-500/20' : 'bg-red-500/10 text-red-500 border border-red-500/20'}`}>
+                  {seedStatus.message}
+                </div>
+              )}
             </button>
           </div>
         </section>
