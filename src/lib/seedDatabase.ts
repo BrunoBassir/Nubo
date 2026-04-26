@@ -14,7 +14,19 @@ const samplePlaces = [
     xpLevel: '+150 XP Bonus',
     nuboPoints: null,
     isOpen: true,
-    distance: '150m'
+    distance: '150m',
+    address: 'Av. Corrientes 1234',
+    phone: '+54 11 4455-6677',
+    website: 'https://artisanroast.com',
+    hours: { lun: '8:00 - 20:00', mar: '8:00 - 20:00', mie: '8:00 - 20:00', jue: '8:00 - 20:00', vie: '8:00 - 22:00', sab: '9:00 - 22:00', dom: 'errado' },
+    coordinates: { lat: -34.6037, lng: -58.3816 },
+    nuboPromotion: '¡Muestra tu Nubo App y llévate un cookie artesanal gratis con tu café especial!',
+    menuItems: [
+      { title: 'Espresso Doble', description: 'Blend especial de la casa, notas acarameladas.', price: '$2.500' },
+      { title: 'Flat White', description: 'Doble ristretto con leche finamente texturizada.', price: '$3.200' },
+      { title: 'Avocado Toast', description: 'Pan de masa madre, palta, huevo poché y semillas.', price: '$6.500' }
+    ],
+    qrCode: 'place1'
   },
   {
     id: 'place2',
@@ -28,7 +40,17 @@ const samplePlaces = [
     xpLevel: '+50 XP',
     nuboPoints: '+5% NUBO POINTS',
     isOpen: true,
-    distance: '450m'
+    distance: '450m',
+    address: 'San Juan 450',
+    phone: '+54 11 3344-5566',
+    hours: { lun: 'cerrado', mar: '10:00 - 18:00', mie: '10:00 - 18:00', jue: '10:00 - 20:00', vie: '10:00 - 20:00', sab: '10:00 - 20:00', dom: '10:00 - 18:00' },
+    coordinates: { lat: -34.6150, lng: -58.3730 },
+    nuboPromotion: '2x1 en entradas generales los días jueves exclusivos para Exploradores nivel 3+.',
+    exhibitions: [
+      { title: 'Luz y Sombra', description: 'Muestra inmersiva de artistas visuales argentinos.', endDate: '15 Nov 2025', room: 'Sala A' },
+      { title: 'Eco-Futurismo', description: 'Esculturas hechas con materiales reciclados.', endDate: '30 Dic 2025', room: 'Pabellón Sur' }
+    ],
+    qrCode: 'place2'
   },
   {
     id: 'place3',
@@ -42,7 +64,15 @@ const samplePlaces = [
     xpLevel: '+300 XP BONUS',
     nuboPoints: null,
     isOpen: true,
-    distance: '800m'
+    distance: '800m',
+    address: 'Av. de Mayo 880',
+    phone: '+54 11 5555-5555',
+    website: 'https://grandplaza.com',
+    hours: { lun: '24 hs', mar: '24 hs', mie: '24 hs', jue: '24 hs', vie: '24 hs', sab: '24 hs', dom: '24 hs' },
+    coordinates: { lat: -34.6080, lng: -58.3800 },
+    nuboPromotion: 'Check-out extendido gratis (Late Check-out 16hs) presentando nivel Aventurero Urbano.',
+    amenities: ['Piscina Climatizada', 'Gimnasio Nube', 'Spa & Wellness', 'Restaurante Panorámico', 'Valet Parking'],
+    qrCode: 'place3'
   },
   {
     id: 'place4',
@@ -56,7 +86,18 @@ const samplePlaces = [
     xpLevel: null,
     nuboPoints: '+10% NUBO POINTS',
     isOpen: false,
-    distance: '1.2km'
+    distance: '1.2km',
+    address: 'Palermo Soho 101',
+    phone: '+54 11 1122-3344',
+    hours: { lun: 'cerrado', mar: 'cerrado', mie: '20:00 - 02:00', jue: '20:00 - 03:00', vie: '20:00 - 05:00', sab: '20:00 - 05:00', dom: '20:00 - 02:00' },
+    coordinates: { lat: -34.5830, lng: -58.4230 },
+    nuboPromotion: 'Happy Hour extendido (2x1 en toda la coctelería) hasta las 22hs.',
+    menuItems: [
+      { title: 'Neon Cosmopolitan', description: 'Vodka premium, arándanos, infusión de cítricos y polvo brillante.', price: '$4.500' },
+      { title: 'Cyberpunk Gin', description: 'Gin artesanal patagónico, tónica de hibisco, frutos rojos.', price: '$5.000' },
+      { title: 'Papas Trufadas', description: 'Papas rústicas con aceite de trufa y parmesano.', price: '$4.200' }
+    ],
+    qrCode: 'place4'
   },
   {
     id: 'place5',
@@ -70,7 +111,17 @@ const samplePlaces = [
     xpLevel: '+100 XP',
     nuboPoints: null,
     isOpen: true,
-    distance: '2km'
+    distance: '2km',
+    address: 'Belgrano 1200',
+    phone: '+54 11 2233-4455',
+    hours: { lun: 'cerrado', mar: '12:00 - 23:00', mie: '12:00 - 23:00', jue: '12:00 - 23:00', vie: '12:00 - 00:00', sab: '12:00 - 00:00', dom: '12:00 - 16:00' },
+    coordinates: { lat: -34.5630, lng: -58.4550 },
+    nuboPromotion: 'Postre sin cargo por mesa para exploradores Nubo.',
+    menuItems: [
+      { title: 'Ravioli de Calabaza', description: 'Masa casera, salsa de manteca y salvia.', price: '$9.500' },
+      { title: 'Tiramisú Clásico', description: 'Café, mascarpone y cacao amargo.', price: '$4.500' }
+    ],
+    qrCode: 'place5'
   },
   {
     id: 'place6',
@@ -84,7 +135,16 @@ const samplePlaces = [
     xpLevel: '+20 XP',
     nuboPoints: null,
     isOpen: true,
-    distance: '3km'
+    distance: '3km',
+    address: 'Defensa 1600',
+    phone: '+54 11 4307-1182',
+    hours: { lun: 'cerrado', mar: 'cerrado', mie: '11:00 - 19:00', jue: '11:00 - 19:00', vie: '11:00 - 19:00', sab: '11:00 - 19:00', dom: '11:00 - 19:00' },
+    coordinates: { lat: -34.6265, lng: -58.3705 },
+    nuboPromotion: 'Audioguía gratis al validar este punto.',
+    exhibitions: [
+      { title: 'Revolución de Mayo', description: 'Salas dedicadas a los próceres.', endDate: 'Permanente', room: 'Sala Principal' }
+    ],
+    qrCode: 'place6'
   }
 ];
 
@@ -205,6 +265,75 @@ const sampleRewards = [
   }
 ];
 
+const sampleAchievements = [
+  {
+    id: 'achievement1',
+    title: 'Madrugador',
+    description: 'Completa 5 visitas antes de las 9am',
+    icon: 'wb_sunny',
+    xpReward: 500,
+    total: 5,
+    triggerType: 'checkins',
+    color: 'amber'
+  },
+  {
+    id: 'achievement2',
+    title: 'Explorador',
+    description: 'Visita 10 lugares distintos',
+    icon: 'explore',
+    xpReward: 1000,
+    total: 10,
+    triggerType: 'checkins',
+    color: 'cyan'
+  },
+  {
+    id: 'achievement3',
+    title: 'Socialité',
+    description: 'Invita a 5 amigos a unirse a Nubo',
+    icon: 'groups',
+    xpReward: 800,
+    total: 5,
+    triggerType: 'referrals',
+    color: 'emerald'
+  }
+];
+
+const sampleSecretMissions = [
+  {
+    id: 'mission1',
+    title: 'Cazador de Búhos',
+    description: 'Visita 3 bares clandestinos en la misma noche antes del cierre.',
+    reward: 'Bebida x2 + 500 XP',
+    difficulty: 'Difícil',
+    icon: 'nightlight',
+    expiresAt: new Date(Date.now() + 48 * 3600 * 1000).toISOString(),
+    active: true,
+    xpReward: 500
+  },
+  {
+    id: 'mission2',
+    title: 'El Lector Oculto',
+    description: 'Descubre la sección secreta de la biblioteca nacional.',
+    reward: '15% de Descuento + 300 XP',
+    difficulty: 'Media',
+    icon: 'menu_book',
+    expiresAt: new Date(Date.now() + 24 * 3600 * 1000).toISOString(),
+    active: true,
+    xpReward: 300
+  },
+  {
+    id: 'mission3',
+    title: 'Ruta del Origen',
+    description: 'Visita las 3 cafeterías de especialidad más antiguas.',
+    reward: 'Café de Autor + 250 XP',
+    difficulty: 'Fácil',
+    icon: 'local_cafe',
+    expiresAt: new Date(Date.now() + 72 * 3600 * 1000).toISOString(),
+    active: true,
+    xpReward: 250
+  }
+];
+
 export async function seedDatabase() {
   try {
     for (const place of samplePlaces) {
@@ -220,6 +349,16 @@ export async function seedDatabase() {
     for (const reward of sampleRewards) {
       const { id, ...data } = reward;
       await setDoc(doc(db, 'rewards', id), data);
+    }
+    
+    for (const achievement of sampleAchievements) {
+      const { id, ...data } = achievement;
+      await setDoc(doc(db, 'achievements', id), data);
+    }
+
+    for (const mission of sampleSecretMissions) {
+      const { id, ...data } = mission;
+      await setDoc(doc(db, 'secret_missions', id), data);
     }
 
     console.log('Database seeded successfully!');

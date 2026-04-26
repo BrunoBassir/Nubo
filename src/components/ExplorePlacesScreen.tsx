@@ -17,6 +17,17 @@ export type Place = {
   xpLevel: string | null;
   nuboPoints: string | null;
   isOpen: boolean;
+  address?: string;
+  phone?: string;
+  website?: string;
+  hours?: Record<string, string>;
+  coordinates?: { lat: number; lng: number };
+  nuboPromotion?: string;
+  menuItems?: Array<{ title: string; description: string; price: string }>;
+  amenities?: string[];
+  exhibitions?: Array<{ title: string; description: string; endDate: string; room: string }>;
+  spotGallery?: Array<{ imageUrl: string; userId: string; userName: string; xp: number }>;
+  qrCode?: string;
 };
 
 export function ExplorePlacesScreen({ onBack, onPlaceDetailClick, onProfileClick, onNotificationsClick, onRouteClick }: { onBack?: () => void, onPlaceDetailClick?: () => void, onProfileClick?: () => void, onNotificationsClick?: () => void, onRouteClick?: () => void }) {

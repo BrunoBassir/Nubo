@@ -14,16 +14,24 @@ export function PlaceExtraDetailsScreen({ place, onBack }: { place: Place, onBac
             </div>
             
             <div className="space-y-6">
-              {[1, 2, 3].map((item) => (
-                <div key={item} className="flex justify-between items-start border-b border-white/5 pb-4">
+              {place.menuItems?.length ? place.menuItems.map((item, index) => (
+                <div key={index} className="flex justify-between items-start border-b border-white/5 pb-4">
                   <div className="flex-1 pr-4">
-                    <h4 className="font-bold text-sm mb-1">{place.category === 'Bares' ? `Trago de Autor 0${item}` : `Plato Principal 0${item}`}</h4>
-                    <p className="text-xs text-slate-400 line-clamp-2">Una deliciosa combinación de ingredientes frescos de temporada, preparados con nuestra técnica especial de la casa.</p>
+                    <h4 className="font-bold text-sm mb-1">{item.title}</h4>
+                    <p className="text-xs text-slate-400 line-clamp-2">{item.description}</p>
                   </div>
-                  <div className="text-cyan-400 font-bold">$ {(Math.random() * 5000 + 2000).toFixed(0)}</div>
+                  <div className="text-cyan-400 font-bold">{item.price}</div>
                 </div>
-              ))}
+              )) : (
+                <div className="text-center text-sm text-slate-500">Menú no disponible</div>
+              )}
             </div>
+            {place.nuboPromotion && (
+              <div className="bg-cyan-900/20 border border-cyan-500/20 rounded-xl p-4 mt-6">
+                <h4 className="font-bold text-sm mb-2 text-cyan-400">Promoción Nubo</h4>
+                <p className="text-xs text-slate-300">{place.nuboPromotion}</p>
+              </div>
+            )}
           </div>
         );
       case 'Hotelería':
@@ -35,23 +43,22 @@ export function PlaceExtraDetailsScreen({ place, onBack }: { place: Place, onBac
             </div>
             
             <div className="grid grid-cols-2 gap-4 mb-6">
-              {[
-                { icon: 'pool', label: 'Piscina' },
-                { icon: 'fitness_center', label: 'Gimnasio' },
-                { icon: 'spa', label: 'Spa' },
-                { icon: 'restaurant', label: 'Restaurante' },
-              ].map((amenity, i) => (
+              {place.amenities?.length ? place.amenities.map((amenity, i) => (
                 <div key={i} className="bg-white/5 border border-white/10 rounded-xl p-4 flex flex-col items-center justify-center gap-2">
-                  <span className="material-symbols-outlined text-cyan-400">{amenity.icon}</span>
-                  <span className="text-xs font-bold">{amenity.label}</span>
+                  <span className="material-symbols-outlined text-cyan-400">check_circle</span>
+                  <span className="text-xs font-bold text-center">{amenity}</span>
                 </div>
-              ))}
+              )) : (
+                <div className="col-span-2 text-center text-sm text-slate-500">Instalaciones no disponibles</div>
+              )}
             </div>
             
-            <div className="bg-cyan-900/20 border border-cyan-500/20 rounded-xl p-4">
-              <h4 className="font-bold text-sm mb-2 text-cyan-400">Promoción Nubo</h4>
-              <p className="text-xs text-slate-300">15% de descuento en estadías de fin de semana pagando con Nubo Pay o acreditando validación en 2 lugares gastronómicos cercanos.</p>
-            </div>
+            {place.nuboPromotion && (
+              <div className="bg-cyan-900/20 border border-cyan-500/20 rounded-xl p-4">
+                <h4 className="font-bold text-sm mb-2 text-cyan-400">Promoción Nubo</h4>
+                <p className="text-xs text-slate-300">{place.nuboPromotion}</p>
+              </div>
+            )}
           </div>
         );
       case 'Cultura':
@@ -63,22 +70,31 @@ export function PlaceExtraDetailsScreen({ place, onBack }: { place: Place, onBac
             </div>
             
             <div className="space-y-4">
-              {[1, 2].map((item) => (
-                <div key={item} className="bg-slate-900/50 rounded-xl overflow-hidden border border-white/5">
+              {place.exhibitions?.length ? place.exhibitions.map((item, index) => (
+                <div key={index} className="bg-slate-900/50 rounded-xl overflow-hidden border border-white/5">
                   <div className="h-32 bg-slate-800 relative">
                     <div className="absolute inset-0 bg-cover bg-center opacity-50 grayscale" style={{ backgroundImage: `url('${place.imageUrl}')` }}></div>
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-white/50 font-bold uppercase tracking-widest text-xs">Sala {item}</span>
+                      <span className="text-white/50 font-bold uppercase tracking-widest text-xs">{item.room}</span>
                     </div>
                   </div>
                   <div className="p-4">
-                    <div className="text-[10px] text-cyan-400 font-bold uppercase tracking-widest mb-1">Hasta el 30 de Noviembre</div>
-                    <h4 className="font-bold text-sm mb-2">Arte Contemporáneo Vol. {item}</h4>
-                    <p className="text-xs text-slate-400">Una exploración de las formas modernas y su impacto en la sociedad actual.</p>
+                    <div className="text-[10px] text-cyan-400 font-bold uppercase tracking-widest mb-1">Hasta {item.endDate}</div>
+                    <h4 className="font-bold text-sm mb-2">{item.title}</h4>
+                    <p className="text-xs text-slate-400">{item.description}</p>
                   </div>
                 </div>
-              ))}
+              )) : (
+                <div className="text-center text-sm text-slate-500">Exposiciones no disponibles</div>
+              )}
             </div>
+            
+            {place.nuboPromotion && (
+              <div className="bg-cyan-900/20 border border-cyan-500/20 rounded-xl p-4 mt-6">
+                <h4 className="font-bold text-sm mb-2 text-cyan-400">Promoción Nubo</h4>
+                <p className="text-xs text-slate-300">{place.nuboPromotion}</p>
+              </div>
+            )}
           </div>
         );
       default:

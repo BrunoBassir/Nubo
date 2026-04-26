@@ -19,6 +19,26 @@ service cloud.firestore {
     
     match /users/{userId} {
       allow read, write: if true;
+      
+      match /notifications/{notifId} {
+        allow read, write: if true;
+      }
+      
+      match /vouchers/{voucherId} {
+        allow read, write: if true;
+      }
+    }
+    
+    match /checkins/{document=**} {
+      allow read, write: if true;
+    }
+
+    match /achievements/{document=**} {
+      allow read, write: if true;
+    }
+
+    match /secret_missions/{document=**} {
+      allow read, write: if true;
     }
 
     match /{document=**} {

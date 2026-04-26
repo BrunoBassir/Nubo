@@ -2,7 +2,7 @@
   "entities": {
     "Place": {
       "title": "Place",
-      "description": "A location in the Nubo network.",
+      "description": "Comercios y puntos de interés de la ciudad",
       "type": "object",
       "properties": {
         "name": { "type": "string" },
@@ -15,43 +15,24 @@
         "xpLevel": { "type": "string" },
         "nuboPoints": { "type": "string" },
         "isOpen": { "type": "boolean" },
-        "distance": { "type": "string" }
+        "distance": { "type": "string" },
+        "address": { "type": "string" },
+        "phone": { "type": "string" },
+        "website": { "type": "string" },
+        "hours": { "type": "object", "description": "Map of operating hours" },
+        "coordinates": { "type": "object", "description": "GeoPoint" },
+        "nuboPromotion": { "type": "string" },
+        "menuItems": { "type": "array", "items": { "type": "object" } },
+        "amenities": { "type": "array", "items": { "type": "string" } },
+        "exhibitions": { "type": "array", "items": { "type": "object" } },
+        "spotGallery": { "type": "array", "items": { "type": "object" } },
+        "qrCode": { "type": "string" }
       },
       "required": ["name", "category", "imageUrl"]
     },
-    "Challenge": {
-      "title": "Challenge",
-      "description": "A task or challenge for the user.",
-      "type": "object",
-      "properties": {
-        "title": { "type": "string" },
-        "description": { "type": "string" },
-        "xpReward": { "type": "number" },
-        "pointsReward": { "type": "number" },
-        "status": { "type": "string" },
-        "progress": { "type": "number" },
-        "maxProgress": { "type": "number" },
-        "icon": { "type": "string" }
-      },
-      "required": ["title", "xpReward", "maxProgress"]
-    },
-    "Reward": {
-      "title": "Reward",
-      "description": "An exchangeable reward for points.",
-      "type": "object",
-      "properties": {
-        "title": { "type": "string" },
-        "description": { "type": "string" },
-        "provider": { "type": "string" },
-        "cost": { "type": "number" },
-        "imageUrl": { "type": "string" },
-        "type": { "type": "string" }
-      },
-      "required": ["title", "cost", "provider"]
-    },
     "User": {
       "title": "User",
-      "description": "A Nubo application user.",
+      "description": "Perfil y estadísticas de cada explorador",
       "type": "object",
       "properties": {
         "displayName": { "type": "string" },
@@ -59,9 +40,134 @@
         "photoURL": { "type": "string" },
         "xp": { "type": "number" },
         "level": { "type": "number" },
-        "points": { "type": "number" }
+        "points": { "type": "number" },
+        "referralCode": { "type": "string" },
+        "totalVisits": { "type": "number" },
+        "totalReferrals": { "type": "number" },
+        "bio": { "type": "string" },
+        "city": { "type": "string" },
+        "unlockedAchievements": { "type": "array", "items": { "type": "string" } },
+        "challengeProgress": { "type": "object" },
+        "passportStamps": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "gender": { "type": "string" }
       },
       "required": ["email"]
+    },
+    "Checkin": {
+      "title": "Checkin",
+      "description": "Registro de cada visita validada por QR",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "placeId": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "xpEarned": { "type": "number" },
+        "pointsEarned": { "type": "number" },
+        "photoUrl": { "type": "string" },
+        "challengeId": { "type": "string" }
+      },
+      "required": ["userId", "placeId", "timestamp"]
+    },
+    "Reward": {
+      "title": "Reward",
+      "description": "Premios canjeables con Nubo Points",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "provider": { "type": "string" },
+        "cost": { "type": "number" },
+        "imageUrl": { "type": "string" },
+        "type": { "type": "string" },
+        "minLevel": { "type": "number" },
+        "placeId": { "type": "string" },
+        "expiresAt": { "type": "string", "format": "date-time" },
+        "active": { "type": "boolean" }
+      },
+      "required": ["title", "cost", "provider"]
+    },
+    "Challenge": {
+      "title": "Challenge",
+      "description": "Desafíos y rutas activas",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "xpReward": { "type": "number" },
+        "pointsReward": { "type": "number" },
+        "status": { "type": "string" },
+        "maxProgress": { "type": "number" },
+        "progress": { "type": "number" },
+        "icon": { "type": "string" },
+        "placeIds": { "type": "array", "items": { "type": "string" } },
+        "imageUrl": { "type": "string" },
+        "expiresAt": { "type": "string", "format": "date-time" },
+        "badgeReward": { "type": "string" }
+      },
+      "required": ["title", "xpReward", "maxProgress"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "Notificaciones por usuario",
+      "type": "object",
+      "properties": {
+        "type": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "unread": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "linkedId": { "type": "string" }
+      },
+      "required": ["type", "title", "message"]
+    },
+    "Voucher": {
+      "title": "Voucher",
+      "description": "Vouchers canjeados por el usuario",
+      "type": "object",
+      "properties": {
+        "rewardId": { "type": "string" },
+        "title": { "type": "string" },
+        "placeName": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "pointsSpent": { "type": "number" },
+        "status": { "type": "string" },
+        "redeemedAt": { "type": "string", "format": "date-time" },
+        "expiresAt": { "type": "string", "format": "date-time" },
+        "usedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["rewardId", "status", "redeemedAt"]
+    },
+    "Achievement": {
+      "title": "Achievement",
+      "description": "Catálogo de logros disponibles (global)",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "icon": { "type": "string" },
+        "xpReward": { "type": "number" },
+        "total": { "type": "number" },
+        "triggerType": { "type": "string" },
+        "color": { "type": "string" }
+      },
+      "required": ["title", "xpReward", "triggerType"]
+    },
+    "SecretMission": {
+      "title": "SecretMission",
+      "description": "Misiones secretas temporales de alta dificultad",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "reward": { "type": "string" },
+        "difficulty": { "type": "string" },
+        "icon": { "type": "string" },
+        "expiresAt": { "type": "string", "format": "date-time" },
+        "active": { "type": "boolean" },
+        "xpReward": { "type": "number" }
+      },
+      "required": ["title", "reward", "active"]
     }
   },
   "firestore": {
@@ -69,17 +175,37 @@
       "schema": { "$ref": "#/entities/Place" },
       "description": "Places data."
     },
-    "/challenges/{challengeId}": {
-      "schema": { "$ref": "#/entities/Challenge" },
-      "description": "Challenges available for users."
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profiles and stats."
+    },
+    "/users/{userId}/notifications/{notifId}": {
+      "schema": { "$ref": "#/entities/Notification" },
+      "description": "Notificaciones por usuario"
+    },
+    "/users/{userId}/vouchers/{voucherId}": {
+      "schema": { "$ref": "#/entities/Voucher" },
+      "description": "Vouchers canjeados por el usuario"
+    },
+    "/checkins/{checkinId}": {
+      "schema": { "$ref": "#/entities/Checkin" },
+      "description": "Registro de cada visita validada por QR"
     },
     "/rewards/{rewardId}": {
       "schema": { "$ref": "#/entities/Reward" },
       "description": "Rewards available in the store."
     },
-    "/users/{userId}": {
-      "schema": { "$ref": "#/entities/User" },
-      "description": "User profiles and stats."
+    "/challenges/{challengeId}": {
+      "schema": { "$ref": "#/entities/Challenge" },
+      "description": "Challenges available for users."
+    },
+    "/achievements/{achievementId}": {
+      "schema": { "$ref": "#/entities/Achievement" },
+      "description": "Catálogo de logros disponibles (global)"
+    },
+    "/secret_missions/{missionId}": {
+      "schema": { "$ref": "#/entities/SecretMission" },
+      "description": "Misiones secretas temporales"
     }
   }
 }
