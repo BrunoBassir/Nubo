@@ -138,7 +138,7 @@ export function HomeScreen({ onProfileClick, onLevelClick, onRecentActivityClick
               <h2 className="font-label-caps text-cyan-400 group-hover:text-cyan-300 transition-colors">LUGARES RECOMENDADOS</h2>
               <span className="material-symbols-outlined text-on-surface-variant group-hover:text-cyan-300 transition-colors">arrow_forward</span>
             </div>
-            <div className="flex overflow-x-auto gap-4 scroll-hide -mx-6 px-6 pb-4 snap-x">
+            <div className="flex overflow-x-auto gap-4 scroll-hide pb-4 snap-x">
               {placesData.map((place, i) => (
                 <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} key={place.id || i} className="w-[260px] min-w-[260px] glass-card rounded-xl overflow-hidden flex-shrink-0 cursor-pointer snap-start hover:bg-white/5 transition-all duration-300 border border-transparent hover:border-cyan-400/30 hover:shadow-[0_0_15px_rgba(25,204,240,0.15)] group flex h-[100px]" onClick={() => setSelectedPlace(place)}>
                   <div className="w-[100px] h-full relative shrink-0">

@@ -288,8 +288,13 @@
   100% { transform: translateX(100%); }
 }
 
-body {
-  min-height: max(884px, 100dvh);
+html, body {
+  min-height: 100dvh;
+  background-color: var(--color-background-dark);
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+  overscroll-behavior-y: none;
 }
 
 @layer utilities {
