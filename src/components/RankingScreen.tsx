@@ -235,7 +235,7 @@ export function RankingScreen({ onReferidosClick, onWeeklyPrizeClick }: { onRefe
                 </div>
                 {/* 2nd Prize */}
                 <div onClick={onWeeklyPrizeClick} className="min-w-[240px] bg-white/5 border border-white/10 rounded-2xl p-3 flex flex-col gap-3 shadow-lg cursor-pointer hover:border-white/30 active:scale-95 transition-all">
-                  <div className="w-full aspect-[4/3] rounded-xl bg-cover bg-center overflow-hidden relative" style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuD8kJnMkuLo4Pg0gfUg90igq1p60c_uXIpZGTz1MeaAIZNZmx9G9rN9C3t-dw1IKqAu2nJM93aCPegzyXwuhM4ochDnuWo8taF-ksoplKmD_1sQ8lhp33E3KD_PcWumS9OXixRH2X3eEYpTeaSaTkAhoaf9Vq2_DYzm-Xr39ajxl0p8AW204pwHD1ybPeGHfBvIo9LUX0Yp2R1kPtWW-c1VeWkkZXnkjDPORIAe1EUTUUN2sTbRHAOR9cTefuZ9Y2IYPTew4tpYgrM')" }}>
+                  <div className="w-full aspect-[4/3] rounded-xl bg-cover bg-center overflow-hidden relative" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=800&q=80')" }}>
                     <div className="absolute top-2 left-2 bg-slate-700 text-slate-200 font-bold text-[10px] px-3 py-1 rounded-full uppercase tracking-widest">2º Puesto</div>
                   </div>
                   <div className="px-1 pb-1">

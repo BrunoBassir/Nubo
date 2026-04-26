@@ -11,10 +11,11 @@ export type Challenge = {
   status: string;
   progress: number;
   maxProgress: number;
-  icon: string;
+  icon?: string;
+  imageUrl?: string;
 };
 
-export function ChallengesScreen({ onBack, onCoffeeRouteClick, onChallengeClick }: { onBack?: () => void, onCoffeeRouteClick?: () => void, onChallengeClick?: () => void }) {
+export function ChallengesScreen({ onBack, onCoffeeRouteClick, onChallengeClick }: { onBack?: () => void, onCoffeeRouteClick?: () => void, onChallengeClick?: (challenge: Challenge) => void }) {
   const [challenges, setChallenges] = useState<Challenge[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -98,12 +99,16 @@ export function ChallengesScreen({ onBack, onCoffeeRouteClick, onChallengeClick 
             {activeChallenges.map(challenge => {
               const progressPercent = Math.round((challenge.progress / challenge.maxProgress) * 100) || 0;
               return (
-                <button key={challenge.id} onClick={onChallengeClick} className="bg-[#0D1619] border border-white/5 rounded-2xl p-3 flex flex-col gap-3 shadow-lg text-left transition-all duration-300 hover:scale-[1.03] hover:border-[#00F2FF]/40 hover:shadow-[0_0_20px_rgba(0,242,255,0.15)] group relative overflow-hidden">
+                <button key={challenge.id} onClick={() => onChallengeClick && onChallengeClick(challenge)} className="bg-[#0D1619] border border-white/5 rounded-2xl p-3 flex flex-col gap-3 shadow-lg text-left transition-all duration-300 hover:scale-[1.03] hover:border-[#00F2FF]/40 hover:shadow-[0_0_20px_rgba(0,242,255,0.15)] group relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-b from-[#00F2FF]/0 via-transparent to-[#00F2FF]/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                   <div className="aspect-square rounded-xl overflow-hidden relative border border-white/10 flex items-center justify-center bg-white/5">
-                    <span className="material-symbols-outlined text-4xl text-[#00F2FF]/50 group-hover:text-[#00F2FF] transition-colors">{challenge.icon || 'star'}</span>
-                    <div className="absolute inset-0 bg-[#050B0D]/20 group-hover:bg-transparent transition-colors"></div>
-                    <div className="absolute top-2 right-2 bg-[#050B0D]/80 backdrop-blur-md px-2 py-1 rounded-lg text-[10px] text-white font-black border border-white/20 group-hover:border-[#00F2FF]/50 transition-colors">{challenge.progress}/{challenge.maxProgress}</div>
+                    {challenge.imageUrl ? (
+                      <div className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style={{ backgroundImage: `url(${challenge.imageUrl})` }}></div>
+                    ) : (
+                      <span className="material-symbols-outlined text-4xl text-[#00F2FF]/50 group-hover:text-[#00F2FF] transition-colors">{challenge.icon || 'star'}</span>
+                    )}
+                    <div className="absolute inset-0 bg-[#050B0D]/40 group-hover:bg-[#050B0D]/20 transition-colors"></div>
+                    <div className="absolute top-2 right-2 bg-[#050B0D]/80 backdrop-blur-md px-2 py-1 rounded-lg text-[10px] text-white font-black border border-white/20 group-hover:border-[#00F2FF]/50 transition-colors z-10">{challenge.progress}/{challenge.maxProgress}</div>
                   </div>
                   <div className="relative z-10 font-sans">
                     <h4 className="font-bold text-sm truncate text-white group-hover:text-[#00F2FF] transition-colors">{challenge.title}</h4>

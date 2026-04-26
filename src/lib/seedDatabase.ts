@@ -64,7 +64,7 @@ const samplePlaces = [
     description: 'Auténtica pasta italiana hecha a mano.',
     category: 'Gastronomía',
     subcategory: 'Italiana',
-    imageUrl: 'https://images.unsplash.com/photo-1498579150354-977475b7e2b3?auto=format&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=800&q=80',
     badge: 'Promo',
     badgeType: 'new',
     xpLevel: '+100 XP',
@@ -98,7 +98,8 @@ const sampleChallenges = [
     status: 'active',
     progress: 2,
     maxProgress: 5,
-    icon: 'restaurant_menu'
+    icon: 'restaurant_menu',
+    imageUrl: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=80'
   },
   {
     id: 'challenge2',
@@ -109,7 +110,8 @@ const sampleChallenges = [
     status: 'new',
     progress: 0,
     maxProgress: 1,
-    icon: 'menu_book'
+    icon: 'menu_book',
+    imageUrl: 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&q=80'
   },
   {
     id: 'challenge3',
@@ -120,7 +122,8 @@ const sampleChallenges = [
     status: 'active',
     progress: 1,
     maxProgress: 3,
-    icon: 'museum'
+    icon: 'museum',
+    imageUrl: 'https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&fit=crop&q=80'
   },
   {
     id: 'challenge4',
@@ -131,7 +134,8 @@ const sampleChallenges = [
     status: 'active',
     progress: 1,
     maxProgress: 2,
-    icon: 'local_bar'
+    icon: 'local_bar',
+    imageUrl: 'https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&q=80'
   }
 ];
 
@@ -151,7 +155,7 @@ const sampleRewards = [
     description: 'Menú de 3 pasos gratis en The Neon Bar.',
     provider: 'The Neon Bar',
     cost: 1200,
-    imageUrl: 'https://images.unsplash.com/photo-1414235077428-338988a92209?auto=format&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=800&q=80',
     type: 'food'
   },
   {

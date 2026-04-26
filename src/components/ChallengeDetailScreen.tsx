@@ -1,9 +1,14 @@
-export function ChallengeDetailScreen({ onBack, onValidate }: { onBack?: () => void, onValidate?: () => void }) {
+import { Challenge } from './ChallengesScreen';
+
+export function ChallengeDetailScreen({ challenge, onBack, onValidate }: { challenge?: Challenge | null, onBack?: () => void, onValidate?: () => void }) {
+  // Use challenge image if available, fallback to the generic one
+  const bgImageUrl = challenge?.imageUrl || 'https://lh3.googleusercontent.com/aida-public/AB6AXuAtmknKxfFmcGriApOdvMiNdmOAfDNH2B5DoWCmCv-cPni_d_LK4Du3r4VSnrrIJbHpXq3IbKZr-7ivym_pZ1yYkwMwwvJ7OOOzqBtFAjTxbo6fujRF8ASWN-E1PmxZaN8IvK-x6wSOS2u5NcVOJepkegvS7dVImw1Zpj1OGAUmB5sp9JDnIUXvcNWKBuccMubABApWZS_6khWk5xLnJOmmnUv-qVUAX2BYBz9EwzIdabSDhiSaisstqUgi6S15mF50R796Les4gY0';
+  
   return (
     <div className="bg-background-dark text-slate-100 min-h-screen flex flex-col w-full lg:max-w-md lg:mx-auto relative dark">
       {/* Header Image & NavBar */}
       <div className="relative h-72 rounded-b-[40px] overflow-hidden shadow-2xl">
-        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuAtmknKxfFmcGriApOdvMiNdmOAfDNH2B5DoWCmCv-cPni_d_LK4Du3r4VSnrrIJbHpXq3IbKZr-7ivym_pZ1yYkwMwwvJ7OOOzqBtFAjTxbo6fujRF8ASWN-E1PmxZaN8IvK-x6wSOS2u5NcVOJepkegvS7dVImw1Zpj1OGAUmB5sp9JDnIUXvcNWKBuccMubABApWZS_6khWk5xLnJOmmnUv-qVUAX2BYBz9EwzIdabSDhiSaisstqUgi6S15mF50R796Les4gY0')" }}></div>
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('${bgImageUrl}')` }}></div>
         <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/40 to-transparent"></div>
         <div className="absolute inset-0 bg-black/20"></div>
 
@@ -23,8 +28,8 @@ export function ChallengeDetailScreen({ onBack, onValidate }: { onBack?: () => v
           <div className="bg-[#00F2FF] text-background-dark text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded inline-block mb-3 shadow-[0_0_10px_rgba(0,242,255,0.4)]">
             Desafío Activo
           </div>
-          <h1 className="text-3xl font-black text-white leading-tight filter drop-shadow-md">Ruta del Café</h1>
-          <p className="text-slate-300 text-sm mt-1 font-medium filter drop-shadow">Visita 5 cafeterías de especialidad de la zona céntrica para completar tu pasaporte.</p>
+          <h1 className="text-3xl font-black text-white leading-tight filter drop-shadow-md">{challenge?.title || 'Ruta del Café'}</h1>
+          <p className="text-slate-300 text-sm mt-1 font-medium filter drop-shadow">{challenge?.description || 'Visita 5 cafeterías de especialidad de la zona céntrica para completar tu pasaporte.'}</p>
         </div>
       </div>
 

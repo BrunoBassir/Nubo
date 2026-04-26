@@ -30,7 +30,7 @@ import { UploadProofScreen } from './components/UploadProofScreen';
 import { ValidationCelebrationScreen } from './components/ValidationCelebrationScreen';
 import { CoffeeRouteScreen } from './components/CoffeeRouteScreen';
 import { ExplorePlacesScreen } from './components/ExplorePlacesScreen';
-import { ChallengesScreen } from './components/ChallengesScreen';
+import { ChallengesScreen, Challenge } from './components/ChallengesScreen';
 import { DiscoveryScreen } from './components/DiscoveryScreen';
 import { VouchersScreen } from './components/VouchersScreen';
 import { RedeemVoucherScreen } from './components/RedeemVoucherScreen';
@@ -64,6 +64,7 @@ export default function App() {
   const [history, setHistory] = useState<Tab[]>(['home']);
   const activeTab = history[history.length - 1];
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(null);
 
   useEffect(() => {
     // Check if onboarding was completed previously
@@ -150,16 +151,16 @@ export default function App() {
   }
 
   return (
-      <div className={`overflow-x-hidden font-sans min-h-[100dvh] ${showGlobalBottomNav ? 'pb-32' : ''} dark lg:max-w-md lg:mx-auto lg:border-x lg:border-white/10 relative ${
+      <div className={`overflow-x-hidden min-h-[100dvh] ${showGlobalBottomNav ? 'pb-32' : ''} dark lg:max-w-md lg:mx-auto lg:border-x lg:border-white/10 relative ${
       activeTab === 'profile' || activeTab === 'edit_profile'
         ? 'bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 flex flex-col w-full'
         : activeTab === 'explore' || activeTab === 'ranking' || activeTab === 'level' || activeTab === 'level_benefits' || activeTab === 'recent_activity' || activeTab === 'spot_gallery' || activeTab === 'upload_proof' || activeTab === 'validation_celebration' || activeTab === 'coffee_route' || activeTab === 'route_map' || activeTab === 'explore_places' || activeTab === 'challenges' || activeTab === 'discovery' || activeTab === 'vouchers' || activeTab === 'redeem_voucher' || activeTab === 'share_invite' || activeTab === 'referrals' || activeTab === 'spot_photo_detail' || activeTab === 'challenge_detail' || activeTab === 'featured_detail' || activeTab === 'ranking_prize_detail' || activeTab === 'manual_code' || activeTab === 'passport' || activeTab === 'radar' || activeTab === 'mystery_chest' || activeTab === 'secret_missions' || activeTab === 'live_auctions' || activeTab === 'prize_fragments' || activeTab === 'trading_market' || activeTab === 'holographic_companion'
           ? 'bg-background-dark text-slate-100 w-full overflow-x-hidden'
           : activeTab === 'scan_qr'
-            ? 'bg-background-dark text-slate-100 overflow-hidden h-[100dvh] w-full flex flex-col'
+            ? 'bg-background-dark font-display text-slate-100 overflow-hidden h-[100dvh] w-full flex flex-col'
             : activeTab === 'prizes' 
-              ? 'bg-background-dark text-slate-100 antialiased overflow-x-hidden flex flex-col w-full'
-              : 'bg-background text-on-background w-full overflow-x-hidden'
+              ? 'bg-background-dark font-display text-slate-100 antialiased overflow-x-hidden flex flex-col w-full'
+              : 'bg-background text-on-background font-body-md w-full overflow-x-hidden'
     }`}>
       {showGlobalTopNav && (
         <GlobalTopNavBar 
@@ -194,7 +195,7 @@ export default function App() {
         {activeTab === 'coffee_route' && <CoffeeRouteScreen onBack={goBack} onHome={() => setActiveTab('home')} onExplore={() => setActiveTab('explore')} onScan={() => setActiveTab('scan_qr')} onPrizes={() => setActiveTab('prizes')} onRanking={() => setActiveTab('ranking')} onRouteMapClick={() => setActiveTab('route_map')} />}
         {activeTab === 'route_map' && <RouteMapScreen onBack={goBack} />}
         {activeTab === 'explore_places' && <ExplorePlacesScreen onBack={goBack} onPlaceDetailClick={() => setActiveTab('validation_celebration')} onProfileClick={() => setActiveTab('profile')} onNotificationsClick={() => setActiveTab('notifications')} onRouteClick={() => setActiveTab('coffee_route')} />}
-        {activeTab === 'challenges' && <ChallengesScreen onBack={goBack} onCoffeeRouteClick={() => setActiveTab('coffee_route')} onChallengeClick={() => setActiveTab('challenge_detail')} />}
+        {activeTab === 'challenges' && <ChallengesScreen onBack={goBack} onCoffeeRouteClick={() => setActiveTab('coffee_route')} onChallengeClick={(challenge) => { setSelectedChallenge(challenge); setActiveTab('challenge_detail'); }} />}
         {activeTab === 'discovery' && <DiscoveryScreen onHome={() => setActiveTab('home')} onExplore={() => setActiveTab('explore')} onScan={() => setActiveTab('scan_qr')} onPrizes={() => setActiveTab('prizes')} onRanking={() => setActiveTab('ranking')} onValidate={() => setActiveTab('validation_celebration')} onRouteClick={() => setActiveTab('coffee_route')} />}
         {activeTab === 'vouchers' && <VouchersScreen onHome={() => setActiveTab('home')} onExplore={() => setActiveTab('explore')} onScan={() => setActiveTab('scan_qr')} onPrizes={() => setActiveTab('prizes')} onRanking={() => setActiveTab('ranking')} onRedeemVoucher={() => setActiveTab('redeem_voucher')} />}
         {activeTab === 'redeem_voucher' && <RedeemVoucherScreen onBack={goBack} onHome={() => setActiveTab('home')} onExplore={() => setActiveTab('explore')} onScan={() => setActiveTab('scan_qr')} onPrizes={() => setActiveTab('prizes')} onRanking={() => setActiveTab('ranking')} />}
@@ -211,7 +212,7 @@ export default function App() {
         {activeTab === 'settings_help' && <SettingsHelpScreen onBack={goBack} />}
         {activeTab === 'settings_about' && <SettingsAboutScreen onBack={goBack} />}
         {activeTab === 'spot_photo_detail' && <SpotPhotoDetailScreen onBack={goBack} />}
-        {activeTab === 'challenge_detail' && <ChallengeDetailScreen onBack={goBack} onValidate={() => setActiveTab('validation_celebration')} />}
+        {activeTab === 'challenge_detail' && <ChallengeDetailScreen challenge={selectedChallenge} onBack={goBack} onValidate={() => setActiveTab('validation_celebration')} />}
         {activeTab === 'featured_detail' && <FeaturedDetailScreen onBack={goBack} onValidate={() => setActiveTab('validation_celebration')} />}
         {activeTab === 'ranking_prize_detail' && <RankingPrizeDetailScreen onBack={goBack} />}
         {activeTab === 'holographic_companion' && <HolographicCompanionScreen onBack={goBack} />}
