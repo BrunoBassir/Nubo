@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { seedDatabase } from '../lib/seedDatabase';
 
+import { auth } from '../lib/firebase';
+import { signOut } from 'firebase/auth';
+
 export function SettingsMenuScreen({ 
   onBack,
   onIdentityClick,
@@ -8,7 +11,8 @@ export function SettingsMenuScreen({
   onPaymentsClick,
   onAppearanceClick,
   onHelpClick,
-  onAboutClick
+  onAboutClick,
+  onAuthClick
 }: { 
   onBack?: () => void;
   onIdentityClick?: () => void;
@@ -17,6 +21,7 @@ export function SettingsMenuScreen({
   onAppearanceClick?: () => void;
   onHelpClick?: () => void;
   onAboutClick?: () => void;
+  onAuthClick?: () => void;
 }) {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [locationEnabled, setLocationEnabled] = useState(true);
@@ -145,6 +150,15 @@ export function SettingsMenuScreen({
           <h2 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3 ml-2">Testing (Prototipo)</h2>
           <div className="glass-card rounded-2xl overflow-hidden divide-y divide-white/5 border border-white/10">
             <button 
+              onClick={onAuthClick} 
+              className="w-full flex items-center justify-between p-4 hover:bg-white/5 transition-colors"
+            >
+              <div className="flex items-center gap-3">
+                <span className="material-symbols-outlined text-[#00f2ff]">login</span>
+                <span className="font-medium text-sm">Autenticación (Login/Sign up)</span>
+              </div>
+            </button>
+            <button 
               onClick={() => {
                 localStorage.removeItem('nubo_onboarding_completed');
                 window.location.reload();
@@ -177,8 +191,9 @@ export function SettingsMenuScreen({
         {/* Danger Zone */}
         <section className="pt-4">
           <button 
-            onClick={() => {
+            onClick={async () => {
               localStorage.setItem('nubo_simulated_auth', 'false');
+              await signOut(auth);
               if (onBack) onBack(); // Go back to profile which will now show signed out state
             }}
             className="w-full flex items-center justify-center p-4 rounded-2xl border border-red-500/20 text-red-500 hover:bg-red-500/10 transition-colors font-bold text-sm"

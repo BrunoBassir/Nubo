@@ -1,6 +1,9 @@
 import { motion } from 'motion/react';
+import { useAuth } from '../contexts/AuthContext';
 
-export function RecentActivityScreen({ onBack, onLevelAchievedClick }: { onBack: () => void, onLevelAchievedClick?: () => void }) {
+export function RecentActivityScreen({ onBack, onLevelAchievedClick, onProfileClick, onNotificationsClick }: { onBack: () => void, onLevelAchievedClick?: () => void, onProfileClick?: () => void, onNotificationsClick?: () => void }) {
+  const { user } = useAuth();
+  
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {
@@ -21,9 +24,13 @@ export function RecentActivityScreen({ onBack, onLevelAchievedClick }: { onBack:
           <button onClick={onBack} className="text-slate-400 hover:text-white transition-colors mr-2">
             <span className="material-symbols-outlined">arrow_back</span>
           </button>
-          <div className="w-10 h-10 rounded-full border-2 border-cyan-400 overflow-hidden">
-            <img alt="User Profile" className="w-full h-full object-cover" data-alt="Close up portrait of a tech-savvy young person with neon lighting accents on their face, high-tech digital aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCG_5vkkfwsd9rysTI7wlWt_PomXBbilo3RJxYz2x9XxX6TDPKZovobJ_fASep1y2rIyla-FqbIoazLaAJK3P2erj5kYG1DQukCIwvD9LxYUnTAu63t8u2CElOrT6HSrRK3meKkt-rSAoSk6s9mQ-WJy0dnAWh4aPWNzUDaMxUYPbLNlBzPFXX-twu8Ks0s6x7vqGy_j-dFHu4agonPYfUDyMeS2iZFRUZeY-X5pzYFnFV_xgrQ6KcWB4AN7Dv2xABXIXyYfpcL0Ck"/>
-          </div>
+          <button onClick={onProfileClick} className="w-10 h-10 rounded-full border-2 border-cyan-400 overflow-hidden cursor-pointer block bg-cyan-400/20 text-cyan-400 flex items-center justify-center">
+            {user?.photoURL ? (
+              <img alt="User Profile" className="w-full h-full object-cover" src={user.photoURL}/>
+            ) : (
+              <span className="material-symbols-outlined">person</span>
+            )}
+          </button>
         </div>
         
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -31,7 +38,7 @@ export function RecentActivityScreen({ onBack, onLevelAchievedClick }: { onBack:
         </div>
 
         <div className="flex items-center relative z-10">
-          <button className="text-cyan-400 hover:text-cyan-300 transition-colors">
+          <button onClick={onNotificationsClick} className="text-cyan-400 hover:text-cyan-300 transition-colors">
             <span className="material-symbols-outlined">notifications</span>
           </button>
         </div>

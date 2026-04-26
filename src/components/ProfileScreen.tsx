@@ -1,45 +1,23 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { ShareSheet } from './ShareSheet';
+import { useAuth } from '../contexts/AuthContext';
+import { signInWithPopup } from 'firebase/auth';
+import { auth, googleProvider } from '../lib/firebase';
 
 export function ProfileScreen({ onEditProfile, onSettingsClick, onInviteFriendsClick, onViewAllAchievements, onPassportClick, onDnaClick, onCompanionClick }: { onEditProfile: () => void, onSettingsClick?: () => void, onInviteFriendsClick?: () => void, onViewAllAchievements?: () => void, onPassportClick?: () => void, onDnaClick?: () => void, onCompanionClick?: () => void }) {
   const [isShareOpen, setIsShareOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
+  const { user, loading } = useAuth();
 
-  useEffect(() => {
-    // Para prototipo: leemos el estado simulado de localStorage
-    const authState = localStorage.getItem('nubo_simulated_auth') !== 'false';
-    setIsAuthenticated(authState);
-  }, []);
-
-  const handleGoogleSignIn = () => {
-    // Simulamos el inicio de sesión
-    localStorage.setItem('nubo_simulated_auth', 'true');
-    setIsAuthenticated(true);
+  const handleGoogleSignIn = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  if (!isAuthenticated) {
-    return (
-      <main className="flex-1 flex flex-col items-center justify-center p-6 h-full min-h-[70vh]">
-        <div className="w-24 h-24 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(25,204,240,0.2)]">
-          <span className="material-symbols-outlined text-[48px] text-primary">person_off</span>
-        </div>
-        <h2 className="text-2xl font-black mb-2 text-center text-slate-100">Crea tu perfil en Nubo</h2>
-        <p className="text-slate-400 text-center mb-10 text-sm max-w-xs">
-          Guardá tu progreso, subí en el ranking, y canjeá tus puntos por vouchers exclusivos.
-        </p>
-        
-        <button 
-          onClick={handleGoogleSignIn}
-          className="w-full max-w-sm bg-white text-slate-900 py-3.5 px-4 rounded-2xl font-bold flex items-center justify-center gap-3 hover:bg-slate-100 active:scale-95 transition-all shadow-lg"
-        >
-          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-5 h-5" />
-          Continuar con Google
-        </button>
-        <p className="text-slate-500 text-xs text-center mt-6 max-w-xs">
-          Al continuar, aceptas nuestros Términos de Servicio y Política de Privacidad.
-        </p>
-      </main>
-    );
+  if (loading) {
+     return <div className="flex-1 flex items-center justify-center">Cargando...</div>;
   }
 
   return (
@@ -65,8 +43,12 @@ export function ProfileScreen({ onEditProfile, onSettingsClick, onInviteFriendsC
               <circle className="text-primary progress-ring" cx="50" cy="50" fill="transparent" r="44" stroke="currentColor" strokeDasharray="276.46" strokeDashoffset="69.11" strokeLinecap="round" strokeWidth="4"></circle>
             </svg>
             {/* Avatar */}
-            <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-background-dark shadow-xl">
-              <img alt="Avatar de usuario" className="w-full h-full object-cover" data-alt="Retrato de un hombre joven moderno" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNBtiCwyV6pI7OUWtVC1d8Ljk8FfTswM5DleqMfI7tmxUMZ8MTrKOwb6A4eN7ZQ5MBWKNdXeY4x9bNFiK1JQmItGP18SLhz4ACUut3YM2SJx8SNYRzBFeSXsbEoAs-4Y02Sr_A-owzfzgtesBI3sv-69xffPFDqFJGi4hUyPUtpe-s17iVCaMS8T4IhNsknYWwL40LnojZ_zNUq3gcUADtdIdj9jS3KrLcDct4Inq5DNvF3NKXNgaQkj9YQec-ZVnpPRxWH0z4_no"/>
+            <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-background-dark shadow-xl bg-slate-800 flex items-center justify-center">
+              {user?.photoURL ? (
+                <img alt="Avatar de usuario" className="w-full h-full object-cover" src={user.photoURL}/>
+              ) : (
+                <span className="material-symbols-outlined text-[64px] text-slate-500">person</span>
+              )}
             </div>
             {/* Badge Overlay */}
             <div className="absolute -bottom-1 bg-primary text-background-dark px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase shadow-lg shadow-primary/20">
@@ -74,7 +56,7 @@ export function ProfileScreen({ onEditProfile, onSettingsClick, onInviteFriendsC
             </div>
           </div>
           <div className="mt-6 text-center">
-            <h2 className="text-3xl font-bold tracking-tight">Alex Rivera</h2>
+            <h2 className="text-3xl font-bold tracking-tight">{user?.displayName || "Explorador"}</h2>
             <p className="text-primary font-medium mt-1">Próximo Nivel: Leyenda Urbana</p>
             <div className="mt-6 flex gap-3">
               <button 
