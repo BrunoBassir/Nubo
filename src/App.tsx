@@ -150,16 +150,16 @@ export default function App() {
   }
 
   return (
-      <div className={`overflow-x-hidden min-h-[100dvh] ${showGlobalBottomNav ? 'pb-32' : ''} dark lg:max-w-md lg:mx-auto lg:border-x lg:border-white/10 relative ${
+      <div className={`overflow-x-hidden font-sans min-h-[100dvh] ${showGlobalBottomNav ? 'pb-32' : ''} dark lg:max-w-md lg:mx-auto lg:border-x lg:border-white/10 relative ${
       activeTab === 'profile' || activeTab === 'edit_profile'
         ? 'bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 flex flex-col w-full'
         : activeTab === 'explore' || activeTab === 'ranking' || activeTab === 'level' || activeTab === 'level_benefits' || activeTab === 'recent_activity' || activeTab === 'spot_gallery' || activeTab === 'upload_proof' || activeTab === 'validation_celebration' || activeTab === 'coffee_route' || activeTab === 'route_map' || activeTab === 'explore_places' || activeTab === 'challenges' || activeTab === 'discovery' || activeTab === 'vouchers' || activeTab === 'redeem_voucher' || activeTab === 'share_invite' || activeTab === 'referrals' || activeTab === 'spot_photo_detail' || activeTab === 'challenge_detail' || activeTab === 'featured_detail' || activeTab === 'ranking_prize_detail' || activeTab === 'manual_code' || activeTab === 'passport' || activeTab === 'radar' || activeTab === 'mystery_chest' || activeTab === 'secret_missions' || activeTab === 'live_auctions' || activeTab === 'prize_fragments' || activeTab === 'trading_market' || activeTab === 'holographic_companion'
           ? 'bg-background-dark text-slate-100 w-full overflow-x-hidden'
           : activeTab === 'scan_qr'
-            ? 'bg-background-dark font-display text-slate-100 overflow-hidden h-[100dvh] w-full flex flex-col'
+            ? 'bg-background-dark text-slate-100 overflow-hidden h-[100dvh] w-full flex flex-col'
             : activeTab === 'prizes' 
-              ? 'bg-background-dark font-display text-slate-100 antialiased overflow-x-hidden flex flex-col w-full'
-              : 'bg-background text-on-background font-body-md w-full overflow-x-hidden'
+              ? 'bg-background-dark text-slate-100 antialiased overflow-x-hidden flex flex-col w-full'
+              : 'bg-background text-on-background w-full overflow-x-hidden'
     }`}>
       {showGlobalTopNav && (
         <GlobalTopNavBar 
