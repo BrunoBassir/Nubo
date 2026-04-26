@@ -12,7 +12,8 @@ export function SettingsMenuScreen({
   onAppearanceClick,
   onHelpClick,
   onAboutClick,
-  onAuthClick
+  onAuthClick,
+  onMerchantPortalClick
 }: { 
   onBack?: () => void;
   onIdentityClick?: () => void;
@@ -22,6 +23,7 @@ export function SettingsMenuScreen({
   onHelpClick?: () => void;
   onAboutClick?: () => void;
   onAuthClick?: () => void;
+  onMerchantPortalClick?: () => void;
 }) {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [locationEnabled, setLocationEnabled] = useState(true);
@@ -149,6 +151,15 @@ export function SettingsMenuScreen({
         <section>
           <h2 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3 ml-2">Testing (Prototipo)</h2>
           <div className="glass-card rounded-2xl overflow-hidden divide-y divide-white/5 border border-white/10">
+            <button 
+              onClick={onMerchantPortalClick} 
+              className="w-full flex items-center justify-between p-4 hover:bg-white/5 transition-colors"
+            >
+              <div className="flex items-center gap-3">
+                <span className="material-symbols-outlined text-fuchsia-400">storefront</span>
+                <span className="font-medium text-sm text-fuchsia-400">Portal de Comercios (Roles)</span>
+              </div>
+            </button>
             <button 
               onClick={onAuthClick} 
               className="w-full flex items-center justify-between p-4 hover:bg-white/5 transition-colors"

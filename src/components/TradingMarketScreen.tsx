@@ -5,10 +5,15 @@ export function TradingMarketScreen({ onBack }: { onBack: () => void }) {
   const [activeTab, setActiveTab] = useState<'explorar' | 'mis_ofertas'>('explorar');
 
   const offers = [
-    { id: 1, user: '@lucia_g', userAvatar: 'https://i.pravatar.cc/150?u=lucia', giving: 'Fragmento Norte (Rojo)', wanting: 'Fragmento Este (Azul)', rarity: 'Legendario', time: 'Hace 5 min' },
-    { id: 2, user: '@tomi_99', userAvatar: 'https://i.pravatar.cc/150?u=tomi', giving: 'Fragmento Sur (Verde)', wanting: 'Fragmento Oeste (Violeta)', rarity: 'Épico', time: 'Hace 12 min' },
-    { id: 3, user: '@valentina.k', userAvatar: 'https://i.pravatar.cc/150?u=valen', giving: 'Fragmento Este (Azul)', wanting: 'NP (Puntos)', rarity: 'Raro', time: 'Hace 1 hora' },
-    { id: 4, user: '@maxi_dj', userAvatar: 'https://i.pravatar.cc/150?u=maxi', giving: 'Fragmento Norte (Rojo)', wanting: 'Fragmento Sur (Verde)', rarity: 'Legendario', time: 'Hace 3 horas' },
+    { id: 1, user: '@lucia_g', userAvatar: 'https://i.pravatar.cc/150?u=lucia', giving: 'Noche de Alojamiento (Hotel Plaza)', wanting: '2500 Puntos Nubo', type: 'Voucher', time: 'Hace 5 min' },
+    { id: 2, user: '@tomi_99', userAvatar: 'https://i.pravatar.cc/150?u=tomi', giving: 'Café de Especialidad (Artisan)', wanting: 'Helado 1/4 (Heladería Sur)', type: 'Intercambio', time: 'Hace 12 min' },
+    { id: 3, user: '@valentina.k', userAvatar: 'https://i.pravatar.cc/150?u=valen', giving: '1000 Puntos Nubo', wanting: 'Entrada Museo Histórico', type: 'Puntos', time: 'Hace 1 hora' },
+    { id: 4, user: '@maxi_dj', userAvatar: 'https://i.pravatar.cc/150?u=maxi', giving: '2x1 en Tragos (Neon Bar)', wanting: '500 Puntos Nubo', type: 'Promo', time: 'Hace 3 horas' },
+  ];
+
+    const myOffers = [
+    { id: 101, giving: '2 Entradas Cine HOYTS', wanting: '1500 Puntos Nubo', type: 'Voucher', time: 'Hace 2 días', status: 'Activa' },
+    { id: 102, giving: '300 Puntos Nubo', wanting: 'Café + Medialunas (La Panadería)', type: 'Puntos', time: 'Hace 1 semana', status: 'Cerrada' },
   ];
 
   return (
@@ -20,8 +25,8 @@ export function TradingMarketScreen({ onBack }: { onBack: () => void }) {
           <span className="material-symbols-outlined text-white">arrow_back</span>
         </button>
         <div className="flex flex-col items-center">
-            <span className="font-bold text-sm tracking-widest uppercase text-white">Mercado P2P</span>
-            <span className="text-[10px] text-teal-400">Intercambio de Fragmentos</span>
+            <span className="font-bold text-sm tracking-widest uppercase text-white">Market Nubo</span>
+            <span className="text-[10px] text-teal-400">P2P Exchange</span>
         </div>
         <div className="w-10 h-10 flex items-center justify-center rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-400">
            <span className="material-symbols-outlined text-[18px]">swap_horiz</span>
@@ -36,10 +41,10 @@ export function TradingMarketScreen({ onBack }: { onBack: () => void }) {
                 <span className="material-symbols-outlined text-8xl" style={{ fontVariationSettings: "'FILL' 1" }}>handshake</span>
             </div>
             <h3 className="text-teal-300 font-bold text-sm mb-1 flex items-center gap-1">
-                <span className="material-symbols-outlined text-[16px]">info</span> ¿Tenés piezas repetidas?
+                <span className="material-symbols-outlined text-[16px]">info</span> Mercado Libre y Abierto
             </h3>
             <p className="text-slate-400 text-xs leading-relaxed max-w-[85%] relative z-10">
-                Intercambiá tus fragmentos con otros exploradores de tu ciudad para completar tus premios más rápido.
+                Intercambiá tus vouchers, noches de hotel o puntos Nubo con la comunidad por otros beneficios que prefieras.
             </p>
         </div>
 
@@ -80,18 +85,19 @@ export function TradingMarketScreen({ onBack }: { onBack: () => void }) {
                                     </div>
                                 </div>
                                 <span className={`text-[10px] px-2 py-0.5 rounded border uppercase font-black tracking-wider ${
-                                    offer.rarity === 'Legendario' ? 'bg-fuchsia-500/10 text-fuchsia-400 border-fuchsia-500/30' :
-                                    offer.rarity === 'Épico' ? 'bg-blue-500/10 text-blue-400 border-blue-500/30' :
+                                    offer.type === 'Voucher' ? 'bg-fuchsia-500/10 text-fuchsia-400 border-fuchsia-500/30' :
+                                    offer.type === 'Intercambio' ? 'bg-amber-500/10 text-amber-400 border-amber-500/30' :
+                                    offer.type === 'Puntos' ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30' :
                                     'bg-slate-500/10 text-slate-400 border-slate-500/30'
                                 }`}>
-                                    {offer.rarity}
+                                    {offer.type}
                                 </span>
                             </div>
 
                             <div className="flex items-center justify-between gap-2 px-2 bg-black/40 py-3 rounded-xl mb-4 relative">
                                 <div className="flex-1 flex flex-col items-center">
                                     <span className="text-[10px] text-slate-500 uppercase font-bold mb-1">Ofrece</span>
-                                    <span className="text-xs text-white font-medium text-center">{offer.giving}</span>
+                                    <span className="text-xs text-white font-medium text-center leading-tight">{offer.giving}</span>
                                 </div>
                                 
                                 <div className="flex items-center justify-center bg-slate-800 rounded-full w-8 h-8 shadow-inner border border-white/5 z-10 shrink-0">
@@ -100,7 +106,7 @@ export function TradingMarketScreen({ onBack }: { onBack: () => void }) {
 
                                 <div className="flex-1 flex flex-col items-center">
                                     <span className="text-[10px] text-slate-500 uppercase font-bold mb-1">Busca</span>
-                                    <span className="text-xs text-white font-medium text-center">{offer.wanting}</span>
+                                    <span className="text-xs text-white font-medium text-center leading-tight">{offer.wanting}</span>
                                 </div>
                             </div>
 
@@ -118,13 +124,66 @@ export function TradingMarketScreen({ onBack }: { onBack: () => void }) {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="flex flex-col items-center justify-center text-center py-20"
+                    className="space-y-4"
                 >
-                    <div className="w-20 h-20 bg-slate-900 border border-slate-800 rounded-full flex items-center justify-center mb-4">
-                        <span className="material-symbols-outlined text-3xl text-slate-600">inbox</span>
-                    </div>
-                    <h3 className="text-white font-bold text-lg mb-2">Sin publicaciones activas</h3>
-                    <p className="text-slate-400 text-sm max-w-[80%]">Todavía no publicaste ningún fragmento para intercambiar.</p>
+                    {myOffers.length > 0 ? (
+                        myOffers.map(offer => (
+                            <div key={offer.id} className={`bg-slate-900/60 border border-white/10 rounded-2xl p-4 transition-colors ${offer.status === 'Cerrada' ? 'opacity-50' : ''}`}>
+                                <div className="flex items-center justify-between mb-4">
+                                    <div className="flex items-center gap-3">
+                                        <div className="flex flex-col">
+                                            <span className="text-sm font-bold text-white flex items-center gap-2">
+                                                Mi Oferta #{offer.id}
+                                                <span className={`text-[9px] px-1.5 py-0.5 rounded border uppercase tracking-widest ${offer.status === 'Activa' ? 'bg-green-500/10 text-green-400 border-green-500/30' : 'bg-slate-500/10 text-slate-400 border-slate-500/30'}`}>{offer.status}</span>
+                                            </span>
+                                            <span className="text-[10px] text-slate-500">{offer.time}</span>
+                                        </div>
+                                    </div>
+                                    <span className={`text-[10px] px-2 py-0.5 rounded border uppercase font-black tracking-wider ${
+                                        offer.type === 'Voucher' ? 'bg-fuchsia-500/10 text-fuchsia-400 border-fuchsia-500/30' :
+                                        offer.type === 'Intercambio' ? 'bg-amber-500/10 text-amber-400 border-amber-500/30' :
+                                        offer.type === 'Puntos' ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30' :
+                                        'bg-slate-500/10 text-slate-400 border-slate-500/30'
+                                    }`}>
+                                        {offer.type}
+                                    </span>
+                                </div>
+
+                                <div className="flex items-center justify-between gap-2 px-2 bg-black/40 py-3 rounded-xl mb-4 relative">
+                                    <div className="flex-1 flex flex-col items-center">
+                                        <span className="text-[10px] text-slate-500 uppercase font-bold mb-1">Ofrecí</span>
+                                        <span className="text-xs text-white font-medium text-center leading-tight">{offer.giving}</span>
+                                    </div>
+                                    
+                                    <div className="flex items-center justify-center bg-slate-800 rounded-full w-8 h-8 shadow-inner border border-white/5 z-10 shrink-0">
+                                        <span className="material-symbols-outlined text-teal-400 text-sm">sync_alt</span>
+                                    </div>
+
+                                    <div className="flex-1 flex flex-col items-center">
+                                        <span className="text-[10px] text-slate-500 uppercase font-bold mb-1">Busqué</span>
+                                        <span className="text-xs text-white font-medium text-center leading-tight">{offer.wanting}</span>
+                                    </div>
+                                </div>
+
+                                <div className="flex gap-2">
+                                    <button disabled={offer.status === 'Cerrada'} className="flex-1 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold uppercase tracking-widest text-[11px] py-3 rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                                        Editar
+                                    </button>
+                                    <button disabled={offer.status === 'Cerrada'} className="flex-1 bg-red-500/10 hover:bg-red-500/20 active:bg-red-500/30 border border-red-500/30 text-red-400 font-bold uppercase tracking-widest text-[11px] py-3 rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                                        Cancelar
+                                    </button>
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                        <div className="flex flex-col items-center justify-center text-center py-20">
+                            <div className="w-20 h-20 bg-slate-900 border border-slate-800 rounded-full flex items-center justify-center mb-4">
+                                <span className="material-symbols-outlined text-3xl text-slate-600">inbox</span>
+                            </div>
+                            <h3 className="text-white font-bold text-lg mb-2">Sin publicaciones activas</h3>
+                            <p className="text-slate-400 text-sm max-w-[80%]">Todavía no publicaste ninguna oferta para intercambiar en el Market.</p>
+                        </div>
+                    )}
                 </motion.div>
             )}
         </AnimatePresence>

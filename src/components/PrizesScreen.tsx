@@ -232,10 +232,10 @@ export function PrizesScreen({ onVouchersClick, onMysteryChestClick, onPrizeFrag
                     <div className="flex items-center gap-2 mb-1">
                       <span className="text-[10px] font-black uppercase tracking-[0.2em] text-teal-400">P2P Exchange</span>
                     </div>
-                    <span className="font-display font-black text-2xl text-white drop-shadow-md leading-none">Mercado Libre</span>
+                    <span className="font-display font-black text-2xl text-white drop-shadow-md leading-none">Market Nubo</span>
                     <span className="text-xs font-semibold text-slate-300 mt-2 flex items-center gap-1">
                       <span className="material-symbols-outlined text-[14px]">swap_horiz</span>
-                      Intercambiá fragmentos con otros
+                      Intercambiá beneficios y más
                     </span>
                   </div>
                   

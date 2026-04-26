@@ -140,13 +140,24 @@ export function ExploreScreen({ onPlacesClick, onChallengesClick, onDiscoveryCli
           </div>
           
           <div className="flex gap-4 overflow-x-auto hide-scrollbar pb-4">
-            {placesData.slice(0, 3).map((place) => (
-              <div key={place.id} onClick={() => setSelectedPlace(place)} className="w-40 shrink-0 group cursor-pointer">
-                <div className="w-full aspect-square rounded-2xl bg-cover bg-center mb-2 border border-slate-200 dark:border-slate-800 transition-all duration-300 group-hover:border-primary/40 group-hover:shadow-[0_0_15px_rgba(25,204,240,0.15)] group-hover:scale-105" style={{ backgroundImage: `url('${place.imageUrl}')` }}></div>
-                <p className="font-bold text-sm truncate group-hover:text-primary transition-colors">{place.name}</p>
-                <p className="text-[10px] text-slate-500">{place.subcategory} • {place.distance}</p>
-              </div>
-            ))}
+            {placesData.length === 0 ? (
+              // Skeleton loading state
+              [1, 2, 3].map((i) => (
+                <div key={`skeleton-${i}`} className="w-40 shrink-0">
+                  <div className="w-full aspect-square rounded-2xl bg-white/5 animate-pulse mb-2"></div>
+                  <div className="h-4 bg-white/5 rounded w-3/4 animate-pulse mb-1"></div>
+                  <div className="h-3 bg-white/5 rounded w-1/2 animate-pulse"></div>
+                </div>
+              ))
+            ) : (
+              placesData.slice(0, 3).map((place) => (
+                <div key={place.id} onClick={() => setSelectedPlace(place)} className="w-40 shrink-0 group cursor-pointer">
+                  <div className="w-full aspect-square rounded-2xl bg-cover bg-center mb-2 border border-slate-200 dark:border-slate-800 transition-all duration-300 group-hover:border-primary/40 group-hover:shadow-[0_0_15px_rgba(25,204,240,0.15)] group-hover:scale-105" style={{ backgroundImage: `url('${place.imageUrl}')` }}></div>
+                  <p className="font-bold text-sm truncate group-hover:text-primary transition-colors">{place.name}</p>
+                  <p className="text-[10px] text-slate-500">{place.subcategory} • {place.distance}</p>
+                </div>
+              ))
+            )}
           </div>
         </section>
       </main>

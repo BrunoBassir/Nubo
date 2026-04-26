@@ -139,23 +139,36 @@ export function HomeScreen({ onProfileClick, onLevelClick, onRecentActivityClick
               <span className="material-symbols-outlined text-on-surface-variant group-hover:text-cyan-300 transition-colors">arrow_forward</span>
             </div>
             <div className="flex overflow-x-auto gap-4 scroll-hide pb-4 snap-x">
-              {placesData.map((place, i) => (
-                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} key={place.id || i} className="w-[260px] min-w-[260px] glass-card rounded-xl overflow-hidden flex-shrink-0 cursor-pointer snap-start hover:bg-white/5 transition-all duration-300 border border-transparent hover:border-cyan-400/30 hover:shadow-[0_0_15px_rgba(25,204,240,0.15)] group flex h-[100px]" onClick={() => setSelectedPlace(place)}>
-                  <div className="w-[100px] h-full relative shrink-0">
-                    <img alt={place.name} className="w-full h-full object-cover" src={place.imageUrl} />
-                  </div>
-                  <div className="p-3 flex-1 flex flex-col justify-center min-w-0">
-                    <h4 className="font-headline-md text-sm text-on-surface line-clamp-2 leading-tight">{place.name}</h4>
-                    <p className="text-[11px] text-on-surface-variant flex items-center gap-1 mt-1 truncate">
-                      <span className="material-symbols-outlined text-[12px]">location_on</span> 
-                      {place.distance}
-                    </p>
-                    <div className="flex items-center gap-2 mt-1">
-                      <p className="text-[10px] text-primary/80 truncate">{place.category}</p>
+              {placesData.length === 0 ? (
+                [1, 2, 3].map((i) => (
+                  <div key={`skeleton-${i}`} className="w-[260px] min-w-[260px] glass-card rounded-xl overflow-hidden flex-shrink-0 snap-start flex h-[100px] animate-pulse">
+                    <div className="w-[100px] h-full bg-white/5 shrink-0" />
+                    <div className="p-3 flex-1 flex flex-col justify-center">
+                      <div className="h-4 bg-white/5 rounded w-3/4 mb-2" />
+                      <div className="h-3 bg-white/5 rounded w-1/2 mb-1" />
+                      <div className="h-2 bg-white/5 rounded w-1/3 mt-2" />
                     </div>
                   </div>
-                </motion.div>
-              ))}
+                ))
+              ) : (
+                placesData.map((place, i) => (
+                  <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} key={place.id || i} className="w-[260px] min-w-[260px] glass-card rounded-xl overflow-hidden flex-shrink-0 cursor-pointer snap-start hover:bg-white/5 transition-all duration-300 border border-transparent hover:border-cyan-400/30 hover:shadow-[0_0_15px_rgba(25,204,240,0.15)] group flex h-[100px]" onClick={() => setSelectedPlace(place)}>
+                    <div className="w-[100px] h-full relative shrink-0">
+                      <img alt={place.name} className="w-full h-full object-cover" src={place.imageUrl} />
+                    </div>
+                    <div className="p-3 flex-1 flex flex-col justify-center min-w-0">
+                      <h4 className="font-headline-md text-sm text-on-surface line-clamp-2 leading-tight">{place.name}</h4>
+                      <p className="text-[11px] text-on-surface-variant flex items-center gap-1 mt-1 truncate">
+                        <span className="material-symbols-outlined text-[12px]">location_on</span> 
+                        {place.distance}
+                      </p>
+                      <div className="flex items-center gap-2 mt-1">
+                        <p className="text-[10px] text-primary/80 truncate">{place.category}</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))
+              )}
             </div>
           </motion.section>
 
