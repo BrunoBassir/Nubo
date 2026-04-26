@@ -72,34 +72,36 @@ const mockHistoryVouchers = [
   }
 ];
 
-export function VouchersScreen({ onHome, onExplore, onScan, onPrizes, onRanking, onRedeemVoucher }: { onHome?: () => void, onExplore?: () => void, onScan?: () => void, onPrizes?: () => void, onRanking?: () => void, onRedeemVoucher?: () => void }) {
+export function VouchersScreen({ onHome, onExplore, onScan, onPrizes, onRanking, onRedeemVoucher, hideHeader = false }: { onHome?: () => void, onExplore?: () => void, onScan?: () => void, onPrizes?: () => void, onRanking?: () => void, onRedeemVoucher?: () => void, hideHeader?: boolean }) {
   const [selectedVoucher, setSelectedVoucher] = useState<typeof mockVouchers[0] | null>(null);
   const [activeTab, setActiveTab] = useState<'active' | 'history'>('active');
 
   const visibleVouchers = activeTab === 'active' ? mockVouchers : mockHistoryVouchers;
 
   return (
-    <div className="bg-background-dark font-display text-slate-100 min-h-screen flex flex-col relative w-full">
+    <div className={hideHeader ? "w-full" : "bg-background-dark font-display text-slate-100 min-h-screen flex flex-col relative w-full"}>
       {selectedVoucher && <RewardDetailScreen reward={{...selectedVoucher, id: selectedVoucher.id}} onClose={() => setSelectedVoucher(null)} onRedeem={() => {
         setSelectedVoucher(null);
         if (onRedeemVoucher) onRedeemVoucher();
       }} />}
       
       {/* Top Header */}
-      <header className="px-6 py-4 flex items-center justify-between sticky top-0 bg-background-dark/95 backdrop-blur-md z-40 border-b border-white/5">
-        <div className="flex items-center gap-3">
-          <button onClick={onPrizes} className="flex size-10 items-center justify-center rounded-full bg-white/5 hover:bg-white/10 transition-colors border border-white/10">
-            <span className="material-symbols-outlined text-slate-100">arrow_back</span>
-          </button>
-          <h1 className="text-xl font-bold tracking-tight">Mis Canjes</h1>
-        </div>
-        <div className="flex items-center gap-2 bg-primary/10 px-3 py-1.5 rounded-full border border-primary/20">
-            <span className="text-[10px] text-slate-400 uppercase tracking-tighter">Puntos</span>
-            <span className="text-sm font-bold text-primary tracking-tight">1,250</span>
-        </div>
-      </header>
+      {!hideHeader && (
+        <header className="px-6 py-4 flex items-center justify-between sticky top-0 bg-background-dark/95 backdrop-blur-md z-40 border-b border-white/5">
+          <div className="flex items-center gap-3">
+            <button onClick={onPrizes} className="flex size-10 items-center justify-center rounded-full bg-white/5 hover:bg-white/10 transition-colors border border-white/10">
+              <span className="material-symbols-outlined text-slate-100">arrow_back</span>
+            </button>
+            <h1 className="text-xl font-bold tracking-tight">Mis Canjes</h1>
+          </div>
+          <div className="flex items-center gap-2 bg-primary/10 px-3 py-1.5 rounded-full border border-primary/20">
+              <span className="text-[10px] text-slate-400 uppercase tracking-tighter">Puntos</span>
+              <span className="text-sm font-bold text-primary tracking-tight">1,250</span>
+          </div>
+        </header>
+      )}
       
-      <div className="relative flex-1 flex flex-col w-full overflow-hidden [background:radial-gradient(circle_at_50%_-20%,rgba(25,204,240,0.15)_0%,transparent_70%)]">
+      <div className={hideHeader ? "relative flex-1 flex flex-col w-full overflow-hidden pt-2" : "relative flex-1 flex flex-col w-full overflow-hidden [background:radial-gradient(circle_at_50%_-20%,rgba(25,204,240,0.15)_0%,transparent_70%)]"}>
         <div className="px-6 py-4 flex flex-col gap-4">
           <div className="flex p-1 bg-white/5 rounded-xl border border-white/10">
             <button 
