@@ -178,6 +178,29 @@ export function RankingScreen({ onReferidosClick, onWeeklyPrizeClick }: { onRefe
               <p className="font-bold text-cyber-cyan text-lg">1,490</p>
             </div>
           </div>
+
+          <div className="flex items-center gap-4 p-4 bg-white/5 border border-white/5 rounded-2xl relative overflow-hidden opacity-50">
+            <div className="w-6 text-center">
+              <span className="text-slate-500 font-bold text-sm">...</span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-4 p-4 bg-cyber-cyan/10 border border-cyber-cyan/30 rounded-2xl relative overflow-hidden mt-4">
+            <div className="w-6 text-center">
+              <span className="text-cyber-cyan font-bold text-sm">142</span>
+            </div>
+            <img alt="your avatar" className="w-11 h-11 rounded-full border-2 border-cyber-cyan/50" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCN5NitYRUNw9IB_S0I-vKHdjYhZYO__YqrLV3N7KcWSlwnxY8oyzaPZIEsiTPJZrUdvD-evUdcMSm8Fih9D5TX75c1b-jnDsoi_c4oecoIHLc6PIw5wam4WtskO3XULd52Mtnk2mozxyjYjZM-qczEEy2Lf1GB-HBfQf4xP3IhuD74CaL7VnwgrfW1H0rrh5eJeBFCoi7wTZch6qL9QO7wkZMfBHQ-PbQ5zn-gM2xlki7XVteaKRdTVV0mnrMVoKa1HO3wA2RjBls"/>
+            <div className="flex-1">
+              <p className="font-bold text-sm text-white">Tú</p>
+              <p className="text-[11px] text-slate-400 font-medium">Faltan 70 pts para subir</p>
+            </div>
+            <div className="flex flex-col items-end">
+              <span className="text-[11px] text-green-400 flex items-center gap-0.5 font-black">
+                <span className="material-symbols-outlined text-base">arrow_drop_up</span> 5
+              </span>
+              <p className="font-bold text-cyber-cyan text-lg">1,250 <span className="text-[10px] font-normal uppercase tracking-widest text-cyber-cyan/70">pts</span></p>
+            </div>
+          </div>
         </div>
         </div>
         )}
@@ -330,6 +353,29 @@ export function RankingScreen({ onReferidosClick, onWeeklyPrizeClick }: { onRefe
                   <span className="text-[11px] text-red-400 flex items-center gap-0.5 font-black">
                     <span className="material-symbols-outlined text-base">arrow_drop_down</span> 1
                   </span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4 p-4 bg-white/5 border border-white/5 rounded-2xl relative overflow-hidden opacity-50">
+                <div className="w-4 text-center">
+                  <span className="text-slate-500 font-bold text-sm">...</span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4 p-4 bg-cyber-cyan/10 border border-cyber-cyan/30 rounded-2xl relative overflow-hidden mt-4">
+                <div className="w-4 text-center">
+                  <span className="text-cyber-cyan font-bold text-sm">28</span>
+                </div>
+                <img alt="your avatar" className="w-11 h-11 rounded-full border-2 border-cyber-cyan/50" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCN5NitYRUNw9IB_S0I-vKHdjYhZYO__YqrLV3N7KcWSlwnxY8oyzaPZIEsiTPJZrUdvD-evUdcMSm8Fih9D5TX75c1b-jnDsoi_c4oecoIHLc6PIw5wam4WtskO3XULd52Mtnk2mozxyjYjZM-qczEEy2Lf1GB-HBfQf4xP3IhuD74CaL7VnwgrfW1H0rrh5eJeBFCoi7wTZch6qL9QO7wkZMfBHQ-PbQ5zn-gM2xlki7XVteaKRdTVV0mnrMVoKa1HO3wA2RjBls"/>
+                <div className="flex-1">
+                  <p className="font-bold text-sm text-white">Tú</p>
+                  <p className="text-[11px] text-slate-400 font-medium">Faltan 120 pts para subir</p>
+                </div>
+                <div className="flex flex-col items-end">
+                  <span className="text-[11px] text-green-400 flex items-center gap-0.5 font-black">
+                    <span className="material-symbols-outlined text-base">arrow_drop_up</span> 2
+                  </span>
+                  <p className="font-bold text-cyber-cyan text-lg">1,250 <span className="text-[10px] font-normal uppercase tracking-widest text-cyber-cyan/70">pts</span></p>
                 </div>
               </div>
             </div>
@@ -621,37 +667,6 @@ export function RankingScreen({ onReferidosClick, onWeeklyPrizeClick }: { onRefe
         </motion.div>
         </AnimatePresence>
       </main>
-
-      {/* User Highlight Fixed Bar - Cyber Pulsing Cyan */}
-      {(rankingTab === 'global' || rankingTab === 'semanal') && (
-        <div className="fixed bottom-[88px] left-4 right-4 z-30 max-w-md mx-auto">
-          <motion.div 
-             initial={{ y: 50, opacity: 0 }}
-             animate={{ y: 0, opacity: 1 }}
-             className="bg-slate-900/40 backdrop-blur-xl px-6 py-4 rounded-3xl flex items-center justify-between shadow-[0_0_40px_rgba(25,204,240,0.15)] text-white border border-cyber-cyan/30 overflow-hidden relative"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-cyber-cyan/10 to-transparent"></div>
-            <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-cyber-cyan/20 rounded-full blur-[30px] animate-pulse"></div>
-
-            <div className="flex items-center gap-4 relative z-10">
-              <div className="relative">
-                <div className="w-12 h-12 rounded-full border-2 border-cyber-cyan overflow-hidden shadow-[0_0_15px_rgba(25,204,240,0.5)]">
-                  <img className="w-full h-full object-cover" data-alt="Current user avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCN5NitYRUNw9IB_S0I-vKHdjYhZYO__YqrLV3N7KcWSlwnxY8oyzaPZIEsiTPJZrUdvD-evUdcMSm8Fih9D5TX75c1b-jnDsoi_c4oecoIHLc6PIw5wam4WtskO3XULd52Mtnk2mozxyjYjZM-qczEEy2Lf1GB-HBfQf4xP3IhuD74CaL7VnwgrfW1H0rrh5eJeBFCoi7wTZch6qL9QO7wkZMfBHQ-PbQ5zn-gM2xlki7XVteaKRdTVV0mnrMVoKa1HO3wA2RjBls"/>
-                </div>
-                <div className="absolute -top-1 -right-1 bg-cyber-cyan text-background-dark font-black text-[9px] px-1.5 py-0.5 rounded-full shadow-lg">TÚ</div>
-              </div>
-              <div>
-                <p className="font-bold text-sm leading-tight text-white">Puesto global <span className="text-cyber-cyan">#142</span></p>
-                <p className="text-[10px] uppercase tracking-widest font-bold text-slate-400 mt-0.5">Faltan 70 pts para subir</p>
-              </div>
-            </div>
-            <div className="text-right relative z-10">
-              <p className="text-2xl font-display font-black leading-tight text-transparent bg-clip-text bg-gradient-to-br from-white to-cyber-cyan">1,250</p>
-              <p className="text-[9px] uppercase font-bold tracking-widest text-cyber-cyan">Puntos</p>
-            </div>
-          </motion.div>
-        </div>
-      )}
     </>
   );
 }
