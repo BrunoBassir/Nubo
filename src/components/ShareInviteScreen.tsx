@@ -44,10 +44,12 @@ export function ShareInviteScreen({ onClose, onHome, onExplore, onScan, onPrizes
         <div className="relative w-full rounded-[2rem] bg-gradient-to-b from-[#19ccf0]/20 to-transparent border border-[#19ccf0]/20 p-8 flex flex-col items-center justify-center mb-10 overflow-hidden shadow-[0_0_40px_rgba(25,204,240,0.15)]">
           <div className="absolute inset-0 bg-[#19ccf0]/10 blur-[50px] rounded-full scale-110"></div>
           
-          <div className="relative animate-bounce drop-shadow-[0_0_20px_rgba(25,204,240,0.5)] mb-6">
-            <span className="material-symbols-outlined text-[80px] text-[#19ccf0] leading-none" style={{ fontVariationSettings: "'FILL' 1, 'wght' 300" }}>redeem</span>
-            <div className="absolute -top-3 -right-3 bg-white text-[#070b14] h-8 px-2 rounded-full flex items-center justify-center font-black text-xs shadow-xl border-2 border-[#19ccf0]">
-              +500 XP
+          <div className="relative mb-6 flex flex-col items-center justify-center gap-4 z-10 w-full">
+            <div className="relative animate-bounce drop-shadow-[0_0_20px_rgba(25,204,240,0.5)]">
+              <span className="material-symbols-outlined text-[80px] text-[#19ccf0] leading-none" style={{ fontVariationSettings: "'FILL' 1, 'wght' 300" }}>redeem</span>
+            </div>
+            <div className="bg-gradient-to-r from-[#19ccf0] to-cyan-400 text-[#070b14] px-5 py-2 rounded-full flex items-center justify-center text-center font-black text-sm shadow-[0_0_15px_rgba(25,204,240,0.6)] uppercase tracking-widest border border-white/20">
+              + 500 XP
             </div>
           </div>
 
