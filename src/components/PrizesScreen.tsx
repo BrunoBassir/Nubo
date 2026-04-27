@@ -187,11 +187,34 @@ export function PrizesScreen({ onVouchersClick, onMysteryChestClick, onPrizeFrag
                     </h2>
                     <span className="text-primary text-[10px] font-bold uppercase cursor-pointer">Ver todo</span>
                   </div>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-2 gap-3 mb-6">
                     {displayRewards.filter(r => r.category === 'Hospedaje').map(renderRewardCard)}
                   </div>
                 </section>
               )}
+
+              {/* Mystery Chest Banner */}
+              <div className="relative rounded-2xl overflow-hidden cursor-pointer group hover:scale-[1.02] transition-transform active:scale-95 shadow-xl bg-gradient-to-r from-indigo-950 via-slate-900 to-slate-900 border border-indigo-500/30 mb-4" onClick={onMysteryChestClick}>
+                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-20 mix-blend-overlay group-hover:scale-110 transition-transform duration-700"></div>
+                <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 blur-[30px] rounded-full -mr-10 -mt-10 group-hover:bg-indigo-500/20 transition-all"></div>
+                
+                <div className="p-5 flex items-center justify-between z-10 relative">
+                  <div className="flex flex-col">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400">Premios Sorpresa</span>
+                    </div>
+                    <span className="font-display font-black text-2xl text-white drop-shadow-md leading-none mb-1">Cofre Misterioso</span>
+                    <span className="text-xs font-semibold text-slate-300 mt-1 flex items-center gap-1">
+                      <span className="material-symbols-outlined text-[14px]">local_fire_department</span>
+                      Quemá 500 NP y probá tu suerte
+                    </span>
+                  </div>
+                  
+                  <div className="w-14 h-14 rounded-full bg-indigo-500/20 backdrop-blur-md flex items-center justify-center border border-indigo-500/50 shadow-[0_0_15px_rgba(99,102,241,0.4)] relative z-10">
+                    <span className="material-symbols-outlined text-3xl text-indigo-100" style={{ fontVariationSettings: "'FILL' 1" }}>inventory_2</span>
+                  </div>
+                </div>
+              </div>
 
               {/* Live Auctions Banner */}
               <div className="relative rounded-2xl overflow-hidden cursor-pointer group hover:scale-[1.02] transition-transform active:scale-95 shadow-xl bg-gradient-to-r from-red-950 via-slate-900 to-slate-900 border border-red-500/30 mb-4" onClick={onLiveAuctionsClick}>

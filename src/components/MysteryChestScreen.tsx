@@ -3,9 +3,22 @@ import { motion, AnimatePresence } from 'motion/react';
 
 export function MysteryChestScreen({ onBack, onOpen }: { onBack: () => void, onOpen: () => void }) {
   const [stage, setStage] = useState<'idle' | 'opening' | 'opened'>('idle');
+  const [prize, setPrize] = useState<{ title: string, subtitle: string, icon: string, isWinner: boolean } | null>(null);
+
+  const possiblePrizes = [
+    { title: "¡Ganaste un Viaje!", subtitle: "Estadía 5 Estrellas en Costa Nubo", icon: "flight_takeoff", isWinner: true },
+    { title: "¡Suerte para la próxima!", subtitle: "Seguí participando", icon: "sentiment_dissatisfied", isWinner: false },
+    { title: "¡Café Gratis!", subtitle: "Válido en cualquier sucursal", icon: "local_cafe", isWinner: true },
+    { title: "Casi lo logras", subtitle: "Pero al menos te llevás 50 XP", icon: "stars", isWinner: false },
+    { title: "Pase VIP", subtitle: "Acceso exclusivo por 1 mes", icon: "workspace_premium", isWinner: true }
+  ];
 
   const handleOpen = () => {
     setStage('opening');
+    // Randomize prize
+    const randomPrize = possiblePrizes[Math.floor(Math.random() * possiblePrizes.length)];
+    setPrize(randomPrize);
+
     setTimeout(() => {
       setStage('opened');
     }, 2000);
@@ -33,7 +46,7 @@ export function MysteryChestScreen({ onBack, onOpen }: { onBack: () => void, onO
                {stage !== 'opened' && (
                   <motion.div 
                      exit={{ opacity: 0, scale: 2 }}
-                     className="absolute inset-0 bg-fuchsia-500/20 blur-3xl rounded-full"
+                     className="absolute inset-0 bg-indigo-500/20 blur-3xl rounded-full"
                   />
                )}
             </AnimatePresence>
@@ -48,7 +61,7 @@ export function MysteryChestScreen({ onBack, onOpen }: { onBack: () => void, onO
                transition={{ duration: stage === 'opening' ? 0.5 : 0.4, repeat: stage === 'opening' ? 3 : 0 }}
                className="relative z-10 w-full h-full flex flex-col items-center justify-center"
             >
-               <span className="material-symbols-outlined text-9xl text-fuchsia-400 drop-shadow-[0_0_20px_rgba(255,0,255,0.8)]" style={{ fontVariationSettings: "'FILL' 1" }}>inventory_2</span>
+               <span className="material-symbols-outlined text-9xl text-indigo-400 drop-shadow-[0_0_20px_rgba(99,102,241,0.8)]" style={{ fontVariationSettings: "'FILL' 1" }}>inventory_2</span>
             </motion.div>
 
             {/* Explosion flash */}
@@ -58,7 +71,7 @@ export function MysteryChestScreen({ onBack, onOpen }: { onBack: () => void, onO
                      initial={{ scale: 0, opacity: 1 }}
                      animate={{ scale: 5, opacity: 0 }}
                      transition={{ duration: 0.8 }}
-                     className="absolute inset-0 bg-fuchsia-400 rounded-full blur-xl z-20"
+                     className="absolute inset-0 bg-indigo-400 rounded-full blur-xl z-20"
                   />
                )}
             </AnimatePresence>
@@ -73,20 +86,20 @@ export function MysteryChestScreen({ onBack, onOpen }: { onBack: () => void, onO
                  transition={{ delay: 0.3, type: "spring", stiffness: 200, damping: 20 }}
                  className="absolute inset-0 z-[200] flex flex-col items-center justify-center py-6 w-full"
                >
-                 <div className="bg-[#050B14] p-8 rounded-[2rem] border-2 border-fuchsia-400 shadow-[0_0_50px_rgba(255,0,255,0.4)] flex flex-col items-center text-center w-full relative overflow-hidden">
+                 <div className="bg-[#050B14] p-8 rounded-[2rem] border-2 border-indigo-400 shadow-[0_0_50px_rgba(99,102,241,0.4)] flex flex-col items-center text-center w-full relative overflow-hidden">
                    
                    {/* Background gradient & shine effect */}
-                   <div className="absolute inset-0 bg-gradient-to-b from-fuchsia-900/40 to-transparent" />
-                   <div className="absolute inset-0 opacity-30 bg-gradient-to-tr from-white/0 via-fuchsia-400/20 to-white/0 w-[200%] h-[200%] -translate-x-[50%] -translate-y-[50%] animate-[spin_4s_linear_infinite] mix-blend-overlay" />
+                   <div className="absolute inset-0 bg-gradient-to-b from-indigo-900/40 to-transparent" />
+                   <div className="absolute inset-0 opacity-30 bg-gradient-to-tr from-white/0 via-indigo-400/20 to-white/0 w-[200%] h-[200%] -translate-x-[50%] -translate-y-[50%] animate-[spin_4s_linear_infinite] mix-blend-overlay" />
 
-                   <div className="w-20 h-20 bg-gradient-to-br from-fuchsia-400 to-fuchsia-600 rounded-full flex items-center justify-center mb-6 border-2 border-fuchsia-300 relative z-10 shadow-[0_0_30px_rgba(255,0,255,0.8)]">
-                      <span className="material-symbols-outlined text-4xl text-white drop-shadow-[0_0_10px_white]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                   <div className="w-20 h-20 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-full flex items-center justify-center mb-6 border-2 border-indigo-300 relative z-10 shadow-[0_0_30px_rgba(99,102,241,0.8)]">
+                      <span className="material-symbols-outlined text-4xl text-white drop-shadow-[0_0_10px_white]" style={{ fontVariationSettings: "'FILL' 1" }}>{prize?.icon || 'star'}</span>
                    </div>
-                   <h2 className="text-fuchsia-300 text-[10px] font-black uppercase tracking-[0.2em] mb-3 relative z-10">¡Premio Legendario Mítico!</h2>
-                   <h3 className="text-white text-3xl font-display font-black leading-tight mb-8 relative z-10 drop-shadow-lg">Pase VIP Anual <br/><span className="text-fuchsia-400">Festivales Oro</span> <br/>+ 10.000 XP</h3>
+                   <h2 className="text-indigo-300 text-[10px] font-black uppercase tracking-[0.2em] mb-3 relative z-10">{prize?.isWinner ? '¡Premio Legendario Mítico!' : 'Cofre Abierto'}</h2>
+                   <h3 className="text-white text-3xl font-display font-black leading-tight mb-8 relative z-10 drop-shadow-lg">{prize?.title.split(' ').map((word, i) => i === 1 ? <span key={i} className="text-indigo-400"> {word} </span> : word + ' ')}<br/><span className="text-base font-sans font-medium text-slate-300">{prize?.subtitle}</span></h3>
                    
-                   <button onClick={onOpen} className="w-full bg-white text-slate-900 font-black uppercase tracking-widest text-[11px] py-4 rounded-xl shadow-[0_4px_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] hover:scale-105 active:scale-95 transition-all relative z-10">
-                      Ir a Mis Vouchers
+                   <button onClick={prize?.isWinner ? onOpen : onBack} className="w-full bg-white text-slate-900 font-black uppercase tracking-widest text-[11px] py-4 rounded-xl shadow-[0_4px_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] hover:scale-105 active:scale-95 transition-all relative z-10">
+                      {prize?.isWinner ? 'Ir a Mis Vouchers' : 'Volver a intentar'}
                    </button>
                  </div>
                </motion.div>
@@ -98,7 +111,7 @@ export function MysteryChestScreen({ onBack, onOpen }: { onBack: () => void, onO
                <motion.button 
                   exit={{ opacity: 0, y: 20 }}
                   onClick={handleOpen}
-                  className="w-full bg-gradient-to-r from-fuchsia-600 to-primary text-white font-bold uppercase tracking-widest text-xs py-4 rounded-full shadow-[0_0_20px_rgba(255,0,255,0.4)] hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2"
+                  className="w-full bg-gradient-to-r from-indigo-600 to-primary text-white font-bold uppercase tracking-widest text-xs py-4 rounded-full shadow-[0_0_20px_rgba(99,102,241,0.4)] hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2"
                >
                   <span className="material-symbols-outlined text-sm">lock_open</span>
                   Abrir por 500 Pts
@@ -112,7 +125,7 @@ export function MysteryChestScreen({ onBack, onOpen }: { onBack: () => void, onO
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="text-fuchsia-400 font-bold uppercase tracking-widest text-xs animate-pulse"
+                  className="text-indigo-400 font-bold uppercase tracking-widest text-xs animate-pulse"
                >
                   Desbloqueando...
                </motion.div>
