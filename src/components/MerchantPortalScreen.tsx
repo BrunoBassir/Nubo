@@ -4,7 +4,7 @@ export function MerchantPortalScreen({ onBack }: { onBack?: () => void }) {
   const [activeTab, setActiveTab] = useState<'dashboard' | 'promotions' | 'profile' | 'create_promo'>('dashboard');
 
   return (
-    <div className="bg-background-dark text-slate-100 min-h-screen flex flex-col relative w-full lg:max-w-md lg:mx-auto">
+    <div className="bg-background-dark text-slate-100 flex flex-col relative w-full lg:max-w-md lg:mx-auto">
       {/* Header */}
       <header className="px-6 py-4 flex items-center justify-between sticky top-0 bg-background-dark/95 backdrop-blur-md z-40 border-b border-white/5">
         <div className="flex items-center gap-3">

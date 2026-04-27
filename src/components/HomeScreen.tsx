@@ -78,7 +78,7 @@ export function HomeScreen({ onProfileClick, onLevelClick, onRecentActivityClick
 
   return (
     <>
-      <main className="pt-8 px-6 max-w-2xl mx-auto space-y-section-gap pb-32">
+      <main className="pt-8 px-6 max-w-2xl mx-auto space-y-section-gap">
         <motion.div variants={containerVariants} initial="hidden" animate="show" className="space-y-section-gap">
           
           {/* Welcome Header */}

@@ -73,7 +73,7 @@ export function SpotGalleryScreen({ onBack, onUploadProofClick, onPhotoClick }: 
   }, []);
 
   return (
-    <div className="bg-surface text-slate-100 min-h-screen selection:bg-primary/30 pb-32">
+    <div className="bg-surface text-slate-100 selection:bg-primary/30">
       {/* Top App Bar */}
       <nav className="sticky top-0 z-50 bg-slate-950/60 backdrop-blur-md border-b border-white/10 px-6 h-16 flex items-center justify-between shadow-lg lg:max-w-md lg:mx-auto w-full">
         <div className="flex items-center gap-3">

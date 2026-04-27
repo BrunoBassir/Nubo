@@ -23,7 +23,7 @@ export function ShareInviteScreen({ onClose, onHome, onExplore, onScan, onPrizes
   };
 
   return (
-    <div className="bg-[#070b14] text-white font-sans min-h-screen relative overflow-x-hidden">
+    <div className="bg-[#070b14] text-white font-sans relative overflow-x-hidden">
       <div className="absolute top-1/4 -left-1/4 w-[200%] h-[1px] bg-gradient-to-r from-transparent via-[#19ccf0]/30 to-transparent -rotate-[35deg] pointer-events-none opacity-20"></div>
       <div className="absolute top-1/2 -left-1/3 w-[200%] h-[1px] bg-gradient-to-r from-transparent via-[#19ccf0]/30 to-transparent -rotate-[35deg] pointer-events-none opacity-10"></div>
       
@@ -39,7 +39,7 @@ export function ShareInviteScreen({ onClose, onHome, onExplore, onScan, onPrizes
         </div>
       </header>
 
-      <main className="relative z-10 pt-24 pb-32 px-6 max-w-md mx-auto">
+      <main className="relative z-10 pt-24 px-6 max-w-md mx-auto">
         {/* Aesthetic Hero Card instead of a giant square */}
         <div className="relative w-full rounded-[2rem] bg-gradient-to-b from-[#19ccf0]/20 to-transparent border border-[#19ccf0]/20 p-8 flex flex-col items-center justify-center mb-10 overflow-hidden shadow-[0_0_40px_rgba(25,204,240,0.15)]">
           <div className="absolute inset-0 bg-[#19ccf0]/10 blur-[50px] rounded-full scale-110"></div>

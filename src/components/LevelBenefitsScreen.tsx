@@ -37,7 +37,7 @@ export function LevelBenefitsScreen({ onBack, onProfileClick, onNotificationsCli
         </div>
       </header>
       
-      <main className="pt-20 px-4 max-w-lg mx-auto pb-24">
+      <main className="pt-20 px-4 max-w-lg mx-auto">
         <motion.div variants={containerVariants} initial="hidden" animate="show">
           <motion.section variants={itemVariants} className="mb-6">
             <div className="flex flex-col gap-1 mb-4">

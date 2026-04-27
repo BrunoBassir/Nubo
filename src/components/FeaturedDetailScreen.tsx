@@ -46,7 +46,7 @@ const tourPlaces: Place[] = [
 
 export function FeaturedDetailScreen({ onBack, onValidate }: { onBack?: () => void, onValidate?: () => void }) {
   return (
-    <div className="bg-background-dark text-slate-100 min-h-screen flex flex-col w-full lg:max-w-md lg:mx-auto relative dark">
+    <div className="bg-background-dark text-slate-100 flex flex-col w-full lg:max-w-md lg:mx-auto relative dark">
       {/* Header Image & NavBar */}
       <div className="relative h-72 rounded-b-[40px] overflow-hidden shadow-2xl">
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuAJsH75Mxn3q8rSehmHhLHh15fY93QYRcbHTzWwuxVC3GE_oDFWolw0twT-TONUwTE9xPCviHDGnXCTzY2wVrZdXfyItICrW8angsHGFdhQFEgvmPyfUvuK3rkzRdkrXB94obx651Gt4CN-mYSFFAUqOUqzqVmgBIuNmB0fqfbX5C1x9ls5ij6bXi80h92Xwtoi97NNcexd6kgCjEX9OoPsyuYfqwnfqH4fiVZM4vkzRgDDLmhyLMq6EF6mKrkNZpNRttGkstIbPgM')" }}></div>
@@ -76,7 +76,7 @@ export function FeaturedDetailScreen({ onBack, onValidate }: { onBack?: () => vo
         </div>
       </div>
 
-      <main className="flex-1 overflow-y-auto px-6 py-8 pb-32 space-y-8">
+      <main className="flex-1 overflow-y-auto px-6 py-8 space-y-8">
         
         {/* Progress Card */}
         <div className="glass-card p-5 rounded-3xl border border-white/10 shadow-lg relative overflow-hidden">

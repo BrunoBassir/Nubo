@@ -70,7 +70,7 @@ export function DiscoveryScreen({ onHome, onExplore, onScan, onPrizes, onRanking
 
   // Removed early loading return
   // if (loading) {
-  //    return <div className="bg-background-dark min-h-screen text-white flex items-center justify-center">Cargando mapa...</div>;
+  //    return <div className="bg-background-dark text-white flex items-center justify-center">Cargando mapa...</div>;
   // }
 
   return (

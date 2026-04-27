@@ -79,7 +79,7 @@ export function VouchersScreen({ onHome, onExplore, onScan, onPrizes, onRanking,
   const visibleVouchers = activeTab === 'active' ? mockVouchers : mockHistoryVouchers;
 
   return (
-    <div className={hideHeader ? "w-full" : "bg-background-dark font-display text-slate-100 min-h-screen flex flex-col relative w-full"}>
+    <div className={hideHeader ? "w-full" : "bg-background-dark font-display text-slate-100 flex flex-col relative w-full"}>
       {selectedVoucher && <RewardDetailScreen reward={{...selectedVoucher, id: selectedVoucher.id}} onClose={() => setSelectedVoucher(null)} onRedeem={() => {
         setSelectedVoucher(null);
         if (onRedeemVoucher) onRedeemVoucher();
@@ -119,7 +119,7 @@ export function VouchersScreen({ onHome, onExplore, onScan, onPrizes, onRanking,
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto px-6 pb-24 space-y-6">
+        <div className="flex-1 overflow-y-auto px-6 space-y-6">
           {visibleVouchers.map((voucher, index) => (
              <div key={voucher.id} className={`relative group ${!voucher.available || activeTab === 'history' ? 'opacity-60' : ''}`}>
               {index === 0 && activeTab === 'active' && <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/20 to-[#f4c025]/20 rounded-2xl blur opacity-30 group-hover:opacity-50 group-hover:blur-md transition duration-500"></div>}

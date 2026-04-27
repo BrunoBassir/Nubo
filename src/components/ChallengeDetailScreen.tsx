@@ -5,7 +5,7 @@ export function ChallengeDetailScreen({ challenge, onBack, onValidate }: { chall
   const bgImageUrl = challenge?.imageUrl || 'https://lh3.googleusercontent.com/aida-public/AB6AXuAtmknKxfFmcGriApOdvMiNdmOAfDNH2B5DoWCmCv-cPni_d_LK4Du3r4VSnrrIJbHpXq3IbKZr-7ivym_pZ1yYkwMwwvJ7OOOzqBtFAjTxbo6fujRF8ASWN-E1PmxZaN8IvK-x6wSOS2u5NcVOJepkegvS7dVImw1Zpj1OGAUmB5sp9JDnIUXvcNWKBuccMubABApWZS_6khWk5xLnJOmmnUv-qVUAX2BYBz9EwzIdabSDhiSaisstqUgi6S15mF50R796Les4gY0';
   
   return (
-    <div className="bg-background-dark text-slate-100 min-h-screen flex flex-col w-full lg:max-w-md lg:mx-auto relative dark">
+    <div className="bg-background-dark text-slate-100 flex flex-col w-full lg:max-w-md lg:mx-auto relative dark">
       {/* Header Image & NavBar */}
       <div className="relative h-72 rounded-b-[40px] overflow-hidden shadow-2xl">
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('${bgImageUrl}')` }}></div>
@@ -33,7 +33,7 @@ export function ChallengeDetailScreen({ challenge, onBack, onValidate }: { chall
         </div>
       </div>
 
-      <main className="flex-1 overflow-y-auto px-6 py-8 pb-32 space-y-8">
+      <main className="flex-1 overflow-y-auto px-6 py-8 space-y-8">
         
         {/* Progress Card */}
         <div className="glass-card p-5 rounded-3xl border border-white/10 shadow-lg relative overflow-hidden">

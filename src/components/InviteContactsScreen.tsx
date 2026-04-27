@@ -46,7 +46,7 @@ export function InviteContactsScreen({ onBack }: { onBack?: () => void }) {
   };
 
   return (
-    <div className="bg-[#070b14] text-white font-sans min-h-screen relative overflow-x-hidden flex flex-col">
+    <div className="bg-[#070b14] text-white font-sans relative overflow-x-hidden flex flex-col">
       <header className="sticky top-0 z-50 px-6 py-4 flex items-center bg-[#070b14]/80 backdrop-blur-xl border-b border-white/5 lg:max-w-md lg:mx-auto w-full">
         <button onClick={onBack} className="size-10 flex items-center justify-center rounded-full bg-white/5 backdrop-blur-md border border-white/10 active:scale-95 transition-transform absolute left-6">
           <span className="material-symbols-outlined text-white text-xl">arrow_back</span>
@@ -54,7 +54,7 @@ export function InviteContactsScreen({ onBack }: { onBack?: () => void }) {
         <h1 className="text-sm font-black uppercase tracking-widest text-center w-full">Enviar Invitación</h1>
       </header>
 
-      <main className="flex-1 px-6 pt-8 pb-32 max-w-md mx-auto w-full flex flex-col relative z-10">
+      <main className="flex-1 px-6 pt-8 max-w-md mx-auto w-full flex flex-col relative z-10">
         
         <div className="text-center mb-8">
           <div className="size-16 bg-[#19ccf0]/10 rounded-full flex items-center justify-center mx-auto mb-4 border border-[#19ccf0]/30 shadow-[0_0_20px_rgba(25,204,240,0.2)]">

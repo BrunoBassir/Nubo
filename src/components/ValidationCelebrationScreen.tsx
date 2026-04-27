@@ -38,7 +38,7 @@ export function ValidationCelebrationScreen({ onClose, onHome, onExplore, onScan
   }, []);
 
   return (
-    <div className="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex flex-col overflow-x-hidden relative lg:max-w-md lg:mx-auto w-full">
+    <div className="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 flex flex-col overflow-x-hidden relative lg:max-w-md lg:mx-auto w-full">
       {isShareOpen && <ShareSheet onClose={() => setIsShareOpen(false)} title="Compartir Logro" text="¡He validado un nuevo lugar en Nubo y gané puntos!" url="https://nubo.app/logros/v1" />}
       {/* Top Navigation Bar */}
       <motion.div 
@@ -158,7 +158,7 @@ export function ValidationCelebrationScreen({ onClose, onHome, onExplore, onScan
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.9, duration: 0.5 }}
-        className="px-6 pb-32 flex flex-col gap-3 z-10"
+        className="px-6 flex flex-col gap-3 z-10"
       >
         <button onClick={onHome} className="w-full bg-primary hover:bg-primary/90 text-background-dark font-bold text-lg py-4 rounded-full transition-all hover:scale-[1.02] active:scale-[0.98] box-glow-primary">
           ¡Genial!

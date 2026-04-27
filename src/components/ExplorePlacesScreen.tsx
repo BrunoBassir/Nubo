@@ -72,11 +72,11 @@ export function ExplorePlacesScreen({ onBack, onPlaceDetailClick, onProfileClick
 
   // Removed early return to show fallback data
   // if (loading) {
-  //   return <div className="bg-background-dark min-h-screen text-white flex items-center justify-center">Cargando lugares...</div>;
+  //   return <div className="bg-background-dark text-white flex items-center justify-center">Cargando lugares...</div>;
   // }
 
   return (
-    <div className="bg-background-dark text-slate-100 min-h-screen flex flex-col w-full lg:max-w-md lg:mx-auto relative">
+    <div className="bg-background-dark text-slate-100 flex flex-col w-full lg:max-w-md lg:mx-auto relative">
       {selectedPlace && <PlaceDetailScreen place={selectedPlace} onClose={() => setSelectedPlace(null)} onValidate={onPlaceDetailClick} onRouteClick={onRouteClick} />}
       {/* TopAppBar */}
       <header className="sticky top-0 z-50 bg-slate-950/60 backdrop-blur-md border-b border-white/10 px-6 h-16 flex justify-between items-center shadow-lg shadow-cyan-900/20">

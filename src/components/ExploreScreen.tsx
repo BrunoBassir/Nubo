@@ -46,7 +46,7 @@ export function ExploreScreen({ onPlacesClick, onChallengesClick, onDiscoveryCli
 
   return (
     <>
-      <main className="flex-1 overflow-y-auto px-6 pb-32 pt-8">
+      <main className="flex-1 overflow-y-auto px-6 pt-8">
         <div className="flex gap-4 mt-4 h-[380px]">
           <div onClick={onPlacesClick} className="relative flex-1 group cursor-pointer overflow-hidden rounded-3xl border border-primary/20 transition-all duration-300 hover:border-primary/60 hover:shadow-[0_0_25px_rgba(25,204,240,0.5)] card-glow-teal">
             <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=800')" }}></div>

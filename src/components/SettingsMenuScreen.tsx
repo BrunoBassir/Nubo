@@ -45,7 +45,7 @@ export function SettingsMenuScreen({
   };
 
   return (
-    <div className="bg-background-dark text-slate-100 min-h-screen flex flex-col w-full lg:max-w-md lg:mx-auto relative dark">
+    <div className="bg-background-dark text-slate-100 flex flex-col w-full lg:max-w-md lg:mx-auto relative dark">
       {/* TopAppBar */}
       <header className="sticky top-0 z-50 bg-slate-950/60 backdrop-blur-md border-b border-white/10 px-6 h-16 flex items-center justify-between shadow-lg">
         <div className="flex items-center gap-3">
@@ -56,7 +56,7 @@ export function SettingsMenuScreen({
         </div>
       </header>
 
-      <main className="flex-1 overflow-y-auto pb-32 px-4 pt-6 space-y-6">
+      <main className="flex-1 overflow-y-auto px-4 pt-6 space-y-6">
         {/* Account Section */}
         <section>
           <h2 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3 ml-2">Cuenta</h2>

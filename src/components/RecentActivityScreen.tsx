@@ -44,7 +44,7 @@ export function RecentActivityScreen({ onBack, onLevelAchievedClick, onProfileCl
         </div>
       </header>
 
-      <main className="pt-24 px-6 max-w-2xl mx-auto pb-32">
+      <main className="pt-24 px-6 max-w-2xl mx-auto">
         <motion.div variants={containerVariants} initial="hidden" animate="show">
           <motion.section variants={itemVariants} className="mb-section-gap">
             <div className="flex items-end justify-between mb-4">

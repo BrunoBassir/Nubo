@@ -44,11 +44,11 @@ export function ChallengesScreen({ onBack, onCoffeeRouteClick, onChallengeClick 
 
   // Removed early loading return to show fallback data
   // if (loading) {
-  //   return <div className="bg-background-dark min-h-screen text-white flex items-center justify-center">Cargando desafíos...</div>;
+  //   return <div className="bg-background-dark text-white flex items-center justify-center">Cargando desafíos...</div>;
   // }
 
   return (
-    <div className="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col w-full lg:max-w-md lg:mx-auto">
+    <div className="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 flex flex-col w-full lg:max-w-md lg:mx-auto">
       {/* Top Navigation Bar */}
       <header className="sticky top-0 z-50 bg-background-light/80 dark:bg-[#050B0D]/80 backdrop-blur-[20px] border-b border-slate-200 dark:border-[#00F2FF]/20 px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">

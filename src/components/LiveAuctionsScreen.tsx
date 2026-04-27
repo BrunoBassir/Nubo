@@ -57,7 +57,7 @@ export function LiveAuctionsScreen({ onBack }: { onBack: () => void }) {
   };
 
   return (
-    <div className="bg-[#050B14] min-h-screen flex flex-col text-slate-100 relative overflow-hidden pb-32">
+    <div className="bg-[#050B14] flex flex-col text-slate-100 relative overflow-hidden">
       
       {/* Background glow effects */}
       <div className="absolute top-0 inset-x-0 h-96 bg-red-600/10 blur-[100px] pointer-events-none" />

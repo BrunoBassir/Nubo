@@ -25,7 +25,7 @@ export function CoffeeRouteScreen({ onBack, onHome, onExplore, onScan, onPrizes,
   }
 
   return (
-    <div className="bg-background-dark text-slate-100 min-h-screen flex flex-col w-full lg:max-w-md lg:mx-auto relative dark">
+    <div className="bg-background-dark text-slate-100 flex flex-col w-full lg:max-w-md lg:mx-auto relative dark">
       {/* Header Image & NavBar */}
       <div className="relative h-72 rounded-b-[40px] overflow-hidden shadow-2xl">
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuAsf34DnQ9u7xgCLyGvxgIZTZuAem_ohKUrK2nsZbcpBhy87PyaK1V0-I7wbnQ2w46iZSG1AysPNzElabkqLIcAzy12UqAtipN4pck2JFO_uFB0SmHKMH6rq_RSVxxuT1ovdGD2DkHdxo1kRV-qSSfeVjAcNkbzG1Yk34wyKDPWsNKXjyZ2j0B8vVA8P9uPe1JjHZ34XaanCzvsCFWe1k23n5wSSYZQCazbhT4DSqO0RbiNoPHf8MwxIKbH8oaUWO1tLsUJ4k-r58M')" }}></div>
@@ -53,7 +53,7 @@ export function CoffeeRouteScreen({ onBack, onHome, onExplore, onScan, onPrizes,
         </div>
       </div>
 
-      <main className="flex-1 overflow-y-auto px-6 py-8 pb-32 space-y-8">
+      <main className="flex-1 overflow-y-auto px-6 py-8 space-y-8">
         
         {/* Progress Card */}
         <div className="glass-card p-5 rounded-3xl border border-white/10 shadow-lg relative overflow-hidden">

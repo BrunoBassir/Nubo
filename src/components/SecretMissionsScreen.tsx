@@ -36,7 +36,7 @@ export function SecretMissionsScreen({ onBack }: { onBack: () => void }) {
   ]);
 
   return (
-    <div className="bg-background-dark min-h-screen pb-32 flex flex-col items-center relative overflow-hidden">
+    <div className="bg-background-dark flex flex-col items-center relative overflow-hidden">
       
       {/* Back Button */}
       <header className="fixed top-0 left-0 right-0 w-full lg:max-w-md lg:mx-auto z-50 flex items-center px-6 h-16 bg-background-dark/80 backdrop-blur-md border-b border-white/5">

@@ -24,7 +24,7 @@ export function PassportScreen({ onBack }: { onBack: () => void }) {
   ];
 
   return (
-    <div className="bg-background-dark min-h-screen pb-32">
+    <div className="bg-background-dark">
       <header className="fixed top-0 left-0 right-0 w-full lg:max-w-md lg:mx-auto z-50 flex items-center justify-between px-6 h-16 bg-background-dark/80 backdrop-blur-xl border-b border-white/10">
         <button onClick={onBack} className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 transition-colors border border-white/10">
           <span className="material-symbols-outlined text-white">arrow_back</span>

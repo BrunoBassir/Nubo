@@ -1,6 +1,6 @@
 export function RedeemVoucherScreen({ onBack, onHome, onExplore, onScan, onPrizes, onRanking }: { onBack?: () => void, onHome?: () => void, onExplore?: () => void, onScan?: () => void, onPrizes?: () => void, onRanking?: () => void }) {
   return (
-    <div className="bg-[#0a0a0a] text-slate-100 min-h-screen flex flex-col font-sans relative">
+    <div className="bg-[#0a0a0a] text-slate-100 flex flex-col font-sans relative">
       {/* Header */}
       <header className="flex items-center justify-between p-6 sticky top-0 z-50">
         <button onClick={onBack} className="flex items-center justify-center w-10 h-10 rounded-full bg-[#00f2ff]/10 text-[#00f2ff]">
@@ -10,7 +10,7 @@ export function RedeemVoucherScreen({ onBack, onHome, onExplore, onScan, onPrize
         <div className="w-10"></div> {/* Spacer for centering */}
       </header>
       
-      <main className="flex-1 px-6 pb-32 max-w-md mx-auto w-full">
+      <main className="flex-1 px-6 max-w-md mx-auto w-full">
         {/* Redemption Ticket Container */}
         <div className="relative mt-4">
           {/* QR Card */}

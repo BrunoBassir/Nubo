@@ -37,7 +37,7 @@ export function PrizeCelebrationScreen({ reward, onClose, onVouchers }: { reward
   }, []);
 
   return (
-    <div className="bg-background-dark font-display text-slate-100 min-h-screen flex flex-col overflow-x-hidden relative lg:max-w-md lg:mx-auto w-full z-50">
+    <div className="bg-background-dark font-display text-slate-100 flex flex-col overflow-x-hidden relative lg:max-w-md lg:mx-auto w-full z-50">
       
       {/* Top Navigation Bar */}
       <motion.div 

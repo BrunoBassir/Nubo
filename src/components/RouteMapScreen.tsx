@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 export function RouteMapScreen({ onBack }: { onBack: () => void }) {
   return (
-    <div className="bg-[#090f11] font-sans text-slate-100 min-h-screen relative overflow-hidden flex flex-col w-full lg:max-w-md lg:mx-auto lg:border-x lg:border-white/10">
+    <div className="bg-[#090f11] font-sans text-slate-100 relative overflow-hidden flex flex-col w-full lg:max-w-md lg:mx-auto lg:border-x lg:border-white/10">
       
       {/* Header Navigation */}
       <div className="absolute top-0 left-0 right-0 z-50 bg-gradient-to-b from-[#090f11] via-[#090f11]/80 to-transparent flex items-center p-4 justify-between w-full pt-6 pb-10 pointer-events-none">

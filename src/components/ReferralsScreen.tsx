@@ -5,7 +5,7 @@ export function ReferralsScreen({ onBack, onHome, onExplore, onScan, onPrizes, o
   const [isShareOpen, setIsShareOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#06090a] text-white font-sans font-display relative">
+    <div className="flex flex-col bg-[#06090a] text-white font-sans font-display relative">
       {isShareOpen && <ShareSheet onClose={() => setIsShareOpen(false)} title="Compartir Nubo" text="¡Sumate a Nubo con mi código NUBO-X92 y ganemos XP!" url="https://nubo.app/invite/NUBO-X92" />}
       
       <header className="sticky top-0 z-50 bg-[#06090a]/80 backdrop-blur-xl px-6 py-4 flex items-center justify-between border-b border-white/5 lg:max-w-md lg:mx-auto w-full">

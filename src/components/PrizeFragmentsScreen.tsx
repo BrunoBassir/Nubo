@@ -18,7 +18,7 @@ export function PrizeFragmentsScreen({ onBack, onOpenVouchers }: { onBack: () =>
   };
 
   return (
-    <div className="bg-[#050B14] min-h-screen flex flex-col text-slate-100 relative overflow-hidden pb-32">
+    <div className="bg-[#050B14] flex flex-col text-slate-100 relative overflow-hidden">
       
       {/* Background Ambience */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-fuchsia-600/10 blur-[100px] pointer-events-none" />

@@ -17,7 +17,7 @@ export function ExplorerDnaScreen({ onBack }: { onBack: () => void }) {
   }, []);
 
   return (
-    <div className="bg-background-dark min-h-screen pb-32 flex flex-col items-center justify-center relative overflow-hidden">
+    <div className="bg-background-dark flex flex-col items-center justify-center relative overflow-hidden">
       {/* Background ambient lighting */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/20 via-background-dark to-background-dark -z-10"></div>
       

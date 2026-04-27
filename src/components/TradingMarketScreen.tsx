@@ -17,7 +17,7 @@ export function TradingMarketScreen({ onBack }: { onBack: () => void }) {
   ];
 
   return (
-    <div className="bg-[#050B14] min-h-screen flex flex-col items-center text-slate-100">
+    <div className="bg-[#050B14] flex flex-col items-center text-slate-100">
       
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 w-full lg:max-w-md lg:mx-auto z-50 px-6 h-16 bg-[#050B14]/90 backdrop-blur-md border-b border-white/5 flex items-center justify-between">
@@ -33,7 +33,7 @@ export function TradingMarketScreen({ onBack }: { onBack: () => void }) {
         </div>
       </header>
 
-      <main className="flex-1 w-full lg:max-w-md px-4 pt-24 pb-32 overflow-y-auto">
+      <main className="flex-1 w-full lg:max-w-md px-4 pt-24 overflow-y-auto">
         
         {/* Info Banner */}
         <div className="bg-gradient-to-r from-teal-900/40 to-emerald-900/20 border border-teal-500/20 rounded-2xl p-4 mb-6 relative overflow-hidden">

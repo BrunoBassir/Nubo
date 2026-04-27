@@ -96,7 +96,7 @@ export function PrizesScreen({ onVouchersClick, onMysteryChestClick, onPrizeFrag
 
   // Removed early return to show fallback data
   // if (loading) {
-  //    return <div className="bg-background-dark min-h-screen text-white flex items-center justify-center">Cargando premios...</div>;
+  //    return <div className="bg-background-dark text-white flex items-center justify-center">Cargando premios...</div>;
   // }
 
   return (

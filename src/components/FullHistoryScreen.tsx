@@ -148,7 +148,7 @@ export function FullHistoryScreen({ onBack }: { onBack: () => void }) {
   };
 
   return (
-    <div className="min-h-screen bg-background-dark font-sans pb-32">
+    <div className="bg-background-dark font-sans">
       <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 h-16 bg-slate-950/80 backdrop-blur-xl border-b border-white/10">
         <div className="flex items-center gap-3">
           <button onClick={onBack} className="text-slate-400 hover:text-white transition-colors mr-2">

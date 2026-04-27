@@ -39,7 +39,7 @@ export function AchievementsScreen({ onBack }: { onBack: () => void }) {
         <div className="w-10"></div>
       </header>
 
-      <main className="pt-20 px-4 max-w-2xl mx-auto pb-32 min-h-screen bg-background-dark">
+      <main className="pt-20 px-4 max-w-2xl mx-auto bg-background-dark">
         <motion.div variants={containerVariants} initial="hidden" animate="show" className="space-y-6">
           
           {/* Progress Overview - Gaming Style */}

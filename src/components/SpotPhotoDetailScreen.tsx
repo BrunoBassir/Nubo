@@ -17,7 +17,7 @@ export function SpotPhotoDetailScreen({ onBack }: { onBack?: () => void }) {
   }, []);
 
   return (
-    <div className="bg-slate-950 text-slate-100 min-h-screen flex flex-col w-full lg:max-w-md lg:mx-auto relative dark">
+    <div className="bg-slate-950 text-slate-100 flex flex-col w-full lg:max-w-md lg:mx-auto relative dark">
       {/* Top Header - Glassmorphic over image */}
       <header className="fixed top-0 z-50 bg-slate-950/40 backdrop-blur-md border-b border-white/10 px-4 h-14 flex items-center justify-between w-full lg:max-w-md">
         <button onClick={onBack} className="flex items-center justify-center size-10 rounded-full bg-black/40 hover:bg-black/60 text-white transition-colors">

@@ -453,7 +453,7 @@ export function RankingScreen({ onReferidosClick, onWeeklyPrizeClick }: { onRefe
             </div>
 
             {/* Top Contributors */}
-            <div className="px-4 mt-8 pb-32">
+            <div className="px-4 mt-8">
               <div className="flex items-center justify-between mb-4 px-1">
                 <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] flex items-center gap-2 text-white/70">
                   <span className="material-symbols-outlined text-cyber-cyan text-lg">emoji_events</span>
@@ -547,7 +547,7 @@ export function RankingScreen({ onReferidosClick, onWeeklyPrizeClick }: { onRefe
             </div>
 
             {/* Referidos Leaderboard */}
-            <div className="px-4 space-y-3 pb-32">
+            <div className="px-4 space-y-3">
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="flex items-center gap-4 p-4 bg-white/5 border border-white/5 rounded-2xl relative overflow-hidden">
                 <div className="absolute left-0 top-0 bottom-0 w-1 bg-cyber-cyan"></div>
                 <div className="w-6 text-center">

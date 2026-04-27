@@ -11,7 +11,7 @@ export function ManualCodeScreen({ onBack, onValidate }: { onBack: () => void, o
   };
 
   return (
-    <div className="bg-background-dark font-sans text-slate-100 min-h-screen flex flex-col relative w-full lg:max-w-md lg:mx-auto lg:border-x lg:border-white/10">
+    <div className="bg-background-dark font-sans text-slate-100 flex flex-col relative w-full lg:max-w-md lg:mx-auto lg:border-x lg:border-white/10">
       {/* Header */}
       <header className="px-6 py-4 flex items-center justify-between border-b border-white/10 relative z-10 bg-background-dark/80 backdrop-blur-md">
         <button onClick={onBack} className="flex size-10 items-center justify-center rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
@@ -21,7 +21,7 @@ export function ManualCodeScreen({ onBack, onValidate }: { onBack: () => void, o
         <div className="w-10"></div>
       </header>
 
-      <main className="flex-1 flex flex-col items-center justify-center px-8 relative z-10 pb-24">
+      <main className="flex-1 flex flex-col items-center justify-center px-8 relative z-10">
         {/* Abstract Background Element */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#19ccf0]/10 blur-[80px] rounded-full pointer-events-none"></div>
 

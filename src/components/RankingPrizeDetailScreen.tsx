@@ -4,7 +4,7 @@ export function RankingPrizeDetailScreen({ onBack }: { onBack: () => void }) {
   const [activeTab, setActiveTab] = useState<'info' | 'ganadores'>('info');
 
   return (
-    <div className="bg-background-dark font-display text-slate-100 min-h-screen flex flex-col relative w-full lg:max-w-md lg:mx-auto lg:border-x lg:border-white/10">
+    <div className="bg-background-dark font-display text-slate-100 flex flex-col relative w-full lg:max-w-md lg:mx-auto lg:border-x lg:border-white/10">
       {/* Header */}
       <header className="absolute top-0 left-0 right-0 z-40 px-4 py-4 flex items-center justify-between">
         <button onClick={onBack} className="flex size-10 items-center justify-center rounded-full bg-black/40 backdrop-blur-md border border-white/10 hover:bg-white/10 transition-colors">
@@ -30,7 +30,7 @@ export function RankingPrizeDetailScreen({ onBack }: { onBack: () => void }) {
         </div>
       </div>
 
-      <div className="flex-1 bg-background-dark px-6 pb-24 -mt-2 relative z-20 rounded-t-3xl border-t border-white/10 pt-6">
+      <div className="flex-1 bg-background-dark px-6 -mt-2 relative z-20 rounded-t-3xl border-t border-white/10 pt-6">
          {/* Tabs */}
          <div className="flex p-1 bg-white/5 rounded-xl border border-white/10 mb-6">
             <button 

@@ -32,7 +32,7 @@ export function ProfileScreen({ onEditProfile, onSettingsClick, onInviteFriendsC
     <>
       {isShareOpen && <ShareSheet onClose={() => setIsShareOpen(false)} title="Compartir Perfil" text="¡Mira mi perfil en Nubo!" url="https://nubo.app/u/marcosur" />}
       
-      <main className="flex-1 overflow-y-auto pb-32 pt-2">
+      <main className="flex-1 overflow-y-auto pt-2">
         <div className="flex items-center justify-between px-6 py-2 relative w-full">
           <button onClick={onSettingsClick} className="flex items-center justify-center w-10 h-10 rounded-full bg-surface-dark border border-white/10 hover:bg-slate-800 transition-colors z-10">
             <span className="material-symbols-outlined text-[20px]">settings</span>

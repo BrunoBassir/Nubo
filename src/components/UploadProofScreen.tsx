@@ -1,6 +1,6 @@
 export function UploadProofScreen({ onBack, onValidate }: { onBack: () => void, onValidate?: () => void }) {
   return (
-    <div className="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col w-full lg:max-w-md lg:mx-auto relative">
+    <div className="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 flex flex-col w-full lg:max-w-md lg:mx-auto relative">
       {/* Top Navigation Bar */}
       <header className="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-4 pt-6 pb-4 border-b border-white/5">
         <div className="flex items-center justify-between w-full">
@@ -14,7 +14,7 @@ export function UploadProofScreen({ onBack, onValidate }: { onBack: () => void, 
         </div>
       </header>
 
-      <main className="flex-1 w-full px-6 pb-32">
+      <main className="flex-1 w-full px-6">
         {/* Challenge Progress Section */}
         <section className="mt-4 mb-8">
           <div className="flex justify-between items-end mb-3">
