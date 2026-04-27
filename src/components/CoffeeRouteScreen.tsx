@@ -4,7 +4,7 @@ import { Place } from './ExplorePlacesScreen';
 
 // Mock place for the "Localizar Parada" functionality
 const mockCoffeePlace: Place = {
-  id: 99,
+  id: "99",
   name: "Brew & Co.",
   distance: "2.5km",
   category: "Gastronomía",

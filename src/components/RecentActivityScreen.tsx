@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { useAuth } from '../contexts/AuthContext';
 
-export function RecentActivityScreen({ onBack, onLevelAchievedClick, onProfileClick, onNotificationsClick }: { onBack: () => void, onLevelAchievedClick?: () => void, onProfileClick?: () => void, onNotificationsClick?: () => void }) {
+export function RecentActivityScreen({ onBack, onLevelAchievedClick, onProfileClick, onNotificationsClick, onFullHistoryClick }: { onBack: () => void, onLevelAchievedClick?: () => void, onProfileClick?: () => void, onNotificationsClick?: () => void, onFullHistoryClick?: () => void }) {
   const { user } = useAuth();
   
   const containerVariants = {
@@ -149,7 +149,10 @@ export function RecentActivityScreen({ onBack, onLevelAchievedClick, onProfileCl
           </motion.section>
 
           <motion.div variants={itemVariants} className="mt-8 flex justify-center">
-            <button className="font-label-caps text-label-caps text-primary border border-primary/30 px-6 py-3 rounded-full hover:bg-primary/10 transition-all uppercase tracking-[0.2em] active:scale-95">
+            <button 
+              onClick={onFullHistoryClick}
+              className="font-label-caps text-label-caps text-primary border border-primary/30 px-6 py-3 rounded-full hover:bg-primary/10 transition-all uppercase tracking-[0.2em] active:scale-95"
+            >
               Ver historial completo
             </button>
           </motion.div>

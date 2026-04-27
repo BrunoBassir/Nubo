@@ -4,7 +4,7 @@ import { PlaceDetailScreen } from './PlaceDetailScreen';
 
 const tourPlaces: Place[] = [
   {
-    id: 101,
+    id: "101",
     name: "Galería de Arte Moderno",
     distance: "450m",
     category: "Cultura",
@@ -17,7 +17,7 @@ const tourPlaces: Place[] = [
     isOpen: true,
   },
   {
-    id: 102,
+    id: "102",
     name: "Museo Histórico",
     distance: "1.2km",
     category: "Cultura",
@@ -30,7 +30,7 @@ const tourPlaces: Place[] = [
     isOpen: true,
   },
   {
-    id: 103,
+    id: "103",
     name: "Museo de Ciencias",
     distance: "3km",
     category: "Cultura",

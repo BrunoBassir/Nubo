@@ -35,7 +35,6 @@ export function ScanQRScreen({ onProfileClick, onNotificationsClick, onManualCod
               }
             }}
             components={{
-              audio: false,
               onOff: false,
               torch: false,
               zoom: false,
