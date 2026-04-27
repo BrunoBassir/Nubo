@@ -61,7 +61,7 @@ export function MysteryChestScreen({ onBack, onOpen }: { onBack: () => void, onO
                transition={{ duration: stage === 'opening' ? 0.5 : 0.4, repeat: stage === 'opening' ? 3 : 0 }}
                className="relative z-10 w-full h-full flex flex-col items-center justify-center"
             >
-               <span className="material-symbols-outlined text-9xl text-indigo-400 drop-shadow-[0_0_20px_rgba(99,102,241,0.8)]" style={{ fontVariationSettings: "'FILL' 1" }}>inventory_2</span>
+               <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f381/512.gif" alt="Cofre Misterioso" className="w-[120%] h-[120%] object-contain drop-shadow-[0_0_40px_rgba(99,102,241,0.6)] mix-blend-screen mix-blend-normal" style={{ filter: 'drop-shadow(0 0 30px rgba(99,102,241,0.5))' }} />
             </motion.div>
 
             {/* Explosion flash */}
@@ -114,7 +114,7 @@ export function MysteryChestScreen({ onBack, onOpen }: { onBack: () => void, onO
                   className="w-full bg-gradient-to-r from-indigo-600 to-primary text-white font-bold uppercase tracking-widest text-xs py-4 rounded-full shadow-[0_0_20px_rgba(99,102,241,0.4)] hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2"
                >
                   <span className="material-symbols-outlined text-sm">lock_open</span>
-                  Abrir por 500 Pts
+                  Abrir por 500 Nubo Points
                </motion.button>
             )}
          </AnimatePresence>

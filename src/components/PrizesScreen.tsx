@@ -206,12 +206,12 @@ export function PrizesScreen({ onVouchersClick, onMysteryChestClick, onPrizeFrag
                     <span className="font-display font-black text-2xl text-white drop-shadow-md leading-none mb-1">Cofre Misterioso</span>
                     <span className="text-xs font-semibold text-slate-300 mt-1 flex items-center gap-1">
                       <span className="material-symbols-outlined text-[14px]">local_fire_department</span>
-                      Quemá 500 NP y probá tu suerte
+                      Quemá 500 Nubo Points y probá tu suerte
                     </span>
                   </div>
                   
                   <div className="w-14 h-14 rounded-full bg-indigo-500/20 backdrop-blur-md flex items-center justify-center border border-indigo-500/50 shadow-[0_0_15px_rgba(99,102,241,0.4)] relative z-10">
-                    <span className="material-symbols-outlined text-3xl text-indigo-100" style={{ fontVariationSettings: "'FILL' 1" }}>inventory_2</span>
+                    <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f381/512.gif" alt="Cofre" className="w-10 h-10 object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]" />
                   </div>
                 </div>
               </div>
