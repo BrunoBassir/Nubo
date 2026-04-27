@@ -7,7 +7,7 @@ const tourPlaces: Place[] = [
     id: "101",
     name: "Galería de Arte Moderno",
     distance: "450m",
-    category: "Cultura",
+    category: "Atractivo",
     subcategory: "Exhibición Inmersiva",
     imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuAJsH75Mxn3q8rSehmHhLHh15fY93QYRcbHTzWwuxVC3GE_oDFWolw0twT-TONUwTE9xPCviHDGnXCTzY2wVrZdXfyItICrW8angsHGFdhQFEgvmPyfUvuK3rkzRdkrXB94obx651Gt4CN-mYSFFAUqOUqzqVmgBIuNmB0fqfbX5C1x9ls5ij6bXi80h92Xwtoi97NNcexd6kgCjEX9OoPsyuYfqwnfqH4fiVZM4vkzRgDDLmhyLMq6EF6mKrkNZpNRttGkstIbPgM",
     badge: null,
@@ -20,7 +20,7 @@ const tourPlaces: Place[] = [
     id: "102",
     name: "Museo Histórico",
     distance: "1.2km",
-    category: "Cultura",
+    category: "Atractivo",
     subcategory: "Historia Local",
     imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuC8qbZ5XV0AKFTAkY59qgZ2wDhFyRTTYSLLtAtzIfrLAOs_1tb9scIWSEO1JqoCYJBGpf9o5c6mdL3PEZbsndvu6BhZO_MFEtpROdXnr3glaLMv0tI98xlqPHLgcij6jnnEs2XAxC2D2R2J1vHSgAxmBAtbTgt-bRj008HAg_2-jkUGUhsuL9_KEdnEhSDZtfAYJKUSO6lEzzk2ETjO_KePTxkIyRrTy9QBXQHGXpvk4a4xZYlYpArctGe5__DN-LeqC9tgT2eq5hU",
     badge: null,
@@ -33,7 +33,7 @@ const tourPlaces: Place[] = [
     id: "103",
     name: "Museo de Ciencias",
     distance: "3km",
-    category: "Cultura",
+    category: "Atractivo",
     subcategory: "Polo Tecnológico",
     imageUrl: "https://images.unsplash.com/photo-1518364538800-6bae3c2ea0f2?q=80&w=2071&auto=format&fit=crop",
     badge: null,
@@ -95,7 +95,7 @@ export function FeaturedDetailScreen({ onBack, onValidate }: { onBack?: () => vo
           <div className="h-2 w-full bg-black/40 rounded-full overflow-hidden shadow-inner mb-4">
             <div className="h-full bg-gradient-to-r from-primary to-accent rounded-full shadow-[0_0_10px_rgba(0,242,255,0.5)]" style={{ width: '33%' }}></div>
           </div>
-          <p className="text-xs text-slate-300">Te faltan 2 visitas para obtener la <strong className="text-white">Insignia Cultural</strong> y <strong className="text-[#00F2FF]">500 XP</strong>.</p>
+          <p className="text-xs text-slate-300">Te faltan 2 visitas para obtener la <strong className="text-white">Insignia Atractivol</strong> y <strong className="text-[#00F2FF]">500 XP</strong>.</p>
         </div>
 
         {/* Checkpoints */}
@@ -168,7 +168,7 @@ export function FeaturedDetailScreen({ onBack, onValidate }: { onBack?: () => vo
             </li>
             <li className="flex items-center gap-3">
               <span className="material-symbols-outlined text-yellow-400 bg-yellow-400/10 p-1.5 rounded-lg text-sm">workspace_premium</span>
-              <span className="text-sm font-medium text-slate-200">Insignia exclusiva <strong className="text-yellow-400">Cultural</strong></span>
+              <span className="text-sm font-medium text-slate-200">Insignia exclusiva <strong className="text-yellow-400">Atractivol</strong></span>
             </li>
           </ul>
         </section>

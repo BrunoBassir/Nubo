@@ -102,7 +102,7 @@ export function PlaceDetailScreen({ place, onClose, onValidate, onRouteClick }: 
               Validar Visita
             </button>
             <button onClick={() => setShowExtraDetails(true)} className="w-full bg-slate-900/50 text-slate-200 py-4 rounded-2xl font-bold text-sm uppercase tracking-widest border border-slate-800 hover:bg-slate-800/80 hover:border-[#19ccf0]/40 hover:text-[#19ccf0] hover:shadow-[0_0_15px_rgba(25,204,240,0.1)] hover:scale-[1.02] active:scale-[0.98] transition-all">
-              Ver {place.category === 'Gastronomía' || place.category === 'Bares' ? 'Menú' : 'Más Detalles'}
+              Ver {place.category === 'Gastronomía' ? 'Menú' : 'Más Detalles'}
             </button>
           </div>
         </div>

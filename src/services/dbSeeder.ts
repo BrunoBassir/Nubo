@@ -23,7 +23,7 @@ const PLACES_SEED = [
   {
     id: 'place2',
     name: 'Museo de Arte Moderno',
-    category: 'Cultura',
+    category: 'Atractivo',
     subcategory: 'Museo',
     imageUrl: 'https://images.unsplash.com/photo-1518998053901-55d8d3961a00?auto=format&fit=crop&q=80',
     distance: '1.2km',
@@ -39,7 +39,7 @@ const PLACES_SEED = [
   {
     id: 'place3',
     name: 'Hotel Plaza Central',
-    category: 'Hotelería',
+    category: 'Alojamiento',
     subcategory: 'Hotel 5*',
     imageUrl: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80',
     distance: '800m',

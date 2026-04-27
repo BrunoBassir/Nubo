@@ -5,7 +5,7 @@ export function PlaceExtraDetailsScreen({ place, onBack }: { place: Place, onBac
   const renderContent = () => {
     switch (place.category) {
       case 'Gastronomía':
-      case 'Bares':
+      case 'Gastronomía':
         return (
           <div className="px-6 py-6 space-y-6">
             <div className="text-center mb-8">
@@ -34,7 +34,7 @@ export function PlaceExtraDetailsScreen({ place, onBack }: { place: Place, onBac
             )}
           </div>
         );
-      case 'Hotelería':
+      case 'Alojamiento':
         return (
           <div className="px-6 py-6 space-y-6">
             <div className="text-center mb-8">
@@ -61,7 +61,7 @@ export function PlaceExtraDetailsScreen({ place, onBack }: { place: Place, onBac
             )}
           </div>
         );
-      case 'Cultura':
+      case 'Atractivo':
         return (
           <div className="px-6 py-6 space-y-6">
             <div className="text-center mb-8">
@@ -115,7 +115,7 @@ export function PlaceExtraDetailsScreen({ place, onBack }: { place: Place, onBac
           </button>
           <div className="flex-1 px-4 text-center">
             <h2 className="text-sm font-bold uppercase tracking-widest border-l-2 border-cyan-400 pl-2 inline-block">
-              {place.category === 'Gastronomía' || place.category === 'Bares' ? 'Menú' : 'Info'}
+              {place.category === 'Gastronomía' ? 'Menú' : 'Info'}
             </h2>
           </div>
           <div className="w-10"></div> {/* Placeholder to balance flex */}

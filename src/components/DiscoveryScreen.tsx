@@ -5,7 +5,7 @@ import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { samplePlaces } from '../lib/seedDatabase';
 
-type DiscoveryCategory = 'Todos' | 'Gastronomía' | 'Cultura' | 'Hotelería';
+type DiscoveryCategory = 'Todos' | 'Gastronomía' | 'Atractivo' | 'Alojamiento';
 
 export function DiscoveryScreen({ onHome, onExplore, onScan, onPrizes, onRanking, onValidate, onRouteClick }: { onHome?: () => void, onExplore?: () => void, onScan?: () => void, onPrizes?: () => void, onRanking?: () => void, onValidate?: () => void, onRouteClick?: () => void }) {
   const [activeCategory, setActiveCategory] = useState<DiscoveryCategory>('Todos');
@@ -54,14 +54,14 @@ export function DiscoveryScreen({ onHome, onExplore, onScan, onPrizes, onRanking
 
   const getIcon = (category: string) => {
      if (category === 'Gastronomía') return 'local_cafe';
-     if (category === 'Cultura') return 'museum';
-     if (category === 'Hospedaje') return 'hotel';
+     if (category === 'Atractivo') return 'museum';
+     if (category === 'Alojamiento') return 'hotel';
      return 'place';
   }
 
   const filteredPlaces = useMemo(() => {
     if (activeCategory === 'Todos') return displayPlaces;
-    return displayPlaces.filter(p => p.category === activeCategory || (activeCategory === 'Gastronomía' && p.category === 'Bares'));
+    return displayPlaces.filter(p => p.category === activeCategory || (false));
   }, [activeCategory, displayPlaces]);
 
   if (showDetailScreen && selectedPlace) {
@@ -95,13 +95,13 @@ export function DiscoveryScreen({ onHome, onExplore, onScan, onPrizes, onRanking
           <div className="flex gap-2 overflow-x-auto scroll-hide py-1">
             <button onClick={() => setActiveCategory('Todos')} className={`px-5 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 flex items-center gap-2 whitespace-nowrap uppercase tracking-wider ${activeCategory === 'Todos' ? 'bg-[#19ccf0] text-background-dark shadow-[0_0_15px_rgba(25,204,240,0.5)]' : 'bg-white/5 border border-white/10 text-slate-400 hover:bg-white/10'}`}>Todos</button>
             <button onClick={() => setActiveCategory('Gastronomía')} className={`px-5 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 flex items-center gap-2 whitespace-nowrap uppercase tracking-wider ${activeCategory === 'Gastronomía' ? 'bg-[#19ccf0] text-background-dark shadow-[0_0_15px_rgba(25,204,240,0.5)]' : 'bg-white/5 border border-white/10 text-slate-400 hover:bg-white/10'}`}>
-              <span className="material-symbols-outlined text-lg">local_cafe</span> Cafés & Bares
+              <span className="material-symbols-outlined text-lg">local_cafe</span> Gastronomía
             </button>
-            <button onClick={() => setActiveCategory('Cultura')} className={`px-5 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 flex items-center gap-2 whitespace-nowrap uppercase tracking-wider ${activeCategory === 'Cultura' ? 'bg-[#19ccf0] text-background-dark shadow-[0_0_15px_rgba(25,204,240,0.5)]' : 'bg-white/5 border border-white/10 text-slate-400 hover:bg-white/10'}`}>
-              <span className="material-symbols-outlined text-lg">museum</span> Museos
+            <button onClick={() => setActiveCategory('Atractivo')} className={`px-5 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 flex items-center gap-2 whitespace-nowrap uppercase tracking-wider ${activeCategory === 'Atractivo' ? 'bg-[#19ccf0] text-background-dark shadow-[0_0_15px_rgba(25,204,240,0.5)]' : 'bg-white/5 border border-white/10 text-slate-400 hover:bg-white/10'}`}>
+              <span className="material-symbols-outlined text-lg">museum</span> Atractivo
             </button>
-            <button onClick={() => setActiveCategory('Hotelería')} className={`px-5 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 flex items-center gap-2 whitespace-nowrap uppercase tracking-wider ${activeCategory === 'Hotelería' ? 'bg-[#19ccf0] text-background-dark shadow-[0_0_15px_rgba(25,204,240,0.5)]' : 'bg-white/5 border border-white/10 text-slate-400 hover:bg-white/10'}`}>
-              <span className="material-symbols-outlined text-lg">hotel</span> Hoteles
+            <button onClick={() => setActiveCategory('Alojamiento')} className={`px-5 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 flex items-center gap-2 whitespace-nowrap uppercase tracking-wider ${activeCategory === 'Alojamiento' ? 'bg-[#19ccf0] text-background-dark shadow-[0_0_15px_rgba(25,204,240,0.5)]' : 'bg-white/5 border border-white/10 text-slate-400 hover:bg-white/10'}`}>
+              <span className="material-symbols-outlined text-lg">hotel</span> Alojamiento
             </button>
           </div>
         </div>

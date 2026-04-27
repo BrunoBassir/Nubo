@@ -6,13 +6,13 @@ import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { sampleRewards } from '../lib/seedDatabase';
 
-type RewardCategory = 'Todo' | 'Gastronomía' | 'Cultura' | 'Hospedaje';
-const rewardCategories: RewardCategory[] = ['Todo', 'Gastronomía', 'Cultura', 'Hospedaje'];
+type RewardCategory = 'Todo' | 'Gastronomía' | 'Atractivo' | 'Alojamiento';
+const rewardCategories: RewardCategory[] = ['Todo', 'Gastronomía', 'Atractivo', 'Alojamiento'];
 
 const mapTypeToCategory = (type: string): RewardCategory => {
   if (type === 'food') return 'Gastronomía';
-  if (type === 'culture') return 'Cultura';
-  if (type === 'hotel') return 'Hospedaje';
+  if (type === 'culture') return 'Atractivo';
+  if (type === 'hotel') return 'Alojamiento';
   return 'Todo';
 };
 
@@ -163,22 +163,22 @@ export function PrizesScreen({ onVouchersClick, onMysteryChestClick, onPrizeFrag
                 </section>
               )}
 
-              {(activeCategory === 'Todo' || activeCategory === 'Cultura') && (
+              {(activeCategory === 'Todo' || activeCategory === 'Atractivo') && (
                 <section>
                   <div className="flex items-center justify-between mb-3 px-1">
                     <h2 className="text-sm font-bold flex items-center gap-2 uppercase tracking-widest text-slate-300">
                       <span className="material-symbols-outlined text-primary text-lg">theater_comedy</span>
-                      Cultura
+                      Atractivo
                     </h2>
                     <span className="text-primary text-[10px] font-bold uppercase cursor-pointer">Ver todo</span>
                   </div>
                   <div className="grid grid-cols-2 gap-3">
-                    {displayRewards.filter(r => r.category === 'Cultura').map(renderRewardCard)}
+                    {displayRewards.filter(r => r.category === 'Atractivo').map(renderRewardCard)}
                   </div>
                 </section>
               )}
 
-              {(activeCategory === 'Todo' || activeCategory === 'Hospedaje') && (
+              {(activeCategory === 'Todo' || activeCategory === 'Alojamiento') && (
                 <section>
                   <div className="flex items-center justify-between mb-3 px-1">
                     <h2 className="text-sm font-bold flex items-center gap-2 uppercase tracking-widest text-slate-300">
@@ -188,7 +188,7 @@ export function PrizesScreen({ onVouchersClick, onMysteryChestClick, onPrizeFrag
                     <span className="text-primary text-[10px] font-bold uppercase cursor-pointer">Ver todo</span>
                   </div>
                   <div className="grid grid-cols-2 gap-3 mb-6">
-                    {displayRewards.filter(r => r.category === 'Hospedaje').map(renderRewardCard)}
+                    {displayRewards.filter(r => r.category === 'Alojamiento').map(renderRewardCard)}
                   </div>
                 </section>
               )}

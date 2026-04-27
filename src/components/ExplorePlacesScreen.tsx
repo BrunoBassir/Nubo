@@ -4,7 +4,7 @@ import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { samplePlaces } from '../lib/seedDatabase';
 
-type PlaceCategory = 'Todo' | 'Gastronomía' | 'Hotelería' | 'Cultura' | 'Bares';
+type PlaceCategory = 'Todo' | 'Gastronomía' | 'Alojamiento' | 'Atractivo' | 'Deportes' | 'Compras';
 
 export type Place = {
   id: string;
@@ -68,7 +68,7 @@ export function ExplorePlacesScreen({ onBack, onPlaceDetailClick, onProfileClick
     return displayPlaces.find(p => p.id === 'place1') || displayPlaces[0];
   }, [displayPlaces]);
 
-  const categories: PlaceCategory[] = ['Todo', 'Gastronomía', 'Hotelería', 'Cultura', 'Bares'];
+  const categories: PlaceCategory[] = ['Todo', 'Gastronomía', 'Alojamiento', 'Atractivo', 'Deportes', 'Compras'];
 
   // Removed early return to show fallback data
   // if (loading) {
