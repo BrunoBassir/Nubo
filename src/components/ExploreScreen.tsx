@@ -1,26 +1,44 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { PlaceDetailScreen } from './PlaceDetailScreen';
 import { Place } from './ExplorePlacesScreen';
 import { collection, onSnapshot, query, limit } from 'firebase/firestore';
 import { db } from '../lib/firebase';
+import { samplePlaces } from '../lib/seedDatabase';
 
 export function ExploreScreen({ onPlacesClick, onChallengesClick, onDiscoveryClick, onFeaturedDetailClick, onRadarClick, onSecretMissionsClick, onRouteClick, onValidate }: { onPlacesClick?: () => void, onChallengesClick?: () => void, onDiscoveryClick?: () => void, onFeaturedDetailClick?: () => void, onRadarClick?: () => void, onSecretMissionsClick?: () => void, onRouteClick?: () => void, onValidate?: () => void }) {
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
   const [placesData, setPlacesData] = useState<Place[]>([]);
+  const [loading, setLoading] = useState(true);
   
   useEffect(() => {
+    // Timeout to stop showing loading state if Firestore is slow
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
     const unsub = onSnapshot(query(collection(db, 'places'), limit(5)), (snapshot) => {
       const places: Place[] = snapshot.docs.map(doc => ({
         ...(doc.data() as Omit<Place, 'id'>),
         id: doc.id
       }));
       setPlacesData(places);
+      setLoading(false);
+      clearTimeout(timer);
     }, (error) => {
        console.error("Error fetching places: ", error);
+       setLoading(false);
+       clearTimeout(timer);
     });
 
-    return () => unsub();
+    return () => {
+      unsub();
+      clearTimeout(timer);
+    };
   }, []);
+
+  const displayPlaces = useMemo(() => {
+    return placesData.length > 0 ? placesData : samplePlaces;
+  }, [placesData]);
 
   if (selectedPlace) {
     return <PlaceDetailScreen place={selectedPlace} onClose={() => setSelectedPlace(null)} onRouteClick={onRouteClick} onValidate={onValidate} />;
@@ -31,7 +49,7 @@ export function ExploreScreen({ onPlacesClick, onChallengesClick, onDiscoveryCli
       <main className="flex-1 overflow-y-auto px-6 pb-32 pt-8">
         <div className="flex gap-4 mt-4 h-[380px]">
           <div onClick={onPlacesClick} className="relative flex-1 group cursor-pointer overflow-hidden rounded-3xl border border-primary/20 transition-all duration-300 hover:border-primary/60 hover:shadow-[0_0_25px_rgba(25,204,240,0.5)] card-glow-teal">
-            <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuAtmknKxfFmcGriApOdvMiNdmOAfDNH2B5DoWCmCv-cPni_d_LK4Du3r4VSnrrIJbHpXq3IbKZr-7ivym_pZ1yYkwMwwvJ7OOOzqBtFAjTxbo6fujRF8ASWN-E1PmxZaN8IvK-x6wSOS2u5NcVOJepkegvS7dVImw1Zpj1OGAUmB5sp9JDnIUXvcNWKBuccMubABApWZS_6khWk5xLnJOmmnUv-qVUAX2BYBz9EwzIdabSDhiSaisstqUgi6S15mF50R796Les4gY0')" }}></div>
+            <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=800')" }}></div>
             <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent"></div>
             <div className="absolute inset-0 bg-primary/10 opacity-40 transition-opacity duration-300 group-hover:opacity-60"></div>
             <div className="absolute bottom-6 left-5 right-5">
@@ -44,7 +62,7 @@ export function ExploreScreen({ onPlacesClick, onChallengesClick, onDiscoveryCli
           </div>
           
           <div onClick={onChallengesClick} className="relative flex-1 group cursor-pointer overflow-hidden rounded-3xl border border-accent/20 transition-all duration-300 hover:border-accent/60 hover:shadow-[0_0_25px_rgba(240,162,25,0.5)] card-glow-orange">
-            <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuBs5cd59liGweFlnfO3PrRFOPwoR3ghQHjqROvkCiCIvimUX9LwQ1Us7ysQMJJZYiGPxSDbVHyFx-Ku7bMR-THA_XBKHxTw4YEydZ8WBJZjkdq7B0iqFApkVEK_ZVPgeBwxhniKTuZmmvrTmfT2x7WQV3yfWuqNgAEh9XvrBoJCTaLNJKq3-kkxSNSD1-PysCyNZCm4SEsTjPi4HIuvorbnnbx_N8Lv7Tm66rvIAaSCPYWZn_QGS629Hk8kpG-pzLi4dvzfPAnX65k')" }}></div>
+            <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80&w=800')" }}></div>
             <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent"></div>
             <div className="absolute inset-0 bg-accent/10 opacity-40 transition-opacity duration-300 group-hover:opacity-60"></div>
             <div className="absolute bottom-6 left-5 right-5">
@@ -109,7 +127,7 @@ export function ExploreScreen({ onPlacesClick, onChallengesClick, onDiscoveryCli
           
           <div className="relative w-full p-5 rounded-2xl bg-slate-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 flex gap-4 items-center overflow-hidden transition-all duration-300 hover:border-primary/30 hover:bg-slate-900/60 hover:shadow-[0_0_20px_rgba(25,204,240,0.1)] group">
             <div className="absolute -right-12 -top-12 size-40 bg-primary/5 rounded-full blur-3xl animate-pulse group-hover:bg-primary/20 transition-colors"></div>
-            <div className="relative w-24 h-24 rounded-xl bg-cover bg-center shrink-0 border border-white/10 group-hover:border-primary/50 overflow-hidden transition-colors" style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuAJsH75Mxn3q8rSehmHhLHh15fY93QYRcbHTzWwuxVC3GE_oDFWolw0twT-TONUwTE9xPCviHDGnXCTzY2wVrZdXfyItICrW8angsHGFdhQFEgvmPyfUvuK3rkzRdkrXB94obx651Gt4CN-mYSFFAUqOUqzqVmgBIuNmB0fqfbX5C1x9ls5ij6bXi80h92Xwtoi97NNcexd6kgCjEX9OoPsyuYfqwnfqH4fiVZM4vkzRgDDLmhyLMq6EF6mKrkNZpNRttGkstIbPgM')" }}>
+            <div className="relative w-24 h-24 rounded-xl bg-cover bg-center shrink-0 border border-white/10 group-hover:border-primary/50 overflow-hidden transition-colors" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=400')" }}>
               <div className="absolute inset-0 bg-primary/10 rounded-xl group-hover:bg-transparent transition-colors"></div>
             </div>
             
@@ -140,24 +158,16 @@ export function ExploreScreen({ onPlacesClick, onChallengesClick, onDiscoveryCli
           </div>
           
           <div className="flex gap-4 overflow-x-auto hide-scrollbar pb-4">
-            {placesData.length === 0 ? (
-              // Skeleton loading state
-              [1, 2, 3].map((i) => (
-                <div key={`skeleton-${i}`} className="w-40 shrink-0">
-                  <div className="w-full aspect-square rounded-2xl bg-white/5 animate-pulse mb-2"></div>
-                  <div className="h-4 bg-white/5 rounded w-3/4 animate-pulse mb-1"></div>
-                  <div className="h-3 bg-white/5 rounded w-1/2 animate-pulse"></div>
-                </div>
-              ))
-            ) : (
-              placesData.slice(0, 3).map((place) => (
-                <div key={place.id} onClick={() => setSelectedPlace(place)} className="w-40 shrink-0 group cursor-pointer">
-                  <div className="w-full aspect-square rounded-2xl bg-cover bg-center mb-2 border border-slate-200 dark:border-slate-800 transition-all duration-300 group-hover:border-primary/40 group-hover:shadow-[0_0_15px_rgba(25,204,240,0.15)] group-hover:scale-105" style={{ backgroundImage: `url('${place.imageUrl}')` }}></div>
-                  <p className="font-bold text-sm truncate group-hover:text-primary transition-colors">{place.name}</p>
-                  <p className="text-[10px] text-slate-500">{place.subcategory} • {place.distance}</p>
-                </div>
-              ))
-            )}
+            {displayPlaces.slice(0, 6).map((place, i) => (
+              <div key={place.id || `explore-place-${i}`} onClick={() => setSelectedPlace(place)} className="w-40 shrink-0 group cursor-pointer">
+                <div 
+                  className="w-full aspect-square rounded-2xl bg-cover bg-center mb-2 border border-slate-200 dark:border-slate-800 transition-all duration-300 group-hover:border-primary/40 group-hover:shadow-[0_0_15px_rgba(25,204,240,0.15)] group-hover:scale-105 bg-slate-800" 
+                  style={{ backgroundImage: `url('${place.imageUrl || 'https://images.unsplash.com/photo-1517248135467-4c7ed9d42339?q=80&w=400'}')` }}
+                ></div>
+                <p className="font-bold text-sm truncate group-hover:text-primary transition-colors">{place.name || 'Lugar'}</p>
+                <p className="text-[10px] text-slate-500">{(place.subcategory || place.category) || 'Explora'} • {place.distance || 'Cerca'}</p>
+              </div>
+            ))}
           </div>
         </section>
       </main>

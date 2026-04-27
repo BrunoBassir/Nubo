@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '../lib/firebase';
+import { sampleChallenges } from '../lib/seedDatabase';
 
 export type Challenge = {
   id: string;
@@ -35,13 +36,16 @@ export function ChallengesScreen({ onBack, onCoffeeRouteClick, onChallengeClick 
     return () => unsub();
   }, []);
 
-  const activeChallenges = challenges.filter(c => c.status === 'active' || c.status === 'new');
+  const displayChallenges = challenges.length > 0 ? challenges : sampleChallenges;
+
+  const activeChallenges = displayChallenges.filter(c => c.status === 'active' || c.status === 'new');
   // For UI mockup we assume first challenge is active/featured if no specific 'featured' tag yet.
   const featuredChallenge = activeChallenges[0] || null;
 
-  if (loading) {
-     return <div className="bg-background-dark min-h-screen text-white flex items-center justify-center">Cargando desafíos...</div>;
-  }
+  // Removed early loading return to show fallback data
+  // if (loading) {
+  //   return <div className="bg-background-dark min-h-screen text-white flex items-center justify-center">Cargando desafíos...</div>;
+  // }
 
   return (
     <div className="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col w-full lg:max-w-md lg:mx-auto">

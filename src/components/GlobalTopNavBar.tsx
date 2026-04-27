@@ -5,8 +5,8 @@ export function GlobalTopNavBar({ onProfileClick, onNotificationsClick }: { onPr
   
   return (
     <header className="fixed top-0 left-0 right-0 w-full lg:max-w-md lg:mx-auto z-[60] flex items-center justify-between px-6 h-16 bg-slate-950/80 backdrop-blur-xl border-b border-white/10 shadow-[0_0_15px_rgba(25,204,240,0.1)]">
-      <div className="flex items-center gap-3 cursor-pointer relative z-10" onClick={onProfileClick}>
-        <div className="w-10 h-10 rounded-full border-2 border-cyan-400 overflow-hidden hover:scale-105 active:scale-95 transition-transform flex items-center justify-center bg-cyan-400/20 text-cyan-400">
+      <div className="flex items-center gap-2 cursor-pointer relative z-10" onClick={onProfileClick}>
+        <div className="w-9 h-9 rounded-full border-2 border-cyan-400 overflow-hidden hover:scale-105 active:scale-95 transition-transform flex items-center justify-center bg-cyan-400/20 text-cyan-400">
           {user?.photoURL ? (
             <img 
               alt={user.displayName || "User"} 
@@ -14,8 +14,14 @@ export function GlobalTopNavBar({ onProfileClick, onNotificationsClick }: { onPr
               src={user.photoURL} 
             />
           ) : (
-            <span className="material-symbols-outlined text-2xl">person</span>
+            <span className="material-symbols-outlined text-xl">person</span>
           )}
+        </div>
+        <div className="flex flex-col">
+          <span className="text-[10px] text-slate-500 font-bold uppercase leading-none mb-0.5">Nivel 14</span>
+          <span className="text-sm font-bold text-white leading-none truncate max-w-[80px]">
+            {user?.displayName ? user.displayName.split(' ')[0] : 'Explorador'}
+          </span>
         </div>
       </div>
       

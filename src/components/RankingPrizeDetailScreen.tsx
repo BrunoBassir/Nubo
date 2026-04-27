@@ -17,16 +17,16 @@ export function RankingPrizeDetailScreen({ onBack }: { onBack: () => void }) {
       </header>
 
       {/* Hero Image */}
-      <div className="relative w-full aspect-square">
+      <div className="relative w-full aspect-[4/3] shrink-0">
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuCdYNx9pwwW-UmDiF0DbrVPm3Y-xTg3vNkYr4C6c7uad8JxNJEhz5524LGhXZrYMmnPb7AfWfPEjRjwHEvMWfJ793v7-6GyGNzzpFOBWd3JTM7SFhwfOIzUhnE_pXKnxOL5lubwmxtoTF8M5tVCZMYlMAwIrDT98a0Vul51l9juAbtxWwadFQEOCmUaIHE-mPjD2fb17e1F7Zvcy9rX5S-ZDjfqdeWVSOC7MGxcCbvsf8i5Try1lPo-IWylaDBrSuoTvDZypFPJ7Ow')" }}></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/40 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent"></div>
         <div className="absolute bottom-6 left-6 right-6">
-          <div className="bg-cyber-cyan text-background-dark font-black text-xs px-3 py-1.5 rounded-full uppercase tracking-widest inline-flex items-center gap-1 mb-3">
+          <div className="bg-cyber-cyan text-background-dark font-black text-[10px] px-3 py-1.5 rounded-full uppercase tracking-widest inline-flex items-center gap-1 mb-3 shadow-[0_0_15px_rgba(25,204,240,0.4)]">
              <span className="material-symbols-outlined text-[14px]">workspace_premium</span>
              1º Puesto Semanal
           </div>
-          <h1 className="text-4xl font-extrabold tracking-tight mb-2">Noches de Hotel</h1>
-          <p className="text-lg text-slate-300 font-medium">Estancia de lujo 5 estrellas en Costa Nubo</p>
+          <h1 className="text-4xl font-extrabold tracking-tight mb-2 text-white drop-shadow-lg">Noches de Hotel</h1>
+          <p className="text-base text-slate-300 font-bold uppercase tracking-wider">Estancia de lujo 5 estrellas</p>
         </div>
       </div>
 

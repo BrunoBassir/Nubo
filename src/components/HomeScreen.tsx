@@ -4,24 +4,60 @@ import { PlaceDetailScreen } from './PlaceDetailScreen';
 import { Place } from './ExplorePlacesScreen';
 import { collection, onSnapshot, query, limit } from 'firebase/firestore';
 import { db } from '../lib/firebase';
+import { seedDatabase, samplePlaces } from '../lib/seedDatabase';
 
 export function HomeScreen({ onProfileClick, onLevelClick, onRecentActivityClick, onSpotClick, onCoffeeRouteClick, onNotificationsClick, onValidate }: { onProfileClick: () => void, onLevelClick: () => void, onRecentActivityClick?: () => void, onSpotClick?: () => void, onCoffeeRouteClick?: () => void, onNotificationsClick?: () => void, onValidate?: () => void }) {
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
   const [placesData, setPlacesData] = useState<Place[]>([]);
+  const [isSeeding, setIsSeeding] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [seedStatus, setSeedStatus] = useState<{message: string; type: 'success' | 'error'} | null>(null);
+  
+  // Timeout to stop showing skeletons if Firestore is slow
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+  
+  const handleSeed = async () => {
+    if (isSeeding) return;
+    setIsSeeding(true);
+    setSeedStatus({ message: 'Iniciando inyección...', type: 'success' });
+    try {
+      const result = await seedDatabase();
+      setIsSeeding(false);
+      if (result.success) {
+        setSeedStatus({ message: '¡Datos inyectados con éxito!', type: 'success' });
+        setTimeout(() => setSeedStatus(null), 5000);
+      } else {
+        setSeedStatus({ message: `Error: ${result.error || 'Desconocido'}`, type: 'error' });
+      }
+    } catch (err: any) {
+      setIsSeeding(false);
+      setSeedStatus({ message: `Crash: ${err.message}`, type: 'error' });
+    }
+  };
   
   useEffect(() => {
-    const unsub = onSnapshot(query(collection(db, 'places'), limit(3)), (snapshot) => {
+    const unsub = onSnapshot(query(collection(db, 'places'), limit(6)), (snapshot) => {
       const places: Place[] = snapshot.docs.map(doc => ({
         ...(doc.data() as Omit<Place, 'id'>),
         id: doc.id
       }));
       setPlacesData(places);
+      setIsLoading(false);
     }, (error) => {
        console.error("Error fetching places: ", error);
+       setIsLoading(false);
     });
 
     return () => unsub();
   }, []);
+
+  // Determine what to display
+  const displayPlaces = placesData.length > 0 ? placesData : samplePlaces.slice(0, 6);
 
   if (selectedPlace) {
     return <PlaceDetailScreen place={selectedPlace} onClose={() => setSelectedPlace(null)} onValidate={onValidate} onRouteClick={onCoffeeRouteClick} />;
@@ -45,6 +81,24 @@ export function HomeScreen({ onProfileClick, onLevelClick, onRecentActivityClick
       <main className="pt-8 px-6 max-w-2xl mx-auto space-y-section-gap pb-32">
         <motion.div variants={containerVariants} initial="hidden" animate="show" className="space-y-section-gap">
           
+          {/* Welcome Header */}
+          <motion.div variants={itemVariants} className="flex justify-between items-end mb-2">
+            <div>
+              <h1 className="text-2xl font-bold tracking-tight">Hola, Explorador</h1>
+              <p className="text-slate-500 text-sm">¿Qué vamos a descubrir hoy?</p>
+            </div>
+            <div className="flex -space-x-2">
+              {[1, 2, 3].map(i => (
+                <div key={i} className="w-8 h-8 rounded-full border-2 border-background-dark bg-slate-800 flex items-center justify-center overflow-hidden">
+                   <img src={`https://i.pravatar.cc/100?img=${i+10}`} alt="Amigo" className="w-full h-full object-cover opacity-60" />
+                </div>
+              ))}
+              <div className="w-8 h-8 rounded-full border-2 border-background-dark bg-primary/20 flex items-center justify-center text-[10px] font-bold text-primary backdrop-blur-sm">
+                +12
+              </div>
+            </div>
+          </motion.div>
+
           {/* Daily Streak */}
           <motion.section variants={itemVariants} className="bg-slate-900 border border-orange-500/30 rounded-2xl p-4 shadow-[0_0_15px_rgba(249,115,22,0.1)] flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -139,35 +193,47 @@ export function HomeScreen({ onProfileClick, onLevelClick, onRecentActivityClick
               <span className="material-symbols-outlined text-on-surface-variant group-hover:text-cyan-300 transition-colors">arrow_forward</span>
             </div>
             <div className="flex overflow-x-auto gap-4 scroll-hide pb-4 snap-x">
-              {placesData.length === 0 ? (
-                [1, 2, 3].map((i) => (
-                  <div key={`skeleton-${i}`} className="w-[260px] min-w-[260px] glass-card rounded-xl overflow-hidden flex-shrink-0 snap-start flex h-[100px] animate-pulse">
-                    <div className="w-[100px] h-full bg-white/5 shrink-0" />
-                    <div className="p-3 flex-1 flex flex-col justify-center">
-                      <div className="h-4 bg-white/5 rounded w-3/4 mb-2" />
-                      <div className="h-3 bg-white/5 rounded w-1/2 mb-1" />
-                      <div className="h-2 bg-white/5 rounded w-1/3 mt-2" />
+              {displayPlaces.map((place, i) => (
+                <motion.div 
+                  whileHover={{ scale: 1.02 }} 
+                  whileTap={{ scale: 0.98 }} 
+                  key={place.id || `home-place-${i}`} 
+                  className="w-[260px] min-w-[260px] glass-card rounded-xl overflow-hidden flex-shrink-0 cursor-pointer snap-start hover:bg-white/5 transition-all duration-300 border border-transparent hover:border-cyan-400/30 hover:shadow-[0_0_15px_rgba(25,204,240,0.15)] group flex h-[100px]" 
+                  onClick={() => setSelectedPlace(place)}
+                >
+                  <div className="w-[100px] h-full relative shrink-0 bg-slate-800 overflow-hidden">
+                    <img 
+                      alt={place.name} 
+                      className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" 
+                      src={place.imageUrl || 'https://images.unsplash.com/photo-1517248135467-4c7ed9d42339?q=80&w=400'} 
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
+                  <div className="p-3 flex-1 flex flex-col justify-center min-w-0">
+                    <h4 className="font-headline-md text-sm text-on-surface line-clamp-2 leading-tight font-bold">{place.name || 'Lugar sin nombre'}</h4>
+                    <p className="text-[11px] text-on-surface-variant flex items-center gap-1 mt-1 truncate">
+                      <span className="material-symbols-outlined text-[12px]">location_on</span> 
+                      {place.distance || 'Cerca de ti'}
+                    </p>
+                    <div className="flex items-center gap-2 mt-1">
+                      <p className="text-[10px] text-primary/80 truncate font-bold uppercase tracking-tight">{place.category || 'Categoría'}</p>
                     </div>
                   </div>
-                ))
-              ) : (
-                placesData.map((place, i) => (
-                  <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} key={place.id || i} className="w-[260px] min-w-[260px] glass-card rounded-xl overflow-hidden flex-shrink-0 cursor-pointer snap-start hover:bg-white/5 transition-all duration-300 border border-transparent hover:border-cyan-400/30 hover:shadow-[0_0_15px_rgba(25,204,240,0.15)] group flex h-[100px]" onClick={() => setSelectedPlace(place)}>
-                    <div className="w-[100px] h-full relative shrink-0">
-                      <img alt={place.name} className="w-full h-full object-cover" src={place.imageUrl} />
-                    </div>
-                    <div className="p-3 flex-1 flex flex-col justify-center min-w-0">
-                      <h4 className="font-headline-md text-sm text-on-surface line-clamp-2 leading-tight">{place.name}</h4>
-                      <p className="text-[11px] text-on-surface-variant flex items-center gap-1 mt-1 truncate">
-                        <span className="material-symbols-outlined text-[12px]">location_on</span> 
-                        {place.distance}
-                      </p>
-                      <div className="flex items-center gap-2 mt-1">
-                        <p className="text-[10px] text-primary/80 truncate">{place.category}</p>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))
+                </motion.div>
+              ))}
+              
+              {placesData.length === 0 && !isLoading && (
+                <div className="min-w-[180px] glass-card rounded-xl border-dashed border-white/20 p-4 flex flex-col items-center justify-center text-center space-y-2 snap-start shrink-0">
+                  <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Modo Demo</p>
+                  <button 
+                    disabled={isSeeding}
+                    onClick={handleSeed}
+                    className="bg-primary/20 text-primary border border-primary/30 font-black text-[9px] px-3 py-1.5 rounded-lg hover:bg-primary/30 transition-all flex items-center gap-1"
+                  >
+                    <span className="material-symbols-outlined text-[10px]">{isSeeding ? 'sync' : 'rocket_launch'}</span>
+                    {isSeeding ? '...' : 'SQL INJECT'}
+                  </button>
+                </div>
               )}
             </div>
           </motion.section>

@@ -10,25 +10,37 @@ export function PlaceDetailScreen({ place, onClose, onValidate, onRouteClick }: 
   }
 
   return (
-    <div className="fixed inset-0 z-[120] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-[12px] font-sans">
-      <div className="w-full max-w-md bg-[#0a1416] sm:rounded-3xl rounded-t-[2.5rem] overflow-hidden shadow-2xl border-t border-x sm:border border-white/10 [box-shadow:inset_0_0_10px_rgba(25,204,240,0.05),0_0_15px_rgba(25,204,240,0.2)] pb-20">
-        <div className="relative w-full h-64 overflow-hidden">
+    <div 
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose?.();
+      }}
+      className="fixed inset-0 z-[500] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-[12px] font-sans"
+    >
+      <div className="w-full max-w-md bg-[#0a1416] sm:rounded-3xl rounded-t-[2.5rem] overflow-hidden shadow-2xl border-t border-x sm:border border-white/10 [box-shadow:inset_0_0_10px_rgba(25,204,240,0.05),0_0_15px_rgba(25,204,240,0.2)] pb-20 max-h-[95vh] flex flex-col relative">
+        {/* Close button - now higher in z-index and explicitly positioned */}
+        <button 
+          onClick={(e) => {
+            e.stopPropagation();
+            onClose?.();
+          }} 
+          className="absolute top-6 left-6 z-[600] size-10 rounded-full bg-black/60 backdrop-blur-xl flex items-center justify-center text-white border border-white/20 active:scale-90 hover:bg-black/80 transition-all shadow-2xl"
+          aria-label="Cerrar"
+        >
+          <span className="material-symbols-outlined text-2xl font-bold">close</span>
+        </button>
+
+        <div className="relative w-full h-64 overflow-hidden shrink-0">
           <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('${place.imageUrl}')` }}></div>
           <div className="absolute inset-0 bg-gradient-to-t from-[#0a1416] via-[#0a1416]/20 to-black/30"></div>
-          <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
-            <button onClick={onClose} className="size-10 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white border border-white/10 active:scale-90 transition-transform">
-              <span className="material-symbols-outlined">close</span>
-            </button>
-            <div className="flex gap-2">
-              <div className="bg-[#19ccf0] text-[#050a0b] px-3 py-1.5 rounded-full text-[11px] font-black uppercase tracking-wider flex items-center gap-1 shadow-[0_0_10px_rgba(25,204,240,0.4)]">
-                <span className="material-symbols-outlined text-[14px]">distance</span>
-                {place.distance}
-              </div>
+          <div className="absolute top-6 right-6 flex justify-end items-start z-50">
+            <div className="bg-[#19ccf0] text-[#050a0b] px-3 py-1.5 rounded-full text-[11px] font-black uppercase tracking-wider flex items-center gap-1 shadow-[0_0_15px_rgba(25,204,240,0.4)]">
+              <span className="material-symbols-outlined text-[14px]">distance</span>
+              {place.distance}
             </div>
           </div>
         </div>
 
-        <div className="px-6 pb-8 -mt-6 relative z-10">
+        <div className="px-6 pb-8 -mt-6 relative z-10 flex-1 overflow-y-auto hide-scrollbar">
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-1.5">
               <span className="text-[#19ccf0] text-[10px] font-black uppercase tracking-[0.2em]">{place.category} • {place.subcategory}</span>

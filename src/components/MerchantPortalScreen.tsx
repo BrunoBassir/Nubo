@@ -1,24 +1,28 @@
 import { useState } from 'react';
 
 export function MerchantPortalScreen({ onBack }: { onBack?: () => void }) {
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'promotions' | 'profile'>('dashboard');
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'promotions' | 'profile' | 'create_promo'>('dashboard');
 
   return (
     <div className="bg-background-dark text-slate-100 min-h-screen flex flex-col relative w-full lg:max-w-md lg:mx-auto">
       {/* Header */}
       <header className="px-6 py-4 flex items-center justify-between sticky top-0 bg-background-dark/95 backdrop-blur-md z-40 border-b border-white/5">
         <div className="flex items-center gap-3">
-          <button onClick={onBack} className="flex size-10 items-center justify-center rounded-full bg-white/5 hover:bg-white/10 transition-colors border border-white/10">
+          <button onClick={() => {
+            if (activeTab === 'create_promo') setActiveTab('promotions');
+            else if (onBack) onBack();
+          }} className="flex size-10 items-center justify-center rounded-full bg-white/5 hover:bg-white/10 transition-colors border border-white/10">
             <span className="material-symbols-outlined text-slate-100">arrow_back</span>
           </button>
           <div className="flex flex-col">
-            <h1 className="text-xl font-bold tracking-tight">Portal Comercios</h1>
-            <span className="text-[10px] text-fuchsia-400 font-bold uppercase tracking-widest">Modo Comercio</span>
+            <h1 className="text-xl font-bold tracking-tight">{activeTab === 'create_promo' ? 'Nueva Promoción' : 'Portal Comercios'}</h1>
+            <span className="text-[10px] text-fuchsia-400 font-bold uppercase tracking-widest">{activeTab === 'create_promo' ? 'Formulario' : 'Modo Comercio'}</span>
           </div>
         </div>
       </header>
 
       {/* Tabs */}
+      {activeTab !== 'create_promo' && (
       <div className="px-6 py-4 sticky top-[72px] bg-background-dark/95 backdrop-blur-md z-30">
         <div className="flex bg-white/5 p-1 rounded-full w-full border border-white/10 overflow-x-auto hide-scrollbar gap-0.5">
           <button 
@@ -41,11 +45,13 @@ export function MerchantPortalScreen({ onBack }: { onBack?: () => void }) {
           </button>
         </div>
       </div>
+      )}
 
       <main className="flex-1 overflow-y-auto pb-8 pt-2">
         {activeTab === 'dashboard' && <MerchantDashboard />}
-        {activeTab === 'promotions' && <MerchantPromotions />}
+        {activeTab === 'promotions' && <MerchantPromotions onCreatePromo={() => setActiveTab('create_promo')} />}
         {activeTab === 'profile' && <MerchantProfile />}
+        {activeTab === 'create_promo' && <MerchantCreatePromo onCancel={() => setActiveTab('promotions')} onSubmit={() => setActiveTab('promotions')} />}
       </main>
     </div>
   );
@@ -109,10 +115,10 @@ function MerchantDashboard() {
   );
 }
 
-function MerchantPromotions() {
+function MerchantPromotions({ onCreatePromo }: { onCreatePromo: () => void }) {
   return (
     <div className="px-6 space-y-4">
-      <div className="bg-gradient-to-br from-fuchsia-900/40 to-slate-900 border border-fuchsia-500/20 rounded-2xl p-4 relative overflow-hidden group cursor-pointer">
+      <div onClick={onCreatePromo} className="bg-gradient-to-br from-fuchsia-900/40 to-slate-900 border border-fuchsia-500/20 rounded-2xl p-4 relative overflow-hidden group cursor-pointer">
         <div className="absolute right-0 top-0 w-32 h-32 bg-fuchsia-500/20 blur-[40px] rounded-full mix-blend-screen"></div>
         <div className="flex items-center gap-4 relative z-10">
           <div className="w-12 h-12 rounded-full bg-fuchsia-500/20 flex items-center justify-center border border-fuchsia-500/40 group-hover:scale-110 transition-transform">
@@ -212,6 +218,72 @@ function MerchantProfile() {
              </div>
           </div>
         </div>
+      </div>
+    </div>
+  );
+}
+
+function MerchantCreatePromo({ onCancel, onSubmit }: { onCancel: () => void, onSubmit: () => void }) {
+  const [promoType, setPromoType] = useState<'descuento' | 'regalo' | '2x1' | 'puntos'>('descuento');
+
+  return (
+    <div className="px-6 space-y-6 pb-6 animate-fade-in">
+      <div className="space-y-2">
+        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Tipo de Promoción</label>
+        <div className="grid grid-cols-2 gap-3">
+          <button onClick={() => setPromoType('descuento')} className={`p-3 rounded-xl border flex flex-col items-center gap-2 transition-all ${promoType === 'descuento' ? 'bg-fuchsia-500/20 border-fuchsia-500/50 text-white' : 'bg-white/5 border-white/10 text-slate-400'}`}>
+            <span className="material-symbols-outlined">percent</span>
+            <span className="text-xs font-bold">Descuento</span>
+          </button>
+          <button onClick={() => setPromoType('regalo')} className={`p-3 rounded-xl border flex flex-col items-center gap-2 transition-all ${promoType === 'regalo' ? 'bg-fuchsia-500/20 border-fuchsia-500/50 text-white' : 'bg-white/5 border-white/10 text-slate-400'}`}>
+            <span className="material-symbols-outlined">featured_seasonal_and_gifts</span>
+            <span className="text-xs font-bold">Regalo</span>
+          </button>
+          <button onClick={() => setPromoType('2x1')} className={`p-3 rounded-xl border flex flex-col items-center gap-2 transition-all ${promoType === '2x1' ? 'bg-fuchsia-500/20 border-fuchsia-500/50 text-white' : 'bg-white/5 border-white/10 text-slate-400'}`}>
+            <span className="material-symbols-outlined">looks_two</span>
+            <span className="text-xs font-bold">2x1</span>
+          </button>
+          <button onClick={() => setPromoType('puntos')} className={`p-3 rounded-xl border flex flex-col items-center gap-2 transition-all ${promoType === 'puntos' ? 'bg-fuchsia-500/20 border-fuchsia-500/50 text-white' : 'bg-white/5 border-white/10 text-slate-400'}`}>
+            <span className="material-symbols-outlined">stars</span>
+            <span className="text-xs font-bold">Multiplicador</span>
+          </button>
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        <div>
+          <label className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 block">Título de la Promoción</label>
+          <input type="text" placeholder="Ej: 20% OFF en cafetería" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-fuchsia-500/50" />
+        </div>
+        
+        <div>
+          <label className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 block">Descripción y Condiciones</label>
+          <textarea rows={3} placeholder="Condiciones de uso, horarios válidos, etc." className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-fuchsia-500/50 resize-none"></textarea>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 block">Stock / Límite</label>
+            <input type="number" placeholder="Ej: 50" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-fuchsia-500/50" />
+          </div>
+          <div>
+            <label className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 block">Nivel Requerido</label>
+            <select className="w-full bg-slate-800 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-fuchsia-500/50 appearance-none">
+              <option>Todos (Nivel 1+)</option>
+              <option>Explorador (Nivel 3+)</option>
+              <option>Guardián (Nivel 5+)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div className="pt-4 flex gap-3">
+        <button onClick={onCancel} className="flex-1 py-3 px-4 rounded-xl font-bold text-sm bg-white/5 hover:bg-white/10 border border-white/10 transition-colors">
+          Cancelar
+        </button>
+        <button onClick={onSubmit} className="flex-1 py-3 px-4 rounded-xl font-bold text-sm bg-fuchsia-500 hover:bg-fuchsia-400 text-white shadow-[0_0_20px_rgba(217,70,239,0.3)] transition-all">
+          Crear Promo
+        </button>
       </div>
     </div>
   );

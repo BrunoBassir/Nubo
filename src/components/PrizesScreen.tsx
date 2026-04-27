@@ -4,6 +4,7 @@ import { PrizeCelebrationScreen } from './PrizeCelebrationScreen';
 import { VouchersScreen } from './VouchersScreen';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '../lib/firebase';
+import { sampleRewards } from '../lib/seedDatabase';
 
 type RewardCategory = 'Todo' | 'Gastronomía' | 'Cultura' | 'Hospedaje';
 const rewardCategories: RewardCategory[] = ['Todo', 'Gastronomía', 'Cultura', 'Hospedaje'];
@@ -52,6 +53,17 @@ export function PrizesScreen({ onVouchersClick, onMysteryChestClick, onPrizeFrag
     return () => unsub();
   }, [userPoints]);
 
+  const displayRewards = rewardsData.length > 0 ? rewardsData : sampleRewards.map(r => ({
+    id: r.id,
+    title: r.title,
+    category: mapTypeToCategory(r.type),
+    points: r.cost,
+    level: Math.ceil(r.cost / 1000) || 1,
+    imageUrl: r.imageUrl,
+    available: userPoints >= r.cost,
+    userPoints: userPoints
+  }));
+
   const renderRewardCard = (reward: RewardInfo) => (
     <div key={reward.id} onClick={() => setSelectedReward(reward)} className={`cursor-pointer transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] group ${reward.available ? 'reward-card-active glow-border hover:shadow-[0_0_15px_rgba(25,204,240,0.15)]' : 'reward-card-locked hover:border-slate-600 border border-transparent'}`}>
       <div className="h-24 bg-cover bg-center overflow-hidden" style={{ backgroundImage: `url("${reward.imageUrl}")` }}>
@@ -82,9 +94,10 @@ export function PrizesScreen({ onVouchersClick, onMysteryChestClick, onPrizeFrag
     </div>
   );
 
-  if (loading) {
-     return <div className="bg-background-dark min-h-screen text-white flex items-center justify-center">Cargando premios...</div>;
-  }
+  // Removed early return to show fallback data
+  // if (loading) {
+  //    return <div className="bg-background-dark min-h-screen text-white flex items-center justify-center">Cargando premios...</div>;
+  // }
 
   return (
     <>
@@ -145,7 +158,7 @@ export function PrizesScreen({ onVouchersClick, onMysteryChestClick, onPrizeFrag
                     <span className="text-primary text-[10px] font-bold uppercase cursor-pointer">Ver todo</span>
                   </div>
                   <div className="grid grid-cols-2 gap-3">
-                    {rewardsData.filter(r => r.category === 'Gastronomía').map(renderRewardCard)}
+                    {displayRewards.filter(r => r.category === 'Gastronomía').map(renderRewardCard)}
                   </div>
                 </section>
               )}
@@ -160,7 +173,7 @@ export function PrizesScreen({ onVouchersClick, onMysteryChestClick, onPrizeFrag
                     <span className="text-primary text-[10px] font-bold uppercase cursor-pointer">Ver todo</span>
                   </div>
                   <div className="grid grid-cols-2 gap-3">
-                    {rewardsData.filter(r => r.category === 'Cultura').map(renderRewardCard)}
+                    {displayRewards.filter(r => r.category === 'Cultura').map(renderRewardCard)}
                   </div>
                 </section>
               )}
@@ -175,7 +188,7 @@ export function PrizesScreen({ onVouchersClick, onMysteryChestClick, onPrizeFrag
                     <span className="text-primary text-[10px] font-bold uppercase cursor-pointer">Ver todo</span>
                   </div>
                   <div className="grid grid-cols-2 gap-3">
-                    {rewardsData.filter(r => r.category === 'Hospedaje').map(renderRewardCard)}
+                    {displayRewards.filter(r => r.category === 'Hospedaje').map(renderRewardCard)}
                   </div>
                 </section>
               )}

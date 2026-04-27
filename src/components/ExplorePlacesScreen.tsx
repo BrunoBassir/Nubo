@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { PlaceDetailScreen } from './PlaceDetailScreen';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '../lib/firebase';
+import { samplePlaces } from '../lib/seedDatabase';
 
 type PlaceCategory = 'Todo' | 'Gastronomía' | 'Hotelería' | 'Cultura' | 'Bares';
 
@@ -52,22 +53,27 @@ export function ExplorePlacesScreen({ onBack, onPlaceDetailClick, onProfileClick
     return () => unsub();
   }, []);
 
+  const displayPlaces = useMemo(() => {
+    return placesData.length > 0 ? placesData : samplePlaces;
+  }, [placesData]);
+
   const filteredPlaces = useMemo(() => {
     if (activeCategory === 'Todo') {
-      return placesData.filter(p => p.id !== 'place1'); // Keep Artisan out of the main list for 'Todo' as it's featured
+      return displayPlaces.filter(p => !['place1'].includes(p.id)); // Keep Artisan out of the main list for 'Todo' as it's featured
     }
-    return placesData.filter(p => p.category === activeCategory);
-  }, [activeCategory, placesData]);
+    return displayPlaces.filter(p => p.category === activeCategory);
+  }, [activeCategory, displayPlaces]);
 
   const featuredPlace = useMemo(() => {
-    return placesData.find(p => p.id === 'place1') || placesData[0];
-  }, [placesData]);
+    return displayPlaces.find(p => p.id === 'place1') || displayPlaces[0];
+  }, [displayPlaces]);
 
   const categories: PlaceCategory[] = ['Todo', 'Gastronomía', 'Hotelería', 'Cultura', 'Bares'];
 
-  if (loading) {
-    return <div className="bg-background-dark min-h-screen text-white flex items-center justify-center">Cargando lugares...</div>;
-  }
+  // Removed early return to show fallback data
+  // if (loading) {
+  //   return <div className="bg-background-dark min-h-screen text-white flex items-center justify-center">Cargando lugares...</div>;
+  // }
 
   return (
     <div className="bg-background-dark text-slate-100 min-h-screen flex flex-col w-full lg:max-w-md lg:mx-auto relative">
@@ -169,9 +175,9 @@ export function ExplorePlacesScreen({ onBack, onPlaceDetailClick, onProfileClick
                  No hay lugares disponibles en esta categoría.
                </div>
             ) : (
-              filteredPlaces.map(place => (
-                <div key={place.id} onClick={() => setSelectedPlace(place)} className="bg-white/5 border border-white/10 rounded-xl p-3 flex gap-4 transition-all duration-300 hover:border-cyan-400/40 hover:bg-cyan-400/5 hover:shadow-[0_0_15px_rgba(25,204,240,0.1)] hover:scale-[1.02] cursor-pointer group">
-                  <div className="w-24 h-24 rounded-lg bg-cover bg-center shrink-0 relative overflow-hidden group-hover:shadow-[0_0_10px_rgba(25,204,240,0.3)] transition-shadow" style={{ backgroundImage: `url('${place.imageUrl}')` }}>
+              filteredPlaces.map((place, i) => (
+                <div key={place.id || `explore-list-place-${i}`} onClick={() => setSelectedPlace(place)} className="bg-white/5 border border-white/10 rounded-xl p-3 flex gap-4 transition-all duration-300 hover:border-cyan-400/40 hover:bg-cyan-400/5 hover:shadow-[0_0_15px_rgba(25,204,240,0.1)] hover:scale-[1.02] cursor-pointer group">
+                  <div className="w-24 h-24 rounded-lg bg-cover bg-center shrink-0 relative overflow-hidden group-hover:shadow-[0_0_10px_rgba(25,204,240,0.3)] transition-shadow bg-slate-800" style={{ backgroundImage: `url('${place.imageUrl || 'https://images.unsplash.com/photo-1517248135467-4c7ed9d42339?q=80&w=400'}')` }}>
                     {place.badge && (
                       <div className={`absolute top-1 left-1 text-[8px] font-black px-1.5 py-0.5 rounded uppercase ${place.badgeType === 'popular' ? 'bg-yellow-400 text-black' : 'bg-cyan-400 text-slate-950'}`}>
                         {place.badge}
@@ -181,7 +187,7 @@ export function ExplorePlacesScreen({ onBack, onPlaceDetailClick, onProfileClick
                   <div className="flex flex-col justify-between flex-1 py-1">
                     <div>
                       <div className="flex justify-between items-start">
-                        <h4 className="font-bold text-base leading-tight group-hover:text-cyan-400 transition-colors">{place.name}</h4>
+                        <h4 className="font-bold text-base leading-tight group-hover:text-cyan-400 transition-colors">{place.name || 'Lugar'}</h4>
                         <span className="text-[10px] text-slate-500 font-medium font-display group-hover:text-cyan-400/70">{place.distance}</span>
                       </div>
                       <p className="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">{place.category} • {place.subcategory}</p>

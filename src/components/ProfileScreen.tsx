@@ -16,9 +16,17 @@ export function ProfileScreen({ onEditProfile, onSettingsClick, onInviteFriendsC
     }
   };
 
-  if (loading) {
-     return <div className="flex-1 flex items-center justify-center">Cargando...</div>;
-  }
+  const mockUser = {
+    displayName: 'Marcos Urrestarazu',
+    photoURL: 'https://i.pravatar.cc/150?img=33',
+    email: 'explorador@nubo.app',
+    level: 14,
+    points: '12.4k',
+    visits: 48,
+    referrals: 12
+  };
+
+  const activeUser = user || mockUser;
 
   return (
     <>
@@ -29,6 +37,14 @@ export function ProfileScreen({ onEditProfile, onSettingsClick, onInviteFriendsC
           <button onClick={onSettingsClick} className="flex items-center justify-center w-10 h-10 rounded-full bg-surface-dark border border-white/10 hover:bg-slate-800 transition-colors z-10">
             <span className="material-symbols-outlined text-[20px]">settings</span>
           </button>
+          {!user && (
+             <button 
+               onClick={handleGoogleSignIn}
+               className="bg-primary/20 text-primary border border-primary/30 px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider hover:bg-primary/30 transition-all active:scale-95 z-10"
+             >
+               Iniciar Sesión
+             </button>
+          )}
           <button onClick={() => setIsShareOpen(true)} className="flex items-center justify-center w-10 h-10 rounded-full bg-surface-dark border border-white/10 hover:bg-slate-800 transition-colors z-10">
             <span className="material-symbols-outlined text-[20px]">share</span>
           </button>
@@ -44,8 +60,8 @@ export function ProfileScreen({ onEditProfile, onSettingsClick, onInviteFriendsC
             </svg>
             {/* Avatar */}
             <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-background-dark shadow-xl bg-slate-800 flex items-center justify-center">
-              {user?.photoURL ? (
-                <img alt="Avatar de usuario" className="w-full h-full object-cover" src={user.photoURL}/>
+              {activeUser.photoURL ? (
+                <img alt="Avatar de usuario" className="w-full h-full object-cover" src={activeUser.photoURL}/>
               ) : (
                 <span className="material-symbols-outlined text-[64px] text-slate-500">person</span>
               )}
@@ -56,7 +72,7 @@ export function ProfileScreen({ onEditProfile, onSettingsClick, onInviteFriendsC
             </div>
           </div>
           <div className="mt-6 text-center">
-            <h2 className="text-3xl font-bold tracking-tight">{user?.displayName || "Explorador"}</h2>
+            <h2 className="text-3xl font-bold tracking-tight">{activeUser.displayName}</h2>
             <p className="text-primary font-medium mt-1">Próximo Nivel: Leyenda Urbana</p>
             <div className="mt-6 flex gap-3">
               <button 

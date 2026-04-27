@@ -3,6 +3,7 @@ import { Place } from './ExplorePlacesScreen';
 import { PlaceDetailScreen } from './PlaceDetailScreen';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '../lib/firebase';
+import { samplePlaces } from '../lib/seedDatabase';
 
 type DiscoveryCategory = 'Todos' | 'Gastronomía' | 'Cultura' | 'Hotelería';
 
@@ -32,7 +33,11 @@ export function DiscoveryScreen({ onHome, onExplore, onScan, onPrizes, onRanking
     return () => unsub();
   }, []);
 
-  const selectedPlace = useMemo(() => placesData.find(p => p.id === selectedPlaceId), [placesData, selectedPlaceId]);
+  const displayPlaces = useMemo(() => {
+    return placesData.length > 0 ? placesData : samplePlaces;
+  }, [placesData]);
+
+  const selectedPlace = useMemo(() => displayPlaces.find(p => p.id === selectedPlaceId) || displayPlaces[0], [displayPlaces, selectedPlaceId]);
 
   // Make deterministic coordinates based on string id length/chars so they are spread out
   const getCoordinates = (id: string, index: number) => {
@@ -55,17 +60,18 @@ export function DiscoveryScreen({ onHome, onExplore, onScan, onPrizes, onRanking
   }
 
   const filteredPlaces = useMemo(() => {
-    if (activeCategory === 'Todos') return placesData;
-    return placesData.filter(p => p.category === activeCategory || (activeCategory === 'Gastronomía' && p.category === 'Bares'));
-  }, [activeCategory, placesData]);
+    if (activeCategory === 'Todos') return displayPlaces;
+    return displayPlaces.filter(p => p.category === activeCategory || (activeCategory === 'Gastronomía' && p.category === 'Bares'));
+  }, [activeCategory, displayPlaces]);
 
   if (showDetailScreen && selectedPlace) {
     return <PlaceDetailScreen place={selectedPlace} onClose={() => setShowDetailScreen(false)} onValidate={onValidate} onRouteClick={onRouteClick} />;
   }
 
-  if (loading) {
-     return <div className="bg-background-dark min-h-screen text-white flex items-center justify-center">Cargando mapa...</div>;
-  }
+  // Removed early loading return
+  // if (loading) {
+  //    return <div className="bg-background-dark min-h-screen text-white flex items-center justify-center">Cargando mapa...</div>;
+  // }
 
   return (
     <div className="bg-[#090f11] text-slate-100 font-sans antialiased overflow-hidden h-screen flex flex-col w-full lg:max-w-md lg:mx-auto relative">

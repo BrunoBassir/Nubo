@@ -1,7 +1,7 @@
 import { collection, doc, setDoc } from 'firebase/firestore';
 import { db } from './firebase';
 
-const samplePlaces = [
+export const samplePlaces = [
   {
     id: 'place1',
     name: 'Artisan Roast House',
@@ -148,7 +148,7 @@ const samplePlaces = [
   }
 ];
 
-const sampleChallenges = [
+export const sampleChallenges = [
   {
     id: 'challenge1',
     title: 'Ruta Gastronómica Central',
@@ -199,7 +199,7 @@ const sampleChallenges = [
   }
 ];
 
-const sampleRewards = [
+export const sampleRewards = [
   {
     id: 'reward1',
     title: '2x1 Café Especial',
@@ -265,7 +265,7 @@ const sampleRewards = [
   }
 ];
 
-const sampleAchievements = [
+export const sampleAchievements = [
   {
     id: 'achievement1',
     title: 'Madrugador',
@@ -298,7 +298,7 @@ const sampleAchievements = [
   }
 ];
 
-const sampleSecretMissions = [
+export const sampleSecretMissions = [
   {
     id: 'mission1',
     title: 'Cazador de Búhos',
@@ -335,36 +335,34 @@ const sampleSecretMissions = [
 ];
 
 export async function seedDatabase() {
+  console.log('Seed started...');
   try {
-    for (const place of samplePlaces) {
-      const { id, ...data } = place;
-      await setDoc(doc(db, 'places', id), data);
-    }
-    
-    for (const challenge of sampleChallenges) {
-      const { id, ...data } = challenge;
-      await setDoc(doc(db, 'challenges', id), data);
-    }
-    
-    for (const reward of sampleRewards) {
-      const { id, ...data } = reward;
-      await setDoc(doc(db, 'rewards', id), data);
-    }
-    
-    for (const achievement of sampleAchievements) {
-      const { id, ...data } = achievement;
-      await setDoc(doc(db, 'achievements', id), data);
-    }
+    const collectionsToSeed = [
+      { name: 'places', data: samplePlaces },
+      { name: 'challenges', data: sampleChallenges },
+      { name: 'rewards', data: sampleRewards },
+      { name: 'achievements', data: sampleAchievements },
+      { name: 'secret_missions', data: sampleSecretMissions }
+    ];
 
-    for (const mission of sampleSecretMissions) {
-      const { id, ...data } = mission;
-      await setDoc(doc(db, 'secret_missions', id), data);
+    for (const coll of collectionsToSeed) {
+      console.log(`Seeding ${coll.name}...`);
+      for (const item of coll.data) {
+        const { id, ...data } = item;
+        try {
+          await setDoc(doc(db, coll.name, id), data);
+          console.log(`Seeded ${coll.name}/${id}`);
+        } catch (itemError: any) {
+          console.error(`Error seeding ${coll.name}/${id}:`, itemError);
+          // Continue with next items
+        }
+      }
     }
 
     console.log('Database seeded successfully!');
     return { success: true };
   } catch (error: any) {
     console.error('Error seeding database: ', error);
-    return { success: false, error: error.message };
+    return { success: false, error: error.message || String(error) };
   }
 }

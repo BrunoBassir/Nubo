@@ -11,77 +11,107 @@ export type RewardInfo = {
 
 export function RewardDetailScreen({ reward, onClose, onRedeem }: { reward: RewardInfo, onClose?: () => void, onRedeem?: () => void }) {
   return (
-    <div className="fixed inset-0 z-[100] flex items-end justify-center px-4 pb-10 backdrop-blur-[8px] bg-[#0a1416]/80 font-sans">
-      <div className="w-full max-w-[390px] bg-[#162529] rounded-[2.5rem] overflow-hidden border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col">
-        <div className="relative h-56 w-full">
-          <img alt={reward.title} className="w-full h-full object-cover" src={reward.imageUrl}/>
-          <div className="absolute inset-0 bg-gradient-to-t from-[#162529] via-transparent to-transparent"></div>
-          <div className="absolute top-5 left-5">
-            <div className="bg-[#0a1416]/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 flex items-center gap-1.5">
-              <span className="material-symbols-outlined text-[#19ccf0] text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>stars</span>
-              <span className="text-[10px] font-bold text-[#19ccf0] uppercase tracking-wider">{reward.category}</span>
+    <div 
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose?.();
+      }}
+      className="fixed inset-0 z-[500] flex items-center justify-center p-4 backdrop-blur-[12px] bg-black/80 font-sans"
+    >
+      <div className="w-full max-w-md bg-[#0a1416] rounded-3xl overflow-hidden shadow-2xl border border-white/10 [box-shadow:inset_0_0_10px_rgba(25,204,240,0.05),0_0_20px_rgba(0,0,0,0.4)] flex flex-col max-h-[90vh] relative">
+        {/* Close Button */}
+        <button 
+          onClick={(e) => {
+            e.stopPropagation();
+            onClose?.();
+          }} 
+          className="absolute top-4 right-4 z-50 size-10 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center text-white border border-white/10 active:scale-95 transition-all hover:bg-black/80 shadow-xl"
+        >
+          <span className="material-symbols-outlined">close</span>
+        </button>
+
+        <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden">
+          <img alt={reward.title} className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700" src={reward.imageUrl}/>
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a1416] via-transparent to-transparent"></div>
+          <div className="absolute bottom-4 left-6">
+            <div className="bg-primary/20 backdrop-blur-md px-3 py-1 rounded-full border border-primary/30 flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-primary text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>stars</span>
+              <span className="text-[10px] font-black text-primary uppercase tracking-widest">{reward.category}</span>
             </div>
           </div>
         </div>
-        <div className="px-8 pt-2 pb-8">
-          <div className="flex justify-between items-start mb-4">
-            <div>
-              <h2 className="text-2xl font-bold text-white mb-1">{reward.title}</h2>
-              <p className="text-slate-400 text-sm leading-relaxed">Disfrutá de este beneficio exclusivo para miembros nivel {reward.level} o superior en locales adheridos.</p>
-            </div>
+        
+        <div className="px-8 pb-8 pt-6 overflow-y-auto hide-scrollbar flex-1">
+          <div className="mb-6">
+            <h2 className="text-3xl font-black text-white leading-tight mb-2 tracking-tight">{reward.title}</h2>
+            <p className="text-slate-400 text-sm leading-relaxed">Este beneficio exclusivo te espera. Canjeá tus puntos y disfrutalo en locales adheridos de la red Nubo.</p>
           </div>
-          <div className="flex items-center justify-between p-4 bg-[#0a1416]/50 rounded-2xl border border-white/5 mb-6">
+
+          <div className="flex items-center justify-between p-5 bg-white/5 rounded-2xl border border-white/10 mb-8 shadow-inner">
             <div className="flex flex-col">
-              <span className="text-[10px] text-slate-500 uppercase font-bold tracking-tighter">Costo del canje</span>
+              <span className="text-[10px] text-slate-500 uppercase font-black tracking-widest mb-1">Costo</span>
               <div className="flex items-baseline gap-1">
-                <span className="text-xl font-black text-[#19ccf0]">{reward.points}</span>
-                <span className="text-[10px] font-bold text-[#19ccf0] uppercase">Pts</span>
+                <span className="text-2xl font-black text-primary tracking-tighter">{reward.points}</span>
+                <span className="text-[10px] font-black text-primary uppercase">NP</span>
               </div>
             </div>
-            <div className="h-8 w-[1px] bg-white/10"></div>
+            <div className="h-10 w-[1px] bg-white/10"></div>
             <div className="flex flex-col items-end">
-              <span className="text-[10px] text-slate-500 uppercase font-bold tracking-tighter">Tu saldo</span>
+              <span className="text-[10px] text-slate-500 uppercase font-black tracking-widest mb-1">Tu Saldo</span>
               <div className="flex items-baseline gap-1">
-                <span className="text-xl font-black text-slate-200">{reward.userPoints}</span>
-                <span className="text-[10px] font-bold text-slate-400 uppercase">Pts</span>
+                <span className="text-2xl font-black text-slate-200 tracking-tighter">{reward.userPoints}</span>
+                <span className="text-[10px] font-black text-slate-400 uppercase">NP</span>
               </div>
             </div>
           </div>
-          <div className="space-y-4 mb-8">
-            <h3 className="text-[11px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-3 px-1">Cómo canjear</h3>
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="h-6 w-6 rounded-full bg-[#19ccf0]/10 border border-[#19ccf0]/20 flex items-center justify-center shrink-0">
-                  <span className="text-[10px] font-bold text-[#19ccf0]">1</span>
+
+          <div className="space-y-5 mb-8">
+            <h3 className="text-[11px] font-black text-primary uppercase tracking-[0.3em] px-1">Validez y Uso</h3>
+            <div className="space-y-4">
+              <div className="flex items-start gap-4 group">
+                <div className="h-6 w-6 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-primary/20 transition-colors">
+                  <span className="text-[10px] font-black text-primary">01</span>
                 </div>
-                <p className="text-xs text-slate-300">Confirmá tu canje para obtener el código.</p>
+                <p className="text-xs text-slate-300 leading-relaxed font-medium">Obtené tu código de canje instantáneo.</p>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="h-6 w-6 rounded-full bg-[#19ccf0]/10 border border-[#19ccf0]/20 flex items-center justify-center shrink-0">
-                  <span className="text-[10px] font-bold text-[#19ccf0]">2</span>
+              <div className="flex items-start gap-4 group">
+                <div className="h-6 w-6 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-primary/20 transition-colors">
+                  <span className="text-[10px] font-black text-primary">02</span>
                 </div>
-                <p className="text-xs text-slate-300">Visitá el local antes de que expire.</p>
+                <p className="text-xs text-slate-300 leading-relaxed font-medium">Válido por 30 días corridos a partir hoy.</p>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="h-6 w-6 rounded-full bg-[#19ccf0]/10 border border-[#19ccf0]/20 flex items-center justify-center shrink-0">
-                  <span className="text-[10px] font-bold text-[#19ccf0]">3</span>
+              <div className="flex items-start gap-4 group">
+                <div className="h-6 w-6 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-primary/20 transition-colors">
+                  <span className="text-[10px] font-black text-primary">03</span>
                 </div>
-                <p className="text-xs text-slate-300">Presentá tu QR al momento de pagar.</p>
+                <p className="text-xs text-slate-300 leading-relaxed font-medium">Mostrá la pantalla en caja y listo.</p>
               </div>
             </div>
           </div>
+
           <div className="flex flex-col gap-3">
             {reward.available ? (
-              <button onClick={onRedeem} className="w-full bg-[#19ccf0] py-4 rounded-xl font-bold text-[#0a1416] shadow-[0_0_20px_rgba(25,204,240,0.3)] hover:brightness-110 transition-all active:scale-[0.98]">
-                Canjear por {reward.points} NP
+              <button 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onRedeem?.();
+                }} 
+                className="w-full bg-primary py-4 h-14 rounded-2xl font-black text-[#0a1416] shadow-[0_0_20px_rgba(25,204,240,0.4)] hover:scale-[1.02] active:scale-95 transition-all text-sm uppercase tracking-widest"
+              >
+                Canjear Ahora
               </button>
             ) : (
-              <button disabled className="w-full bg-slate-800 text-slate-500 py-4 rounded-xl font-bold cursor-not-allowed text-sm">
-                Nivel Insuficiente (Req: Nivel {reward.level})
+              <button disabled className="w-full bg-slate-800 text-slate-500 py-4 h-14 rounded-2xl font-bold cursor-not-allowed text-xs border border-white/5 uppercase tracking-widest">
+                NP Insuficientes
               </button>
             )}
-            <button onClick={onClose} className="w-full py-4 rounded-xl font-bold text-slate-400 hover:text-white transition-colors text-sm">
-              Volver
+            <button 
+              onClick={(e) => {
+                e.stopPropagation();
+                onClose?.();
+              }} 
+              className="w-full py-4 h-14 rounded-2xl font-black text-slate-500 hover:text-white transition-colors text-xs uppercase tracking-[0.2em]"
+            >
+              Cerrar
             </button>
           </div>
         </div>
