@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface OnboardingScreenProps {
@@ -9,7 +9,7 @@ export function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
   const [step, setStep] = useState(0);
 
   const nextStep = () => {
-    if (step < 3) {
+    if (step < 4) {
       setStep(step + 1);
     } else {
       onComplete();
@@ -29,14 +29,59 @@ export function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
   return (
     <div className="fixed inset-0 z-[100] bg-[#101f22] text-slate-100 font-display overflow-hidden">
       <AnimatePresence mode="wait">
-        {step === 0 && <StepZero key="step0" onNext={nextStep} />}
-        {step === 1 && <StepOne key="step1" onNext={nextStep} onSkip={skipOnboarding} />}
-        {step === 2 && <StepTwo key="step2" onNext={nextStep} onPrev={prevStep} />}
-        {step === 3 && <StepThree key="step3" onComplete={onComplete} onPrev={prevStep} />}
+        {step === 0 && <StepIntro key="stepIntro" onNext={nextStep} />}
+        {step === 1 && <StepZero key="step0" onNext={nextStep} />}
+        {step === 2 && <StepOne key="step1" onNext={nextStep} onSkip={skipOnboarding} />}
+        {step === 3 && <StepTwo key="step2" onNext={nextStep} onPrev={prevStep} />}
+        {step === 4 && <StepThree key="step3" onComplete={onComplete} onPrev={prevStep} />}
       </AnimatePresence>
     </div>
   );
 }
+
+// -----------------------------------------------------
+// Step Intro: Logo presentation
+// -----------------------------------------------------
+const StepIntro = ({ onNext }: { onNext: () => void; key?: string }) => {
+  useEffect(() => {
+    const timer = setTimeout(onNext, 3000);
+    return () => clearTimeout(timer);
+  }, [onNext]);
+  
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0, scale: 1.1 }}
+      transition={{ duration: 0.5 }}
+      className="relative flex h-full w-full flex-col items-center justify-center bg-[#0a1112] overflow-hidden max-w-md mx-auto"
+      onClick={onNext}
+    >
+      <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at 50% 50%, rgba(25, 204, 240, 0.15) 0%, rgba(10, 17, 18, 0) 70%)' }}></div>
+      <motion.div
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ 
+          duration: 1,
+          ease: "easeOut"
+        }}
+        className="relative px-8 w-full max-w-sm flex justify-center"
+      >
+        <motion.div
+          animate={{ scale: [1, 1.05, 1], rotate: [0, 2, -2, 0], y: [0, -10, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <img 
+            alt="NUBO" 
+            className="w-full h-auto object-contain brightness-125 drop-shadow-[0_0_40px_rgba(67,221,226,0.6)]" 
+            src="https://lh3.googleusercontent.com/aida/ADBb0ujTO8OICi5dMqeWK-37zXjL6hSeOTulMvdrsKKR7Lv7fW8urGGZFy4hjQBQCW-bmlF-CYsXf4_O0ItQhwdM0ywSYtBX5yEVQNUNfY7zklBeOOxLw8wupr-o3Lf0Tu0agaQ2x5MT0tuSqiWXrkyFx_1fTiP7FwYTZTQvEuhfXtzMzEUTd3gPkulOP1Uqig7ZqBm7WpZN61bKigv5Qlb8FelxgNmMRRBpoA_yOhpNjTokkypSLIClOBqbZJwyiUC0I94KaJ2gE92bjw" 
+          />
+        </motion.div>
+        <div className="absolute inset-0 bg-[#19ccf0]/20 blur-[80px] -z-10 rounded-full animate-pulse"></div>
+      </motion.div>
+    </motion.div>
+  );
+};
 
 // -----------------------------------------------------
 // Step 0: "Explorar la ciudad tiene recompensa" (Hero)
