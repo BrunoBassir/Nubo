@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { NuboHologramCoin } from './NuboHologramCoin';
 
 export function MysteryChestScreen({ onBack, onOpen }: { onBack: () => void, onOpen: () => void }) {
   const [stage, setStage] = useState<'idle' | 'opening' | 'opened'>('idle');
@@ -92,8 +93,8 @@ export function MysteryChestScreen({ onBack, onOpen }: { onBack: () => void, onO
                    <div className="absolute inset-0 bg-gradient-to-b from-indigo-900/40 to-transparent" />
                    <div className="absolute inset-0 opacity-30 bg-gradient-to-tr from-white/0 via-indigo-400/20 to-white/0 w-[200%] h-[200%] -translate-x-[50%] -translate-y-[50%] animate-[spin_4s_linear_infinite] mix-blend-overlay" />
 
-                   <div className="w-20 h-20 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-full flex items-center justify-center mb-6 border-2 border-indigo-300 relative z-10 shadow-[0_0_30px_rgba(99,102,241,0.8)]">
-                      <span className="material-symbols-outlined text-4xl text-white drop-shadow-[0_0_10px_white]" style={{ fontVariationSettings: "'FILL' 1" }}>{prize?.icon || 'star'}</span>
+                   <div className="w-24 h-24 bg-gradient-to-br from-indigo-400/20 to-indigo-600/20 rounded-full flex items-center justify-center mb-6 relative z-10">
+                      <NuboHologramCoin className="w-20 h-20" />
                    </div>
                    <h2 className="text-indigo-300 text-[10px] font-black uppercase tracking-[0.2em] mb-3 relative z-10">{prize?.isWinner ? '¡Premio Legendario Mítico!' : 'Cofre Abierto'}</h2>
                    <h3 className="text-white text-3xl font-display font-black leading-tight mb-8 relative z-10 drop-shadow-lg">{prize?.title.split(' ').map((word, i) => i === 1 ? <span key={i} className="text-indigo-400"> {word} </span> : word + ' ')}<br/><span className="text-base font-sans font-medium text-slate-300">{prize?.subtitle}</span></h3>

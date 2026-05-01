@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { ShareSheet } from './ShareSheet';
 import confetti from 'canvas-confetti';
 import { motion } from 'motion/react';
+import { NuboHologramCoin } from './NuboHologramCoin';
 
 export function ValidationCelebrationScreen({ onClose, onHome, onExplore, onScan, onRanking, onPrizes }: { onClose: () => void, onHome: () => void, onExplore: () => void, onScan: () => void, onRanking: () => void, onPrizes: () => void }) {
   const [isShareOpen, setIsShareOpen] = useState(false);
@@ -67,8 +68,7 @@ export function ValidationCelebrationScreen({ onClose, onHome, onExplore, onScan
           className="relative z-10 mb-8"
         >
           <div className="flex items-center justify-center w-52 h-52 rounded-full border border-primary/30 shadow-[inset_0_0_15px_rgba(25,204,240,0.1),0_0_20px_rgba(25,204,240,0.2)] bg-background-dark/60 backdrop-blur-md relative cyber-pulse">
-            {/* Checkmark Icon */}
-            <span className="material-symbols-outlined text-[110px] text-primary glow-primary font-bold">check</span>
+            <NuboHologramCoin className="w-36 h-36" />
             {/* Particles */}
             <div className="absolute -top-4 -right-2 w-3 h-3 bg-primary rounded-full shadow-[0_0_15px_#19ccf0]"></div>
             <div className="absolute top-10 -left-6 w-2 h-2 bg-blue-400 rounded-full shadow-[0_0_10px_#60a5fa]"></div>
