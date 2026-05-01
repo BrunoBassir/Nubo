@@ -34,7 +34,7 @@ export function RecentActivityScreen({ onBack, onLevelAchievedClick, onProfileCl
         </div>
         
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="text-cyan-400 font-bold tracking-[0.2em] text-xl font-space-grotesk pointer-events-auto">NUBO</div>
+          <img alt="NUBO" className="h-[42px] w-auto brightness-125 drop-shadow-[0_0_12px_rgba(67,221,226,0.6)] pointer-events-auto max-w-[70vw] object-contain" src="https://lh3.googleusercontent.com/aida/ADBb0ujTO8OICi5dMqeWK-37zXjL6hSeOTulMvdrsKKR7Lv7fW8urGGZFy4hjQBQCW-bmlF-CYsXf4_O0ItQhwdM0ywSYtBX5yEVQNUNfY7zklBeOOxLw8wupr-o3Lf0Tu0agaQ2x5MT0tuSqiWXrkyFx_1fTiP7FwYTZTQvEuhfXtzMzEUTd3gPkulOP1Uqig7ZqBm7WpZN61bKigv5Qlb8FelxgNmMRRBpoA_yOhpNjTokkypSLIClOBqbZJwyiUC0I94KaJ2gE92bjw" />
         </div>
 
         <div className="flex items-center relative z-10">

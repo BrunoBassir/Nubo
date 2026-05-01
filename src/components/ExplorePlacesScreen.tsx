@@ -87,7 +87,7 @@ export function ExplorePlacesScreen({ onBack, onPlaceDetailClick, onProfileClick
           <div className="size-9 rounded-full overflow-hidden border border-cyan-500/30 cursor-pointer" onClick={onProfileClick}>
             <img alt="User profile photo" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBu9J5gFLzAd2Zriz9H8pHA3S7sOePseF6qydq69GcPs_i4dZ93L2-Hyjk7ptEkTaLdgbpO0piiN-VarRWaE4e372jTdZ-E0WOeQ5K_gBq4ZVcT8Kyj2PTod-6ZnZNOseeLs4XHkmDZymJKGlt7gQrbGKP1Si5gaTAXXLEHCZp3o6R1H3KjvxiRi0xoMUukxM5oJlmMa1Q-Nsgh_kOOuvmgDjmdx_SWqwkvilKh9faymwl5YdiLKfhYYHlbiZJ0IGJq2E_m7bOI_y0"/>
           </div>
-          <h1 className="text-xl font-black text-cyan-400 italic tracking-tighter">NUBO</h1>
+          <img alt="NUBO" className="h-10 w-auto brightness-125 drop-shadow-[0_0_12px_rgba(67,221,226,0.6)]" src="https://lh3.googleusercontent.com/aida/ADBb0ujTO8OICi5dMqeWK-37zXjL6hSeOTulMvdrsKKR7Lv7fW8urGGZFy4hjQBQCW-bmlF-CYsXf4_O0ItQhwdM0ywSYtBX5yEVQNUNfY7zklBeOOxLw8wupr-o3Lf0Tu0agaQ2x5MT0tuSqiWXrkyFx_1fTiP7FwYTZTQvEuhfXtzMzEUTd3gPkulOP1Uqig7ZqBm7WpZN61bKigv5Qlb8FelxgNmMRRBpoA_yOhpNjTokkypSLIClOBqbZJwyiUC0I94KaJ2gE92bjw" />
         </div>
         <div className="flex items-center gap-4">
           <div className="bg-cyan-500/10 border border-cyan-500/20 px-2.5 py-1 rounded-lg flex items-center gap-1.5">

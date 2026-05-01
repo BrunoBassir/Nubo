@@ -49,13 +49,8 @@ const StepZero = ({ onNext }: { onNext: () => void; key?: string }) => (
     transition={{ duration: 0.3 }}
     className="relative flex h-full w-full flex-col bg-[#0a1112] overflow-hidden max-w-md mx-auto"
   >
-    <nav className="flex items-center justify-between px-6 py-6 z-50 shrink-0">
-      <div className="flex items-center gap-2.5">
-        <div className="size-10 bg-[#19ccf0] rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(25,204,240,0.3)]">
-          <span className="material-symbols-outlined text-[#0a1112] font-bold">explore</span>
-        </div>
-        <span className="text-xl font-bold tracking-tight text-white">Nubo</span>
-      </div>
+    <nav className="flex items-center justify-center w-full px-6 pt-12 pb-8 z-50 shrink-0">
+      <img alt="NUBO" className="h-[240px] w-auto brightness-125 drop-shadow-[0_0_20px_rgba(67,221,226,0.6)] object-contain" src="https://lh3.googleusercontent.com/aida/ADBb0ujTO8OICi5dMqeWK-37zXjL6hSeOTulMvdrsKKR7Lv7fW8urGGZFy4hjQBQCW-bmlF-CYsXf4_O0ItQhwdM0ywSYtBX5yEVQNUNfY7zklBeOOxLw8wupr-o3Lf0Tu0agaQ2x5MT0tuSqiWXrkyFx_1fTiP7FwYTZTQvEuhfXtzMzEUTd3gPkulOP1Uqig7ZqBm7WpZN61bKigv5Qlb8FelxgNmMRRBpoA_yOhpNjTokkypSLIClOBqbZJwyiUC0I94KaJ2gE92bjw" />
     </nav>
     <main className="relative flex-1 flex flex-col px-6 pt-2 pb-6 z-10 overflow-y-auto min-h-0">
       <div className="relative w-full h-40 flex items-center justify-center mb-4">
@@ -122,10 +117,7 @@ const StepOne = ({ onNext, onSkip }: { onNext: () => void, onSkip: () => void; k
   >
     <header className="flex items-center justify-between p-6 z-10 shrink-0">
       <div className="flex items-center gap-2">
-        <div className="text-[#19ccf0] flex size-8 shrink-0 items-center justify-center">
-          <span className="material-symbols-outlined text-3xl">filter_drama</span>
-        </div>
-        <h2 className="text-slate-100 text-xl font-bold tracking-tight">Nubo</h2>
+        <img alt="NUBO" className="h-[72px] w-auto brightness-125 drop-shadow-[0_0_12px_rgba(67,221,226,0.6)]" src="https://lh3.googleusercontent.com/aida/ADBb0ujTO8OICi5dMqeWK-37zXjL6hSeOTulMvdrsKKR7Lv7fW8urGGZFy4hjQBQCW-bmlF-CYsXf4_O0ItQhwdM0ywSYtBX5yEVQNUNfY7zklBeOOxLw8wupr-o3Lf0Tu0agaQ2x5MT0tuSqiWXrkyFx_1fTiP7FwYTZTQvEuhfXtzMzEUTd3gPkulOP1Uqig7ZqBm7WpZN61bKigv5Qlb8FelxgNmMRRBpoA_yOhpNjTokkypSLIClOBqbZJwyiUC0I94KaJ2gE92bjw" />
       </div>
       <button onClick={onSkip} className="text-slate-400 text-sm font-medium px-4 py-1 rounded-full border border-slate-700/50 hover:bg-slate-800 transition-colors">
         Saltar
@@ -183,7 +175,7 @@ const StepTwo = ({ onNext, onPrev }: { onNext: () => void, onPrev: () => void; k
       <button onClick={onPrev} className="flex size-10 items-center justify-center rounded-full bg-slate-800 text-white transition-colors">
         <span className="material-symbols-outlined">arrow_back</span>
       </button>
-      <span className="text-sm font-bold tracking-widest uppercase text-[#19ccf0]">Nubo</span>
+      <img alt="NUBO" className="h-[72px] w-auto brightness-125 drop-shadow-[0_0_12px_rgba(67,221,226,0.6)]" src="https://lh3.googleusercontent.com/aida/ADBb0ujTO8OICi5dMqeWK-37zXjL6hSeOTulMvdrsKKR7Lv7fW8urGGZFy4hjQBQCW-bmlF-CYsXf4_O0ItQhwdM0ywSYtBX5yEVQNUNfY7zklBeOOxLw8wupr-o3Lf0Tu0agaQ2x5MT0tuSqiWXrkyFx_1fTiP7FwYTZTQvEuhfXtzMzEUTd3gPkulOP1Uqig7ZqBm7WpZN61bKigv5Qlb8FelxgNmMRRBpoA_yOhpNjTokkypSLIClOBqbZJwyiUC0I94KaJ2gE92bjw" />
       <div className="w-10"></div>
     </header>
 
@@ -275,11 +267,11 @@ const StepThree = ({ onComplete, onPrev }: { onComplete: () => void, onPrev: () 
     <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at 50% 50%, rgba(25, 204, 240, 0.15) 0%, rgba(16, 31, 34, 0) 70%)' }}></div>
 
     <div className="relative flex items-center justify-between w-full p-6 pt-8 z-10 shrink-0">
-      <button onClick={onPrev} className="flex size-12 items-center justify-center rounded-full bg-slate-800/20 backdrop-blur-md border border-slate-700/30">
+      <button onClick={onPrev} className="flex size-10 items-center justify-center rounded-full bg-slate-800 text-white transition-colors">
         <span className="material-symbols-outlined text-slate-100">arrow_back</span>
       </button>
-      <h2 className="text-slate-400 text-sm font-medium tracking-widest uppercase">Paso 3 de 3</h2>
-      <div className="size-12"></div>
+      <img alt="NUBO" className="h-[72px] w-auto brightness-125 drop-shadow-[0_0_12px_rgba(67,221,226,0.6)]" src="https://lh3.googleusercontent.com/aida/ADBb0ujTO8OICi5dMqeWK-37zXjL6hSeOTulMvdrsKKR7Lv7fW8urGGZFy4hjQBQCW-bmlF-CYsXf4_O0ItQhwdM0ywSYtBX5yEVQNUNfY7zklBeOOxLw8wupr-o3Lf0Tu0agaQ2x5MT0tuSqiWXrkyFx_1fTiP7FwYTZTQvEuhfXtzMzEUTd3gPkulOP1Uqig7ZqBm7WpZN61bKigv5Qlb8FelxgNmMRRBpoA_yOhpNjTokkypSLIClOBqbZJwyiUC0I94KaJ2gE92bjw" />
+      <div className="size-10"></div>
     </div>
 
     <div className="flex flex-col items-center justify-center flex-1 py-8 px-6 z-10 overflow-y-auto min-h-0">
