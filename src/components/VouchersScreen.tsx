@@ -7,6 +7,7 @@ const mockVouchers = [
     title: 'Café de cortesía',
     placeName: 'Star Urban Coffee',
     category: 'Gastronomía',
+    city: 'Rosario',
     level: 1,
     imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCOMOlMoMND60i9WCfHv4uf-8bBFb3n3J6J3VSufTSPmG9vaGGbcz1eNMXkYpAgrxQu3UXTMhW5_PRgcXuCi_i5Eb1UnQPE-BhvGPOa4zVqSvNijtZziplJUdw80QfRsEp5T89ZYErXuk5nFmjsT3DnfJb_YHMLYe_BM3nQ2mtUpP5KZxEXzG_q5thbLxOi90_nl7IlBrzcRDCmJoCL0wqxAI68FZSbAiPUnRCCBEj4xwaTCbd4zIuF7jZmvS763O4uwkJFJPvtyeI',
     logoUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC9FCiVhinMNHXplDpu76QVdqImIrLbJ255cK4B-h8LEzrQGS4q5vjreh5HmjAwsY2qPmzKcDN2lVyuHEXnH3RkilQxmw113mumFpeKY-8WQmGQROUBa2SYAXNoFAI0L0ou-PscPJj3Zk8V99YPsp8JyoUzmqaKdbusU5ztB-OiZdJkwz_-cuzhr0eZr_MyljYFVGd_i_DNClFDIDVUqbikhiZhGF0bDRrPRnvbWdCme7X1wsJxx0wGDw79Gm5gNElurIiHqCnaM-I',
@@ -20,6 +21,7 @@ const mockVouchers = [
     title: '20% Off en Cenas',
     placeName: 'Pizzería del Centro',
     category: 'Gastronomía',
+    city: 'Rosario',
     level: 2,
     imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB86KdbUYEx4U1CzvvVkry7Bx7Jq4OvCVpgDhebQuQTubhJJfYMeI2RbXlqIj5XQUvArQ_WAS2kD816YLNtpYfoqrCVj7UJbAKZcCNh1qJ7z7EbGZlOEeSFR8DbMPd0_l7gz8vSvM2R8CvogHLe4oG_JD1ujPvax4__Wa8uFiH_9phZ4BVJkUfU0AaFOKYszXOpuoIBuvsAQ6Om0IXotzYLtt7gJGD65glreDpPfqiUdEeXO6bPlXwWTjTC1842IL8M3hJ6rFbsS5g',
     logoUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBd_Hb69WeCOMujEY17l4yTnVMwvWuzLobU3I4VoYaCXmcvchB-L-k1k9_fPM9e2dP59t-hLJcjHGk8dV8PcDaIcanS9abSTCdGR9D9aM1RQw8GafNtjTw7Xt7QNXZJmwbk0T3XZ3clZ_9lY-JlVafUU9Ur8mbcxWBjc3hhswdpnOxIfyaW286RUqFF9TdI8-UWnNQWHe4RduJQkQJcDzo77QO-d7rGgZRh84wQlRYybwUjkshsdYwclz8D_vc3U8A_vNnamvnY_aA',
@@ -33,6 +35,7 @@ const mockVouchers = [
     title: 'Pase VIP Evento',
     placeName: 'Nubo Urban Fest',
     category: 'Atractivo',
+    city: 'Rosario',
     level: 5,
     imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDFnc5BijG8IwQt7G3Q9DMxs7HYS5tSN9a6wWQ0eNg2dL6k9MZI8yqld8TCwed2iAxCWeaHwoKNSQIjEIC2hUBm-O9aLtwUHZQvkUdqZkvRAJq1tVVhnQM2go2Ssy63qZDWQAMm2k8oiibm6WTqWdjb9vtXxV0xWwxUsKAEJUvJgAT2YOBiGtypYXOhDhxHya8zCw9U_cGH5F4-xQ9ThffhHydnTOWQyzEIulI4Hf2slNYueMa8J66bgLRMSIpo_BXKX7oTgEe18ak',
     logoUrl: '',
@@ -49,6 +52,7 @@ const mockHistoryVouchers = [
     title: 'Descuento 15% Meriendas',
     placeName: 'Café Del Sol',
     category: 'Gastronomía',
+    city: 'Rosario',
     level: 1,
     imageUrl: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     logoUrl: '',
@@ -62,6 +66,7 @@ const mockHistoryVouchers = [
     title: 'Entrada Museo 2x1',
     placeName: 'Museo de Arte Moderno',
     category: 'Atractivo',
+    city: 'Rosario',
     level: 2,
     imageUrl: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     logoUrl: '',
@@ -135,6 +140,10 @@ export function VouchersScreen({ onHome, onExplore, onScan, onPrizes, onRanking,
                   <div className="flex-1">
                     <h3 className="font-bold text-lg leading-tight group-hover:text-primary transition-colors">{voucher.title}</h3>
                     <p className="text-slate-400 text-sm">{voucher.placeName}</p>
+                    <div className="flex items-center gap-1 mt-1 opacity-70">
+                      <span className="material-symbols-outlined text-[10px]">location_on</span>
+                      <span className="text-[10px] font-bold uppercase tracking-wider">{voucher.city}</span>
+                    </div>
                     <div className={`flex items-center gap-1 mt-2 text-[11px] font-bold ${voucher.available && activeTab === 'active' ? 'text-primary' : 'text-slate-500'} uppercase tracking-wider`}>
                       <span className="material-symbols-outlined text-[14px]">calendar_today</span>
                       {activeTab === 'history' ? voucher.expireDate : `Expira: ${voucher.expireDate}`}

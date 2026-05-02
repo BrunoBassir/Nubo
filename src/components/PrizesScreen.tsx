@@ -21,6 +21,7 @@ export function PrizesScreen({ onVouchersClick, onMysteryChestClick, onPrizeFrag
   const [selectedReward, setSelectedReward] = useState<RewardInfo | null>(null);
   const [showCelebration, setShowCelebration] = useState(false);
   const [prizeTab, setPrizeTab] = useState<'mercado' | 'canjes'>('mercado');
+  const [selectedCity, setSelectedCity] = useState<string | null>(null);
   
   const [rewardsData, setRewardsData] = useState<RewardInfo[]>([]);
   const [loading, setLoading] = useState(true);
@@ -130,7 +131,81 @@ export function PrizesScreen({ onVouchersClick, onMysteryChestClick, onPrizeFrag
         </div>
 
         {prizeTab === 'mercado' ? (
+          !selectedCity ? (
+            <div className="px-6 pt-2 pb-10 space-y-4">
+              <h2 className="text-xl font-display font-black text-white mb-6">Elegí tu ciudad</h2>
+              
+              <div 
+                onClick={() => setSelectedCity('Rosario')}
+                className="relative rounded-2xl overflow-hidden h-32 mb-4 cursor-pointer transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_15px_rgba(25,204,240,0.15)] border border-primary/30 group"
+              >
+                <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style={{ backgroundImage: `url(https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?q=80&w=600&auto=format&fit=crop)` }}></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-background-dark/95 via-background-dark/40 to-transparent"></div>
+                <div className="relative z-10 p-4 h-full flex flex-col justify-end">
+                  <div className="flex justify-between items-end">
+                    <div>
+                      <h3 className="text-2xl font-display font-black text-white leading-none">Rosario</h3>
+                      <p className="text-primary text-[10px] font-bold uppercase tracking-widest mt-1">Premios Disponibles</p>
+                    </div>
+                    <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center backdrop-blur-sm border border-primary/30">
+                       <span className="material-symbols-outlined text-primary text-sm">chevron_right</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="relative rounded-2xl overflow-hidden h-32 mb-4 opacity-50 grayscale border border-white/10">
+                <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(https://images.unsplash.com/photo-1589909202802-8f4aadce1849?q=80&w=600&auto=format&fit=crop)` }}></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-background-dark/90 via-background-dark/40 to-transparent"></div>
+                <div className="relative z-10 p-4 h-full flex flex-col justify-end">
+                  <div className="flex justify-between items-end">
+                    <h3 className="text-2xl font-display font-black text-white">CABA</h3>
+                    <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-sm">
+                      <span className="material-symbols-outlined text-white text-sm">lock</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="relative rounded-2xl overflow-hidden h-32 mb-4 opacity-50 grayscale border border-white/10">
+                <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=600&auto=format&fit=crop)` }}></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-background-dark/90 via-background-dark/40 to-transparent"></div>
+                <div className="relative z-10 p-4 h-full flex flex-col justify-end">
+                  <div className="flex justify-between items-end">
+                    <h3 className="text-2xl font-display font-black text-white">Córdoba</h3>
+                    <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-sm">
+                      <span className="material-symbols-outlined text-white text-sm">lock</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="relative rounded-2xl overflow-hidden h-32 mb-4 opacity-50 grayscale border border-white/10">
+                <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(https://images.unsplash.com/photo-1501594907352-04cda38ebc29?q=80&w=600&auto=format&fit=crop)` }}></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-background-dark/90 via-background-dark/40 to-transparent"></div>
+                <div className="relative z-10 p-4 h-full flex flex-col justify-end">
+                  <div className="flex justify-between items-end">
+                    <h3 className="text-2xl font-display font-black text-white">San Francisco</h3>
+                    <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-sm">
+                      <span className="material-symbols-outlined text-white text-sm">lock</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          ) : (
           <>
+            <div className="px-6 py-2 flex items-center justify-between mb-2">
+              <button onClick={() => setSelectedCity(null)} className="text-slate-400 hover:text-white flex items-center gap-1 text-[10px] uppercase font-bold tracking-widest transition-colors">
+                <span className="material-symbols-outlined text-[14px]">arrow_back</span>
+                Volver a ciudades
+              </button>
+              <div className="flex items-center gap-1 text-primary text-xs font-bold px-2.5 py-1 bg-primary/10 rounded-full border border-primary/20">
+                <span className="material-symbols-outlined text-[12px]">location_on</span>
+                {selectedCity}
+              </div>
+            </div>
             <div className="px-6 py-2 overflow-x-auto flex gap-2 hide-scrollbar">
               {rewardCategories.map(cat => (
                 <button
@@ -295,6 +370,7 @@ export function PrizesScreen({ onVouchersClick, onMysteryChestClick, onPrizeFrag
               </div>
             </div>
           </>
+          )
         ) : (
           <VouchersScreen hideHeader={true} />
         )}
