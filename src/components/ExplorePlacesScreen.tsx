@@ -1,8 +1,9 @@
 import { useState, useMemo, useEffect } from 'react';
 import { PlaceDetailScreen } from './PlaceDetailScreen';
-import { collection, onSnapshot } from 'firebase/firestore';
+import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { samplePlaces } from '../lib/seedDatabase';
+import { useGlobalCity } from '../contexts/CityContext';
 
 type PlaceCategory = 'Todo' | 'Gastronomía' | 'Alojamiento' | 'Atractivo' | 'Deportes' | 'Compras';
 
@@ -29,6 +30,7 @@ export type Place = {
   exhibitions?: Array<{ title: string; description: string; endDate: string; room: string }>;
   spotGallery?: Array<{ imageUrl: string; userId: string; userName: string; xp: number }>;
   qrCode?: string;
+  city?: string; // Added city
 };
 
 export function ExplorePlacesScreen({ onBack, onPlaceDetailClick, onProfileClick, onNotificationsClick, onRouteClick }: { onBack?: () => void, onPlaceDetailClick?: () => void, onProfileClick?: () => void, onNotificationsClick?: () => void, onRouteClick?: () => void }) {
@@ -36,8 +38,11 @@ export function ExplorePlacesScreen({ onBack, onPlaceDetailClick, onProfileClick
   const [activeCategory, setActiveCategory] = useState<PlaceCategory>('Todo');
   const [placesData, setPlacesData] = useState<Place[]>([]);
   const [loading, setLoading] = useState(true);
+  const { selectedGlobalCity } = useGlobalCity();
 
   useEffect(() => {
+    // Let's load all places for simplicity, then filter. Or we could filter via firestore query.
+    // For now we'll fetch all and filter in memory since sample places don't have city properly set in FB initially.
     const unsub = onSnapshot(collection(db, 'places'), (snapshot) => {
       const places: Place[] = snapshot.docs.map(doc => ({
         ...(doc.data() as Omit<Place, 'id'>),
@@ -54,8 +59,10 @@ export function ExplorePlacesScreen({ onBack, onPlaceDetailClick, onProfileClick
   }, []);
 
   const displayPlaces = useMemo(() => {
-    return placesData.length > 0 ? placesData : samplePlaces;
-  }, [placesData]);
+    const data = placesData.length > 0 ? placesData : samplePlaces;
+    // Fall back to Rosario if the place doesn't have a city explicitly set to avoid losing items during dev.
+    return data.filter(p => (p.city || 'Rosario') === selectedGlobalCity);
+  }, [placesData, selectedGlobalCity]);
 
   const filteredPlaces = useMemo(() => {
     if (activeCategory === 'Todo') {
@@ -69,11 +76,6 @@ export function ExplorePlacesScreen({ onBack, onPlaceDetailClick, onProfileClick
   }, [displayPlaces]);
 
   const categories: PlaceCategory[] = ['Todo', 'Gastronomía', 'Alojamiento', 'Atractivo', 'Deportes', 'Compras'];
-
-  // Removed early return to show fallback data
-  // if (loading) {
-  //   return <div className="bg-background-dark text-white flex items-center justify-center">Cargando lugares...</div>;
-  // }
 
   return (
     <div className="bg-background-dark text-slate-100 flex flex-col w-full lg:max-w-md lg:mx-auto relative">
@@ -99,6 +101,15 @@ export function ExplorePlacesScreen({ onBack, onPlaceDetailClick, onProfileClick
       </header>
       <main className="flex-1 overflow-y-auto px-4 pb-12">
         <div className="mt-4 px-2">
+          {/* City Context Title */}
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-2xl font-display font-black text-white">Lugares Nubo</h2>
+              <div className="flex items-center gap-1 text-primary text-xs font-bold px-2.5 py-1 bg-primary/10 rounded-full border border-primary/20">
+                <span className="material-symbols-outlined text-[12px]">location_on</span>
+                {selectedGlobalCity}
+              </div>
+            </div>
+
           <div className="relative mb-6">
             <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xl">search</span>
             <input className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-sm focus:ring-1 focus:ring-cyan-500 focus:border-cyan-500 placeholder:text-slate-500 text-white" placeholder="Buscar lugares, experiencias..." type="text"/>
@@ -172,7 +183,7 @@ export function ExplorePlacesScreen({ onBack, onPlaceDetailClick, onProfileClick
           <div className="space-y-4">
             {filteredPlaces.length === 0 ? (
                <div className="text-center text-slate-500 py-10">
-                 No hay lugares disponibles en esta categoría.
+                 No hay lugares disponibles en esta ciudad para esta categoría.
                </div>
             ) : (
               filteredPlaces.map((place, i) => (

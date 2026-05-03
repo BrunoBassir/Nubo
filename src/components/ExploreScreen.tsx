@@ -4,11 +4,13 @@ import { Place } from './ExplorePlacesScreen';
 import { collection, onSnapshot, query, limit } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { samplePlaces } from '../lib/seedDatabase';
+import { useGlobalCity } from '../contexts/CityContext';
 
 export function ExploreScreen({ onPlacesClick, onChallengesClick, onDiscoveryClick, onFeaturedDetailClick, onRadarClick, onSecretMissionsClick, onRouteClick, onValidate }: { onPlacesClick?: () => void, onChallengesClick?: () => void, onDiscoveryClick?: () => void, onFeaturedDetailClick?: () => void, onRadarClick?: () => void, onSecretMissionsClick?: () => void, onRouteClick?: () => void, onValidate?: () => void }) {
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
   const [placesData, setPlacesData] = useState<Place[]>([]);
   const [loading, setLoading] = useState(true);
+  const { selectedGlobalCity } = useGlobalCity();
   
   useEffect(() => {
     // Timeout to stop showing loading state if Firestore is slow
@@ -16,7 +18,7 @@ export function ExploreScreen({ onPlacesClick, onChallengesClick, onDiscoveryCli
       setLoading(false);
     }, 2000);
 
-    const unsub = onSnapshot(query(collection(db, 'places'), limit(5)), (snapshot) => {
+    const unsub = onSnapshot(query(collection(db, 'places'), limit(20)), (snapshot) => {
       const places: Place[] = snapshot.docs.map(doc => ({
         ...(doc.data() as Omit<Place, 'id'>),
         id: doc.id
@@ -37,8 +39,9 @@ export function ExploreScreen({ onPlacesClick, onChallengesClick, onDiscoveryCli
   }, []);
 
   const displayPlaces = useMemo(() => {
-    return placesData.length > 0 ? placesData : samplePlaces;
-  }, [placesData]);
+    const data = placesData.length > 0 ? placesData : samplePlaces;
+    return data.filter(p => (p.city || 'Rosario') === selectedGlobalCity);
+  }, [placesData, selectedGlobalCity]);
 
   if (selectedPlace) {
     return <PlaceDetailScreen place={selectedPlace} onClose={() => setSelectedPlace(null)} onRouteClick={onRouteClick} onValidate={onValidate} />;
@@ -53,11 +56,13 @@ export function ExploreScreen({ onPlacesClick, onChallengesClick, onDiscoveryCli
             <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent"></div>
             <div className="absolute inset-0 bg-primary/10 opacity-40 transition-opacity duration-300 group-hover:opacity-60"></div>
             <div className="absolute bottom-6 left-5 right-5">
-              <div className="mb-2 size-10 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/40 group-hover:shadow-primary/60 transition-shadow duration-300">
-                <span className="material-symbols-outlined text-background-dark font-bold">storefront</span>
+              <div className="mb-2 flex justify-between items-start">
+                <div className="size-10 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/40 group-hover:shadow-primary/60 transition-shadow duration-300">
+                  <span className="material-symbols-outlined text-background-dark font-bold">storefront</span>
+                </div>
               </div>
               <h2 className="text-2xl font-bold text-white leading-none mb-1 text-glow-teal group-hover:text-primary group-hover:drop-shadow-[0_0_10px_rgba(25,204,240,0.8)] transition-all duration-300">Lugares<br/>Nubo</h2>
-              <p className="text-xs text-primary font-medium">Visitá y ganá en comercios</p>
+              <p className="text-xs text-primary font-medium">Visitá y ganá en {selectedGlobalCity}</p>
             </div>
           </div>
           
@@ -70,7 +75,7 @@ export function ExploreScreen({ onPlacesClick, onChallengesClick, onDiscoveryCli
                 <span className="material-symbols-outlined text-background-dark font-bold">military_tech</span>
               </div>
               <h2 className="text-2xl font-bold text-white leading-none mb-1 transition-all duration-300 group-hover:text-accent group-hover:drop-shadow-[0_0_10px_rgba(240,162,25,0.8)]">Desafíos<br/>Urbanos</h2>
-              <p className="text-xs text-accent font-medium">Cumplí desafíos y subí de nivel</p>
+              <p className="text-xs text-accent font-medium">Cumplí desafíos en {selectedGlobalCity}</p>
             </div>
           </div>
         </div>
@@ -91,7 +96,7 @@ export function ExploreScreen({ onPlacesClick, onChallengesClick, onDiscoveryCli
             <div className="p-6 relative z-10 flex-1">
               <div className="flex items-center gap-2 mb-1">
                 <span className="material-symbols-outlined text-primary text-xl drop-shadow-[0_0_8px_rgba(25,204,240,0.8)] animate-pulse">radar</span>
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Nuevo</span>
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Nuevo en {selectedGlobalCity}</span>
               </div>
               <h3 className="font-display font-black text-2xl text-white mb-1 leading-tight">Radar Nubo</h3>
               <p className="text-xs text-slate-400 max-w-[200px]">Escaneá tu zona para encontrar cofres y lugares x2 XP.</p>
@@ -153,12 +158,12 @@ export function ExploreScreen({ onPlacesClick, onChallengesClick, onDiscoveryCli
 
         <section className="mt-8">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-bold">Cerca de vos</h3>
+            <h3 className="text-lg font-bold">Cerca de vos en {selectedGlobalCity}</h3>
             <span onClick={onDiscoveryClick} className="text-primary text-sm font-semibold cursor-pointer hover:drop-shadow-[0_0_5px_rgba(25,204,240,0.5)] transition-all">Ver todos</span>
           </div>
           
           <div className="flex gap-4 overflow-x-auto hide-scrollbar pb-4">
-            {displayPlaces.slice(0, 6).map((place, i) => (
+            {displayPlaces.length > 0 ? displayPlaces.slice(0, 6).map((place, i) => (
               <div key={place.id || `explore-place-${i}`} onClick={() => setSelectedPlace(place)} className="w-40 shrink-0 group cursor-pointer">
                 <div 
                   className="w-full aspect-square rounded-2xl bg-cover bg-center mb-2 border border-slate-200 dark:border-slate-800 transition-all duration-300 group-hover:border-primary/40 group-hover:shadow-[0_0_15px_rgba(25,204,240,0.15)] group-hover:scale-105 bg-slate-800" 
@@ -167,7 +172,9 @@ export function ExploreScreen({ onPlacesClick, onChallengesClick, onDiscoveryCli
                 <p className="font-bold text-sm truncate group-hover:text-primary transition-colors">{place.name || 'Lugar'}</p>
                 <p className="text-[10px] text-slate-500">{(place.subcategory || place.category) || 'Explora'} • {place.distance || 'Cerca'}</p>
               </div>
-            ))}
+            )) : (
+              <p className="text-slate-400 text-sm">No hay lugares para mostrar en esta ciudad.</p>
+            )}
           </div>
         </section>
       </main>
