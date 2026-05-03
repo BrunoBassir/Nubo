@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { useAuth } from '../contexts/AuthContext';
+import { GlobalTopNavBar } from './GlobalTopNavBar';
 
 export function RecentActivityScreen({ onBack, onLevelAchievedClick, onProfileClick, onNotificationsClick, onFullHistoryClick }: { onBack: () => void, onLevelAchievedClick?: () => void, onProfileClick?: () => void, onNotificationsClick?: () => void, onFullHistoryClick?: () => void }) {
   const { user } = useAuth();
@@ -19,30 +20,11 @@ export function RecentActivityScreen({ onBack, onLevelAchievedClick, onProfileCl
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 w-full lg:max-w-md lg:mx-auto z-50 flex items-center justify-between px-6 h-16 bg-slate-950/80 backdrop-blur-xl border-b border-white/10 shadow-[0_0_15px_rgba(25,204,240,0.1)]">
-        <div className="flex items-center gap-3 relative z-10">
-          <button onClick={onBack} className="text-slate-400 hover:text-white transition-colors mr-2">
-            <span className="material-symbols-outlined">arrow_back</span>
-          </button>
-          <button onClick={onProfileClick} className="w-10 h-10 rounded-full border-2 border-cyan-400 overflow-hidden cursor-pointer block bg-cyan-400/20 text-cyan-400 flex items-center justify-center">
-            {user?.photoURL ? (
-              <img alt="User Profile" className="w-full h-full object-cover" src={user.photoURL}/>
-            ) : (
-              <span className="material-symbols-outlined">person</span>
-            )}
-          </button>
-        </div>
-        
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <img alt="NUBO" className="h-[42px] w-auto brightness-125 drop-shadow-[0_0_12px_rgba(67,221,226,0.6)] pointer-events-auto max-w-[70vw] object-contain" src="https://lh3.googleusercontent.com/aida/ADBb0ujTO8OICi5dMqeWK-37zXjL6hSeOTulMvdrsKKR7Lv7fW8urGGZFy4hjQBQCW-bmlF-CYsXf4_O0ItQhwdM0ywSYtBX5yEVQNUNfY7zklBeOOxLw8wupr-o3Lf0Tu0agaQ2x5MT0tuSqiWXrkyFx_1fTiP7FwYTZTQvEuhfXtzMzEUTd3gPkulOP1Uqig7ZqBm7WpZN61bKigv5Qlb8FelxgNmMRRBpoA_yOhpNjTokkypSLIClOBqbZJwyiUC0I94KaJ2gE92bjw" />
-        </div>
-
-        <div className="flex items-center relative z-10">
-          <button onClick={onNotificationsClick} className="text-cyan-400 hover:text-cyan-300 transition-colors">
-            <span className="material-symbols-outlined">notifications</span>
-          </button>
-        </div>
-      </header>
+      <GlobalTopNavBar 
+        onBack={onBack}
+        onProfileClick={() => onProfileClick && onProfileClick()}
+        onNotificationsClick={() => onNotificationsClick && onNotificationsClick()}
+      />
 
       <main className="pt-24 px-6 max-w-2xl mx-auto">
         <motion.div variants={containerVariants} initial="hidden" animate="show">

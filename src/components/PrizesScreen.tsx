@@ -135,7 +135,7 @@ export function PrizesScreen({ onVouchersClick, onMysteryChestClick, onPrizeFrag
                 {selectedGlobalCity}
               </div>
             </div>
-            {selectedGlobalCity === 'Rosario' ? (
+            {displayRewards.length > 0 ? (
               <>
                 <div className="px-6 py-2 overflow-x-auto flex gap-2 hide-scrollbar">
                   {rewardCategories.map(cat => (

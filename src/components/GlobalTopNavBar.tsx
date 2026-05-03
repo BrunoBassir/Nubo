@@ -2,7 +2,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useGlobalCity } from '../contexts/CityContext';
 import { useState } from 'react';
 
-export function GlobalTopNavBar({ onProfileClick, onNotificationsClick }: { onProfileClick: () => void, onNotificationsClick: () => void }) {
+export function GlobalTopNavBar({ onProfileClick, onNotificationsClick, onBack }: { onProfileClick: () => void, onNotificationsClick: () => void, onBack?: () => void }) {
   const { user } = useAuth();
   const { selectedGlobalCity, setSelectedGlobalCity, availableCities } = useGlobalCity();
   const [showCityMenu, setShowCityMenu] = useState(false);
@@ -10,17 +10,24 @@ export function GlobalTopNavBar({ onProfileClick, onNotificationsClick }: { onPr
   return (
     <>
     <header className="fixed top-0 left-0 right-0 w-full lg:max-w-md lg:mx-auto z-[60] flex items-center justify-between px-6 h-16 bg-slate-950/80 backdrop-blur-xl border-b border-white/10 shadow-[0_0_15px_rgba(25,204,240,0.1)]">
-      <div className="flex items-center gap-2 cursor-pointer relative z-10" onClick={onProfileClick}>
-        <div className="w-9 h-9 rounded-full border-2 border-cyan-400 overflow-hidden hover:scale-105 active:scale-95 transition-transform flex items-center justify-center bg-cyan-400/20 text-cyan-400">
-          {user ? (
-            <img 
-              alt={user.displayName || "User"} 
-              className="w-full h-full object-cover" 
-              src={user.photoURL || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop"} 
-            />
-          ) : (
-            <span className="material-symbols-outlined text-xl">person</span>
-          )}
+      <div className="flex items-center gap-3 relative z-10">
+        {onBack && (
+          <button onClick={onBack} className="material-symbols-outlined text-slate-400 hover:text-cyan-300 transition-colors">
+            arrow_back
+          </button>
+        )}
+        <div className="flex items-center gap-2 cursor-pointer" onClick={onProfileClick}>
+          <div className="w-9 h-9 rounded-full border-2 border-cyan-400 overflow-hidden hover:scale-105 active:scale-95 transition-transform flex items-center justify-center bg-cyan-400/20 text-cyan-400">
+            {user ? (
+              <img 
+                alt={user.displayName || "User"} 
+                className="w-full h-full object-cover" 
+                src={user.photoURL || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop"} 
+              />
+            ) : (
+              <span className="material-symbols-outlined text-xl">person</span>
+            )}
+          </div>
         </div>
       </div>
       
@@ -72,10 +79,12 @@ export function GlobalTopNavBar({ onProfileClick, onNotificationsClick }: { onPr
               <button
                 key={city}
                 onClick={() => {
-                  setSelectedGlobalCity(city);
-                  setShowCityMenu(false);
+                  if (city === 'Rosario') {
+                    setSelectedGlobalCity(city);
+                    setShowCityMenu(false);
+                  }
                 }}
-                className={`w-full flex items-center justify-between p-4 rounded-xl mb-1 transition-colors ${selectedGlobalCity === city ? 'bg-cyan-500/10 border border-cyan-500/30' : 'hover:bg-white/5 border border-transparent'}`}
+                className={`w-full flex items-center justify-between p-4 rounded-xl mb-1 transition-colors ${selectedGlobalCity === city ? 'bg-cyan-500/10 border border-cyan-500/30' : 'hover:bg-white/5 border border-transparent'} ${city !== 'Rosario' ? 'opacity-50 cursor-not-allowed' : ''}`}
                 disabled={city !== 'Rosario'}
               >
                 <div className="flex items-center gap-3">

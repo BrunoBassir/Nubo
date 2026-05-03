@@ -26,7 +26,7 @@ export function MysteryChestScreen({ onBack, onOpen }: { onBack: () => void, onO
   };
 
   return (
-    <div className="fixed inset-0 z-[150] bg-background-dark/95 backdrop-blur-xl flex flex-col items-center justify-center p-6 text-slate-100">
+    <div className="flex-1 bg-background-dark/95 backdrop-blur-xl flex flex-col items-center justify-center p-6 text-slate-100 min-h-[100dvh] w-full relative">
       <button onClick={onBack} className="absolute top-6 left-6 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors">
          <span className="material-symbols-outlined text-white">close</span>
       </button>

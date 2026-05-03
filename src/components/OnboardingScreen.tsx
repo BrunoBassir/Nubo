@@ -27,7 +27,7 @@ export function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] bg-[#101f22] text-slate-100 font-display overflow-hidden">
+    <div className="flex-1 min-h-[100dvh] bg-[#101f22] text-slate-100 font-display overflow-hidden flex flex-col relative w-full">
       <AnimatePresence mode="wait">
         {step === 0 && <StepIntro key="stepIntro" onNext={nextStep} />}
         {step === 1 && <StepZero key="step0" onNext={nextStep} />}

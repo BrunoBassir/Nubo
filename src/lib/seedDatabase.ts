@@ -5,6 +5,7 @@ export const samplePlaces = [
   {
     id: 'place1',
     name: 'Artisan Roast House',
+    city: 'Rosario',
     description: 'Café de especialidad con granos de origen único.',
     category: 'Gastronomía',
     subcategory: 'Especialidad',
@@ -144,7 +145,8 @@ export const samplePlaces = [
     exhibitions: [
       { title: 'Revolución de Mayo', description: 'Salas dedicadas a los próceres.', endDate: 'Permanente', room: 'Sala Principal' }
     ],
-    qrCode: 'place6'
+    qrCode: 'place6',
+    city: 'Rosario'
   }
 ];
 
@@ -152,6 +154,7 @@ export const sampleChallenges = [
   {
     id: 'challenge1',
     title: 'Ruta Gastronómica Central',
+    city: 'Rosario',
     description: 'Gana el doble de puntos visitando los mercados históricos esta semana.',
     xpReward: 1000,
     pointsReward: 200,
@@ -195,7 +198,8 @@ export const sampleChallenges = [
     progress: 1,
     maxProgress: 2,
     icon: 'local_bar',
-    imageUrl: 'https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&q=80'
+    imageUrl: 'https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&q=80',
+    city: 'Rosario'
   }
 ];
 
@@ -203,6 +207,7 @@ export const sampleRewards = [
   {
     id: 'reward1',
     title: '2x1 Café Especial',
+    city: 'Rosario',
     description: 'Canjea un espresso o americano gratis comprando otro.',
     provider: 'Artisan Roast House',
     cost: 300,
@@ -261,7 +266,8 @@ export const sampleRewards = [
     provider: 'Hotel Grand Plaza',
     cost: 12000,
     imageUrl: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    type: 'hotel'
+    type: 'hotel',
+    city: 'Rosario'
   }
 ];
 

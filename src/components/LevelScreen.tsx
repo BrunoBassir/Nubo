@@ -1,24 +1,12 @@
+import { GlobalTopNavBar } from './GlobalTopNavBar';
+
 export function LevelScreen({ onLevelDetailsClick, onProfileClick, onNotificationsClick }: { onLevelDetailsClick?: () => void, onProfileClick?: () => void, onNotificationsClick?: () => void }) {
   return (
     <>
-      {/* TopAppBar */}
-      <header className="fixed top-0 left-0 right-0 w-full lg:max-w-md lg:mx-auto z-50 flex items-center justify-between px-6 h-16 bg-slate-950/80 backdrop-blur-xl border-b border-white/10 shadow-[0_0_15px_rgba(25,204,240,0.1)]">
-        <div className="flex items-center gap-3 relative z-10">
-          <div className="w-10 h-10 rounded-full border-2 border-cyan-400 overflow-hidden cursor-pointer" onClick={onProfileClick}>
-            <img alt="User profile" className="w-full h-full object-cover" data-alt="Close-up portrait of a young tech professional with short dark hair, soft blue ambient studio lighting, futuristic cyber-minimalist aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-Uxo9zq4QTh7dWOoEAvTEq4wE3TZ9qZn7L6BXNWzYS2qNqgUHzzy8ZQUrvsCwdlha49ADI-PZ0RVi2-5cj_Hbmjs1kihq21zu550P0zF7exDLoGIDyPKeEPh7OjFgREvpndy6Ddibjzv2OPQHk5PcY1-VrD2Q7arvCQFfMwnY88fEh3E2VKlvMLEZSDmEBxPyQDfGJ9AA2pa_sEonZzkMeOuWyzwt4HkaK91Fuc18e7o5WLSzPPgcw_mTCSoesqDKC2VDF1Z3Vxo"/>
-          </div>
-        </div>
-        
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <img alt="NUBO" className="h-[42px] w-auto brightness-125 drop-shadow-[0_0_12px_rgba(67,221,226,0.6)] pointer-events-auto max-w-[70vw] object-contain" src="https://lh3.googleusercontent.com/aida/ADBb0ujTO8OICi5dMqeWK-37zXjL6hSeOTulMvdrsKKR7Lv7fW8urGGZFy4hjQBQCW-bmlF-CYsXf4_O0ItQhwdM0ywSYtBX5yEVQNUNfY7zklBeOOxLw8wupr-o3Lf0Tu0agaQ2x5MT0tuSqiWXrkyFx_1fTiP7FwYTZTQvEuhfXtzMzEUTd3gPkulOP1Uqig7ZqBm7WpZN61bKigv5Qlb8FelxgNmMRRBpoA_yOhpNjTokkypSLIClOBqbZJwyiUC0I94KaJ2gE92bjw" />
-        </div>
-        
-        <div className="flex items-center relative z-10">
-          <button className="text-cyan-400 hover:text-cyan-300 transition-colors" onClick={onNotificationsClick}>
-            <span className="material-symbols-outlined">notifications</span>
-          </button>
-        </div>
-      </header>
+      <GlobalTopNavBar 
+        onProfileClick={() => onProfileClick && onProfileClick()}
+        onNotificationsClick={() => onNotificationsClick && onNotificationsClick()}
+      />
       
       <main className="pt-20 px-4 max-w-lg mx-auto">
         {/* Progress Summary Card */}

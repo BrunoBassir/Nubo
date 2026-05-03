@@ -24,7 +24,7 @@ export function RadarScreen({ onBack }: { onBack: () => void }) {
   }, []);
 
   return (
-    <div className="bg-[#050B14] text-slate-100 flex flex-col items-center justify-center relative overflow-hidden font-display">
+    <div className="bg-[#050B14] text-slate-100 flex flex-col items-center justify-center relative overflow-hidden font-display flex-1 w-full min-h-[100dvh]">
       
       {/* Back Button */}
       <header className="absolute top-0 left-0 right-0 w-full lg:max-w-md lg:mx-auto z-50 flex items-center px-6 h-16 bg-transparent">
