@@ -48,7 +48,7 @@ export function GlobalTopNavBar({ onProfileClick, onNotificationsClick, onBack }
           <img 
             alt="Notificaciones Nubo" 
             className="h-[40px] w-auto brightness-125 drop-shadow-[0_0_8px_rgba(67,221,226,0.6)]" 
-            src="https://lh3.googleusercontent.com/aida/ADBb0ujTO8OICi5dMqeWK-37zXjL6hSeOTulMvdrsKKR7Lv7fW8urGGZFy4hjQBQCW-bmlF-CYsXf4_O0ItQhwdM0ywSYtBX5yEVQNUNfY7zklBeOOxLw8wupr-o3Lf0Tu0agaQ2x5MT0tuSqiWXrkyFx_1fTiP7FwYTZTQvEuhfXtzMzEUTd3gPkulOP1Uqig7ZqBm7WpZN61bKigv5Qlb8FelxgNmMRRBpoA_yOhpNjTokkypSLIClOBqbZJwyiUC0I94KaJ2gE92bjw" 
+            src="/nubo-logo.png" 
           />
         </button>
       </div>

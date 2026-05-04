@@ -12,7 +12,7 @@ export function NuboHologramCoin({ className = "w-16 h-16" }: { className?: stri
         <img 
           alt="NUBO Hologram"
           className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(25,204,240,0.8)] brightness-150"
-          src="https://lh3.googleusercontent.com/aida/ADBb0ujTO8OICi5dMqeWK-37zXjL6hSeOTulMvdrsKKR7Lv7fW8urGGZFy4hjQBQCW-bmlF-CYsXf4_O0ItQhwdM0ywSYtBX5yEVQNUNfY7zklBeOOxLw8wupr-o3Lf0Tu0agaQ2x5MT0tuSqiWXrkyFx_1fTiP7FwYTZTQvEuhfXtzMzEUTd3gPkulOP1Uqig7ZqBm7WpZN61bKigv5Qlb8FelxgNmMRRBpoA_yOhpNjTokkypSLIClOBqbZJwyiUC0I94KaJ2gE92bjw"
+          src="/nubo-logo.png"
         />
         {/* Holographic specular shine */}
         <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/50 to-transparent mix-blend-overlay rounded-full blur-[2px]"></div>
